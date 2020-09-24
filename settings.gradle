@@ -1,0 +1,2 @@
+rootProject.name='leave_a_record'
+include ':app'

@@ -74,7 +74,6 @@ public class SetGallery extends AppCompatActivity {
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"),  101);
-
             }
 
 

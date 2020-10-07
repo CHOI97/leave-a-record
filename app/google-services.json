@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1060390492273",
+    "firebase_url": "https://leave-a-record.firebaseio.com",
+    "project_id": "leave-a-record",
+    "storage_bucket": "leave-a-record.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1060390492273:android:1003c4684e0418a6cde3d0",
+        "android_client_info": {
+          "package_name": "com.example.leave_a_record"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1060390492273-gumfhj0ik3e8unv6h0il47ea56otfd8d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.leave_a_record",
+            "certificate_hash": "14476579e2460ca8964373c403595cd266177584"
+          }
+        },
+        {
+          "client_id": "1060390492273-9qkinb92j59j75vktlo8153b1r0l7cb5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpPIpUFLWo88cgt6judabY6oaiFAUODQk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1060390492273-9qkinb92j59j75vktlo8153b1r0l7cb5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

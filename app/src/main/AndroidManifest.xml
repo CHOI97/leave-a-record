@@ -29,14 +29,6 @@
             android:value="AIzaSyCTtEC39s9JafYXxKz2pxjH5N0LsPZHRRY" />
 
 
-        <activity android:name=".MainActivity"
-            android:theme="@style/FullScreen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.LAUCHER"/>
-            </intent-filter>
-        </activity>
         <activity android:name=".SetGallery">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

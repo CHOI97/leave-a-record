@@ -8,12 +8,12 @@
     >
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textView3"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="240dp"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="회원가입"
+        android:text="LOGO"
         android:textColor="#000000"
         android:textSize="24sp"
         android:textStyle="bold" />
@@ -25,7 +25,7 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/signup_id"
+            android:id="@+id/login_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
@@ -34,7 +34,7 @@
             android:inputType="textEmailAddress" />
 
         <EditText
-            android:id="@+id/signup_pw"
+            android:id="@+id/login_pw"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
@@ -42,25 +42,17 @@
             android:hint="비밀번호"
             android:inputType="textPassword" />
 
-        <EditText
-            android:id="@+id/signup_pwd"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:ems="10"
-            android:hint="비밀번호 확인"
-            android:inputType="textPassword" />
 
         <Button
-            android:id="@+id/signup_bt"
+            android:id="@+id/login_bt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="SIGN UP" />
+            android:text="LOGIN" />
         <Button
-            android:id="@+id/signTologin_bt"
+            android:id="@+id/loginTosignup_bt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="BACK" />
+            android:text="JoIN" />
 
     </LinearLayout>
 </LinearLayout>

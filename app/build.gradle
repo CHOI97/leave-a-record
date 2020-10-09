@@ -40,4 +40,6 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:17.0.0'
     implementation platform('com.google.firebase:firebase-bom:25.11.0')
     implementation 'com.google.firebase:firebase-analytics'
+    //edittext
+    implementation 'com.android.support:design:29.0.3'
 }

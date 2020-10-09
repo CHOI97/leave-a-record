@@ -1,0 +1,137 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
+    >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textSize="15dp"
+        android:textColor="#000000"
+        android:text="Edit Image"
+        android:layout_marginBottom="16dp"/>
+
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/Text_title"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="title" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        >
+
+        <RadioButton
+            android:id="@+id/Pin1"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:layout_weight="0.2"
+            android:text="Pin 1"/>
+
+        <RadioButton
+            android:id="@+id/Pin2"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:layout_weight="0.2"
+            android:text="Pin 2" />
+
+        <RadioButton
+            android:id="@+id/Pin3"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:layout_weight="0.2"
+            android:text="Pin 3"/>
+        <RadioButton
+            android:id="@+id/Pin4"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:layout_weight="0.2"
+            android:text="Pin 4"/>
+        <RadioButton
+            android:id="@+id/Pin5"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:layout_weight="0.2"
+            android:text="Pin 5"/>
+    </RadioGroup>
+
+
+    <ImageView
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_gravity="center"
+        android:background="@null"
+        android:src="@drawable/bin_purple" />
+
+
+    <com.google.android.material.textfield.TextInputLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/Text_date"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:hint="date" />
+</com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/Text_content"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:hint="content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <RelativeLayout
+        android:id="@+id/RelativeLayout_login"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:background="@drawable/bin_purple"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:weightSum="1"
+        >
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@null"
+            android:src="@drawable/bin_purple"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:stateListAnimator="@null"
+            android:text="save"
+            android:textColor="#ffffff" />
+
+    </RelativeLayout>
+
+</LinearLayout>

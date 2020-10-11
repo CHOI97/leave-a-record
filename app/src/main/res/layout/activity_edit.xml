@@ -1,5 +1,6 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -21,7 +22,8 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        tools:ignore="MissingClass">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/Text_title"
@@ -80,6 +82,7 @@
         android:src="@drawable/bin_purple" />
 
 
+
     <com.google.android.material.textfield.TextInputLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -98,7 +101,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/Text_content"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="100dp"
             android:hint="content" />
     </com.google.android.material.textfield.TextInputLayout>
 

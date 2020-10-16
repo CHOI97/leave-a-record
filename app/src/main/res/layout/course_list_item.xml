@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/img_icon"
+        android:id="@+id/course_img_icon"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginLeft="15dp"
@@ -20,11 +20,11 @@
         android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/img_icon"
+        app:layout_constraintLeft_toRightOf="@id/course_img_icon"
         android:layout_marginLeft="15dp">
 
         <TextView
-            android:id="@+id/txt_title"
+            android:id="@+id/course_txt_title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -34,7 +34,7 @@
             android:text="제목"/>
 
         <TextView
-            android:id="@+id/txt_date"
+            android:id="@+id/course_txt_date"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"

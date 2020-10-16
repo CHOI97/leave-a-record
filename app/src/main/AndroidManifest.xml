@@ -27,17 +27,19 @@
             android:value="AIzaSyCTtEC39s9JafYXxKz2pxjH5N0LsPZHRRY" />
 
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".ProfileActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"
+                    />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SignupActivity">
-        </activity>
-        <activity android:name=".SetGallery">
-        </activity>
+<!--        <activity android:name=".SignupActivity">-->
+<!--        </activity>-->
+<!--        <activity android:name=".SetGallery">-->
+<!--        </activity>-->
+
     </application>
 
 </manifest>

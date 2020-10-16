@@ -37,9 +37,9 @@ public class CourseListAdapter extends BaseAdapter {
         }
 
         // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
-        TextView courseTitle = (TextView) convertView.findViewById(R.id.txt_title) ;
-        TextView courseDate = (TextView) convertView.findViewById(R.id.txt_date) ;
-        AppCompatImageView courseIcon = (AppCompatImageView) convertView.findViewById(R.id.img_icon
+        TextView courseTitle = (TextView) convertView.findViewById(R.id.course_txt_title) ;
+        TextView courseDate = (TextView) convertView.findViewById(R.id.course_txt_date) ;
+        AppCompatImageView courseIcon = (AppCompatImageView) convertView.findViewById(R.id.course_img_icon
         ) ;
         // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
         CourseListItem listViewItem = listViewItemList.get(position);

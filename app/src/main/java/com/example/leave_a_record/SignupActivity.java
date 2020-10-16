@@ -23,7 +23,7 @@
 //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
 //        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.sign_up);
+//        setContentView(R.layout.signup_page);
 //        mAuth = FirebaseAuth.getInstance();
 //        findViewById(R.id.signup_bt).setOnClickListener(onClickListener);
 //        findViewById(R.id.signTologin_bt).setOnClickListener(onClickListener);

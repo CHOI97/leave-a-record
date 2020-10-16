@@ -50,7 +50,7 @@
 //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
 //        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
+////        setContentView(R.layout.activity_main);  ----------------------수정중------------------
 //        checkSelfPermission(); //권한요청
 //        course_time=findViewById(R.id.course_time);
 //        btn = findViewById(R.id.btn);

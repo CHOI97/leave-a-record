@@ -14,9 +14,6 @@ import androidx.fragment.app.Fragment;
 
 import com.example.leave_a_record.CourseListAdapter;
 import com.example.leave_a_record.R;
-
-
-
 /**
  * "여행코스" 탭을 눌렀을때 나오는 화면에 대한 java 코드
  */

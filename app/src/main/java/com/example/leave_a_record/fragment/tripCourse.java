@@ -10,8 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.teamproject3.CourseListAdapter;
-import com.example.teamproject3.R;
+import com.example.leave_a_record.CourseListAdapter;
+import com.example.leave_a_record.R;
 
 /**
  * "여행코스" 탭을 눌렀을때 나오는 화면에 대한 java 코드

@@ -98,7 +98,7 @@
 //                //이미지 URI 를 이용하여 이미지뷰에 순서대로 세팅한다.
 //                if (clipData != null) {
 //
-//                    for (int i = 0; i < 2; i++) {
+//                    for (int i = 0; i < 10; i++) {
 //                        if (i < clipData.getItemCount()) {
 //                            Uri urione = clipData.getItemAt(i).getUri();
 //                            switch (i) {

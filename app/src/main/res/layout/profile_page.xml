@@ -14,32 +14,34 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/img_back"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            app:srcCompat="?attr/actionModeCloseDrawable"
+            android:background="?attr/actionModeCloseDrawable"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <Button
             android:id="@+id/img_add"
             android:layout_width="40dp"
             android:layout_height="40dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toLeftOf="@id/img_more"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/ic_menu_add" />
 
-        <androidx.appcompat.widget.AppCompatImageView
+            android:background="@android:drawable/ic_menu_add"/>
+
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/img_more"
             android:layout_width="40dp"
             android:layout_height="40dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/ic_menu_info_details" />
+            android:background="@android:drawable/ic_menu_info_details"
+             />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout

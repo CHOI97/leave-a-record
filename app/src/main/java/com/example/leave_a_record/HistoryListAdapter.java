@@ -44,7 +44,7 @@ public class HistoryListAdapter extends BaseAdapter {
 //        if (convertView == null)
 //            convertView = inf.inflate(layout, null);
 //        AppCompatImageView iv = (AppCompatImageView) convertView.findViewById(R.id.imageView1);
-//        iv.setImageResource(img[position]);
+//        iv.setImageResource(img[position]);dk
 //
 //        return convertView;
 //    }

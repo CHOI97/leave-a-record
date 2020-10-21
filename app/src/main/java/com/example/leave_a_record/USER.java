@@ -24,7 +24,7 @@ public class USER {
     private Uri uri;
 
 //    public USER(String edit_title, RadioButton p1, RadioButton p2, RadioButton p3, RadioButton p4, RadioButton p5, ImageView edit_iv, String edit_Text_date, String tee2t_content, Button save) {
-//        this.edit_title = edit_title;
+//        this.edit_title = edit_title;ㅋ
 //        this.p1 = p1;
 //        this.p2 = p2;
 //        this.p3 = p3;

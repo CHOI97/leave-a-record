@@ -19,12 +19,12 @@ public class USER {
 
 //    private TextView edit_Text_date;
 //
-//    private String Tee2t_content;
+    private TextView Text_content;
 //    private Button save;
     private Uri uri;
 
 //    public USER(String edit_title, RadioButton p1, RadioButton p2, RadioButton p3, RadioButton p4, RadioButton p5, ImageView edit_iv, String edit_Text_date, String tee2t_content, Button save) {
-//        this.edit_title = edit_title;ㅋ
+//        this.edit_title = edit_title;
 //        this.p1 = p1;
 //        this.p2 = p2;
 //        this.p3 = p3;
@@ -32,14 +32,14 @@ public class USER {
 //        this.p5 = p5;
 //        this.edit_iv = edit_iv;
 //        this.edit_Text_date = edit_Text_date;
-//        Tee2t_content = tee2t_content;
+//        Text_content = text_content;
 //        this.save = save;
 //    }
 
 
 
     //////////////////////////test code
-public USER(Uri uri) {
+public USER(Uri uri ,TextView text_content) {
 //    this.edit_title = edit_title;
 //    this.p1 = p1;
 //    this.p2 = p2;
@@ -49,7 +49,7 @@ public USER(Uri uri) {
 //    this.edit_iv = edit_iv;
     this.uri=uri;
 //    this.edit_Text_date = edit_Text_date;
-//    Tee2t_content = tee2t_content;
+    this.Text_content = text_content;
 //    this.save = save;
 }
 /////////////////////////////////////
@@ -71,7 +71,6 @@ public USER(Uri uri) {
 //    }
 //
 //    public void setP1(RadioButton p1) {
-//        this.p1 = p1;
 //    }
 //
 //    public RadioButton getP2() {
@@ -156,5 +155,13 @@ public USER(Uri uri) {
 
     public void setUri(Uri uri) {
         this.uri = uri;
+    }
+
+    public TextView getText_content() {
+        return Text_content;
+    }
+
+    public void setText_content(TextView text_content) {
+        Text_content = text_content;
     }
 }

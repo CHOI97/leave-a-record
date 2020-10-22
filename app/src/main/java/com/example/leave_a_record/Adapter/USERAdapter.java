@@ -1,17 +1,16 @@
-package com.example.leave_a_record;
+package com.example.leave_a_record.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.textfield.TextInputEditText;
+import com.example.leave_a_record.R;
+import com.example.leave_a_record.USER;
 
 import java.util.List;
 
@@ -27,7 +26,7 @@ public class USERAdapter extends RecyclerView.Adapter<USERAdapter.UserViewHolder
     @NonNull
     @Override
     public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(mContext).inflate(R.layout.edit_page,parent,false);
+        View view= LayoutInflater.from(mContext).inflate(R.layout.page_edit,parent,false);
 
         return new UserViewHolder(view);
     }

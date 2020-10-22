@@ -1,4 +1,4 @@
-package com.example.leave_a_record;
+package com.example.leave_a_record.InterfaceActivity;
 
 import android.content.ClipData;
 import android.content.Intent;
@@ -7,24 +7,23 @@ import android.graphics.Color;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.leave_a_record.R;
 import com.example.leave_a_record.fragment.myHistory;
 import com.example.leave_a_record.fragment.tripCourse;
+import com.example.leave_a_record.post_data_image;
 
 import java.util.ArrayList;
 
@@ -42,7 +41,7 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.profile_page);
+        setContentView(R.layout.page_profile);
         txt_myHistory = findViewById(R.id.txt_myHistory);
         txt_tripCourse = findViewById(R.id.txt_tripCourse);
         fragment_layout= findViewById(R.id.fragment_layout);
@@ -122,7 +121,7 @@ public class ProfileActivity extends AppCompatActivity {
                         }
                     }
                     Log.d("현재 진행중인 것은", "인텐트로 넘기기전입니다.");
-                    intent = new Intent(this,test_viewpager2.class);
+                    intent = new Intent(this, test_viewpager2.class);
 //                    intent.putExtra("image-data",pd_datas);
 //                    for(int j=0;j<pd_data.length;j++) {
 //                        to_edit.putExtra("image data - Uri", arr_uri);
@@ -135,9 +134,7 @@ public class ProfileActivity extends AppCompatActivity {
 
                  else if (uri != null) {
                     try{
-                        exif = new ExifInterface(getPath(uri));
-//                        pd_data[0].setUri(uri);
-//                        pd_data[0].setDate_time(getDateTime(exif));
+                        goToast("여러장의 이미지를 선택해주세요");  // 일단 여러이미지만 받는걸로 수정.
 
                     }catch(Exception e)
                     {
@@ -212,4 +209,8 @@ public class ProfileActivity extends AppCompatActivity {
             }
         }
     }
+    private void goToast(String msg){
+        Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
+    }
+
 }

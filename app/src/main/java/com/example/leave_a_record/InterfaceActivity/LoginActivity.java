@@ -1,4 +1,4 @@
-package com.example.leave_a_record;
+package com.example.leave_a_record.InterfaceActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.leave_a_record.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -23,7 +24,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_page);
+        setContentView(R.layout.page_login);
         mAuth = FirebaseAuth.getInstance();
         findViewById(R.id.login_bt).setOnClickListener(onClickListener);
         findViewById(R.id.loginTosignup_bt).setOnClickListener(onClickListener);
@@ -88,12 +89,12 @@ public class LoginActivity extends AppCompatActivity {
     private void goToast(String msg){
         Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
     }
-//    private void logintomainActivity(){
-//        Intent intent = new Intent (this,SetGallery.class);
-//        startActivity(intent); ------------------------예비 메인 화면-------------
-//    }
+    private void logintomainActivity(){
+        Intent intent = new Intent (this, ProfileActivity.class);
+        startActivity(intent);
+    }
     private void loginTosignup(){
-        Intent intent = new Intent (this,SignupActivity.class);
+        Intent intent = new Intent (this, SignupActivity.class);
         startActivity(intent);
 }
 }

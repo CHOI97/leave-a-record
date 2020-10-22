@@ -14,7 +14,6 @@ public class post_data_image  implements Serializable {
         this.uri=uri;
         this.date_time=date_time;
     }
-
     public String getUri() {
         return uri;
     }

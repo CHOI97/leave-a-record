@@ -1,4 +1,4 @@
-package com.example.leave_a_record;
+package com.example.leave_a_record.InterfaceActivity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.leave_a_record.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -23,7 +24,7 @@ public class SignupActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.signup_page);
+        setContentView(R.layout.page_sign_up);
         mAuth = FirebaseAuth.getInstance();
         findViewById(R.id.signup_bt).setOnClickListener(onClickListener);
         findViewById(R.id.signTologin_bt).setOnClickListener(onClickListener);
@@ -93,7 +94,7 @@ public class SignupActivity extends AppCompatActivity {
         Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
     }
     private void signTologinActivity(){
-        Intent intent = new Intent (this,LoginActivity.class);
+        Intent intent = new Intent (this, LoginActivity.class);
         startActivity(intent);
     }
 }

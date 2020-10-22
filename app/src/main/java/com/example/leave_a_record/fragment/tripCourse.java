@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 
-import com.example.leave_a_record.CourseListAdapter;
+import com.example.leave_a_record.Adapter.CourseListAdapter;
 import com.example.leave_a_record.R;
 /**
  * "여행코스" 탭을 눌렀을때 나오는 화면에 대한 java 코드
@@ -25,7 +25,7 @@ public class tripCourse extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.tripcourse, container, false);
+        View view = inflater.inflate(R.layout.item_tripcourse, container, false);
         Log.d("success", "tripCourse:success"); //로그찍기
 //
 

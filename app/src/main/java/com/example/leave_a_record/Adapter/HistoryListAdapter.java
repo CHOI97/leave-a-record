@@ -1,6 +1,8 @@
-package com.example.leave_a_record;
+package com.example.leave_a_record.Adapter;
 
 import android.content.Context;
+import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,13 +12,15 @@ import android.widget.ImageView;
 
 import androidx.appcompat.widget.AppCompatImageView;
 
+import java.util.ArrayList;
+
 public class HistoryListAdapter extends BaseAdapter {
     Context context;
     int layout;
-    int img[];
+    ArrayList<String> img;
     LayoutInflater inf;
 
-    public HistoryListAdapter(Context context, int layout, int[] img) {
+    public HistoryListAdapter(Context context, int layout, ArrayList<String> img) {
         this.context = context;
         this.layout = layout;
         this.img = img;
@@ -26,12 +30,12 @@ public class HistoryListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return img.length;
+        return img.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return img[position];
+        return img.get(position);
     }
 
     @Override
@@ -53,15 +57,19 @@ public class HistoryListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageView imageView;
         if(convertView == null){
+            Log.d("success", "myHistory"); //로그찍기
             imageView = new ImageView(context);
             imageView.setLayoutParams(new GridView.LayoutParams(300,300));
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imageView.setPadding(1, 1, 1, 1);
+            Log.d("success", "good"); //로그찍기
+//            Log.d("success", img.get(position)); //로그찍기
+
         }else{
             imageView = (ImageView)convertView;
         }
 
-        imageView.setImageResource(img[position]);
+//        imageView.setImageURI(Uri.parse(img.get(position)));
 
         return imageView;
     }

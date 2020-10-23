@@ -4,23 +4,26 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.leave_a_record.R;
 import com.example.leave_a_record.image_edit_data;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.List;
 
 public class USERAdapter extends RecyclerView.Adapter<USERAdapter.UserViewHolder>{
     Context mContext;
-    List<image_edit_data> imageeditdataList;
+    List<image_edit_data> imageditdataList;
 
-    public USERAdapter(Context mContext, List<image_edit_data> imageeditdataList) {
+    public USERAdapter(Context mContext, List<image_edit_data> imageditdataList) {
         this.mContext = mContext;
-        this.imageeditdataList = imageeditdataList;
+        this.imageditdataList = imageditdataList;
     }
 
     @NonNull
@@ -33,8 +36,10 @@ public class USERAdapter extends RecyclerView.Adapter<USERAdapter.UserViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
-        image_edit_data imageeditdata = imageeditdataList.get(position);
-        holder.edit_iv.setImageURI(imageeditdata.getUri()); //test를위해
+        image_edit_data imageditdata = imageditdataList.get(position);
+        holder.edit_iv.setImageURI(imageditdata.getUri()); //test를위해
+        holder.edit_date_time.setText(imageditdata.getDate_time());
+
         ////////test code
 //        holder.edit_iv.setImageResource(user.getEdit_iv());
         ////////
@@ -44,28 +49,29 @@ public class USERAdapter extends RecyclerView.Adapter<USERAdapter.UserViewHolder
 
     @Override
     public int getItemCount() {
-        return imageeditdataList.size();
+        return imageditdataList.size();
     }
 
     public class UserViewHolder extends RecyclerView.ViewHolder {
 //        TextInputEditText edit_title;
 //        RadioButton p1,p2,p3,p4,p5;
         ImageView edit_iv;
-//        TextInputEditText edit_Text_date;
+        TextView edit_date_time;
+        EditText edit_content;
 //        TextInputEditText Text_content;
 //        Button save;
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
-//            edit_title = itemView.findViewById(R.id.edit_title);
+
 //            p1 =  itemView.findViewById(R.id.edit_Pin1);
 //            p2= itemView.findViewById(R.id.edit_Pin2);
 //            p3=itemView.findViewById(R.id.edit_Pin3);
 //            p4=itemView.findViewById(R.id.edit_Pin4);
 //            p5=itemView.findViewById(R.id.edit_Pin5);
             edit_iv= itemView.findViewById(R.id.edit_iv);
-//            edit_Text_date=itemView.findViewById(R.id.edit_Text_date);
-//            Text_content=itemView.findViewById(R.id.Text_content);
-//            save=itemView.findViewById(R.id.edit_save);
+            edit_date_time=itemView.findViewById(R.id.edit_date_time);
+            edit_content=itemView.findViewById(R.id.edit_content);
+
 
         }
     }

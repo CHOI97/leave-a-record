@@ -9,11 +9,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,33 +55,34 @@ public class ProfileActivity extends AppCompatActivity {
 
         txt_myHistory.setOnClickListener(new menuClickListener());
         txt_tripCourse.setOnClickListener(new menuClickListener());
-        img_more.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Log.d("팝업메뉴","=======눌렸음.");
-                PopupMenu popup= new PopupMenu(getApplicationContext(), v);//v는 클릭된 뷰를 의미
-                Log.d("팝업메뉴","=======생성중");
-                getMenuInflater().inflate(R.menu.menu_all, popup.getMenu());
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()){
-                            case R.id.Logout:
-                                Toast.makeText(getApplication(),"로그아웃",Toast.LENGTH_SHORT).show();
-                                break;
-                            case R.id.settings:
-                                Toast.makeText(getApplication(),"설정",Toast.LENGTH_SHORT).show();
-                                break;
-                            default:
-                                break;
-                        }
-                        return false;
-                    }
-                });
-
-            }
-        });
+        //--------------- 메뉴 팝업 부분 -----------------//
+//        img_more.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                Log.d("팝업메뉴","=======눌렸음.");
+//                PopupMenu popup= new PopupMenu(getApplicationContext(), v);//v는 클릭된 뷰를 의미
+//                Log.d("팝업메뉴","=======생성중");
+//                getMenuInflater().inflate(R.menu.menu_all, popup.getMenu());
+//                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+//                    @Override
+//                    public boolean onMenuItemClick(MenuItem item) {
+//                        switch (item.getItemId()){
+//                            case R.id.Logout:
+//                                Toast.makeText(getApplication(),"로그아웃",Toast.LENGTH_SHORT).show();
+//                                break;
+//                            case R.id.settings:
+//                                Toast.makeText(getApplication(),"설정",Toast.LENGTH_SHORT).show();
+//                                break;
+//                            default:
+//                                break;
+//                        }
+//                        return false;
+//                    }
+//                });
+//
+//            }
+//        });
 
 
         img_add.setOnClickListener(new View.OnClickListener() {
@@ -109,7 +108,6 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         ExifInterface exif;
-//        post_data_image []pd_data;
         String DatetimeArray[];
         Intent intent;
         Uri urione;
@@ -154,7 +152,7 @@ public class ProfileActivity extends AppCompatActivity {
                         }
                     }
                     Log.d("현재 진행중인 것은", "인텐트로 넘기기전입니다.");
-                    intent = new Intent(this, test_viewpager2.class);
+                    intent = new Intent(this, edit_viewpager2.class);
 //                    intent.putExtra("image-data",pd_datas);
 //                    for(int j=0;j<pd_data.length;j++) {
 //                        to_edit.putExtra("image data - Uri", arr_uri);

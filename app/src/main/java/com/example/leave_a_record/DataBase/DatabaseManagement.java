@@ -1,4 +1,4 @@
-package com.example.leave_a_record;
+package com.example.leave_a_record.DataBase;
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -11,7 +11,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
-import static com.example.leave_a_record.Constant.DB_COLLECTION_USERS;
+import static com.example.leave_a_record.DataBase.Constant.DB_COLLECTION_USERS;
 
 public class DatabaseManagement {
 

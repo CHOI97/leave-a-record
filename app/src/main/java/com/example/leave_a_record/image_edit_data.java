@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import java.net.URI;
 
-public class USER {
+public class image_edit_data {
 //    private String edit_title;
 //    private RadioButton p1,p2,p3,p4,p5;
 //    private ImageView edit_iv;
@@ -39,7 +39,7 @@ public class USER {
 
 
     //////////////////////////test code
-public USER(Uri uri ,TextView text_content) {
+public image_edit_data(Uri uri , TextView text_content) {
 //    this.edit_title = edit_title;
 //    this.p1 = p1;
 //    this.p2 = p2;

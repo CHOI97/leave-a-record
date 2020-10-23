@@ -55,23 +55,23 @@
 
     <ImageView
         android:id="@+id/edit_iv"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
         android:layout_gravity="center"
         android:background="@null"
         android:src="@drawable/bin_purple" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+<!--    <com.google.android.material.textfield.TextInputLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content">-->
 
-        <com.google.android.material.textfield.TextInputLayout
+<!--        <com.google.android.material.textfield.TextInputLayout-->
 
-            android:id="@+id/edit_Text_date"
-            android:layout_width="150dp"
-            android:layout_height="50dp"
-            android:hint="date" />
-    </com.google.android.material.textfield.TextInputLayout>
+<!--            android:id="@+id/edit_Text_date"-->
+<!--            android:layout_width="150dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:hint="date" />-->
+<!--    </com.google.android.material.textfield.TextInputLayout>-->
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
@@ -84,38 +84,6 @@
             android:hint="content" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <RelativeLayout
-        android:id="@+id/RelativeLayout_login"
-        android:layout_width="100dp"
-        android:layout_height="40dp"
-        android:orientation="horizontal"
-        android:background="@drawable/bin_purple"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp"
-        android:weightSum="1"
-        >
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@null"
-            android:src="@drawable/bin_purple"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true"
-            />
-
-
-        <Button
-            android:id="@+id/edit_save"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:stateListAnimator="@null"
-            android:text="save"
-            android:textColor="#ffffff" />
-
-    </RelativeLayout>
 
     </LinearLayout>
 

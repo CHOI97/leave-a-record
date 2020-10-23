@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
                                 Log.d(TAG, "signInWithEmail:success");
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 goToast("로그인 성공");
-//                                logintomainActivity();
+                                logintomainActivity();
                             } else {
 
                                 Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -89,6 +89,7 @@ public class LoginActivity extends AppCompatActivity {
     private void goToast(String msg){
         Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
     }
+
     private void logintomainActivity(){
         Intent intent = new Intent (this, ProfileActivity.class);
         startActivity(intent);

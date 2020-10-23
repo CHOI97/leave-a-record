@@ -1,10 +1,8 @@
 package com.example.leave_a_record.InterfaceActivity;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -17,8 +15,8 @@ import androidx.viewpager2.widget.ViewPager2;
 //import java.io.Serializable;
 import com.example.leave_a_record.Adapter.USERAdapter;
 import com.example.leave_a_record.R;
-import com.example.leave_a_record.USER;
-import com.example.leave_a_record.fragment.myHistory;
+import com.example.leave_a_record.image_edit_data;
+import com.example.leave_a_record.UserData;
 import com.example.leave_a_record.post_data_image;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -34,7 +32,7 @@ import java.util.List;
 
 public class test_viewpager2 extends AppCompatActivity  {
     ViewPager2 viewPager2;
-    List<USER> userList;
+    List<image_edit_data> imageeditdataList;
     USERAdapter userAdapter;
     Button save_content;
 
@@ -44,7 +42,7 @@ public class test_viewpager2 extends AppCompatActivity  {
 //    ArrayList<post_data_image> list =(ArrayList<post_data_image>)intent.getSerializableExtra("image-data");    ----오류-----
 
     protected void onCreate(Bundle savedInstanceState) {
-
+        final UserData userData;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.item_viewpager_editpage);
         save_content=findViewById(R.id.save);
@@ -53,15 +51,15 @@ public class test_viewpager2 extends AppCompatActivity  {
         Log.d("현재 진행중인 것은", "화면전환에 성공하셨습니다..");
 
 
-        userList = new ArrayList<>();
+        imageeditdataList = new ArrayList<>();
         Log.d("현재 진행중인 것은", "리스트를 받기전입니다..");
         for(int i=0;i<pd_datas_receive.size();i++){
-            userList.add(new USER(Uri.parse(pd_datas_receive.get(i).getUri()),null));
+            imageeditdataList.add(new image_edit_data(Uri.parse(pd_datas_receive.get(i).getUri()),null));
 
             Log.d("현재 진행중인 것은", "Uri를 성공적으로 받았습니다.");
         }
 
-        userAdapter =  new USERAdapter(this,userList);
+        userAdapter =  new USERAdapter(this, imageeditdataList);
         viewPager2.setAdapter(userAdapter);
 
         save_content.setOnClickListener(new View.OnClickListener() {
@@ -70,8 +68,7 @@ public class test_viewpager2 extends AppCompatActivity  {
                 for(int i=0;i<pd_datas_receive.size();i++) {
                     uploadFile(i);
                 }
-
-
+//                uploadFile(pd_datas_receive.size());
             }
         });
 
@@ -97,9 +94,9 @@ public class test_viewpager2 extends AppCompatActivity  {
             FirebaseStorage storage = FirebaseStorage.getInstance();
 
             //Unique한 파일명을 만들자.
-            SimpleDateFormat formatter = new SimpleDateFormat("yy"+File_tag);
+            SimpleDateFormat formatter = new SimpleDateFormat("yymmss"+File_tag);
             Date now = new Date();
-            String filename = formatter.format(now) + ".jpg";
+            String filename = formatter.format(now) +user_name+ ".jpg";
             //storage 주소와 폴더 파일명을 지정해 준다.
             StorageReference storageRef = storage.getReferenceFromUrl("gs://leave-a-record.appspot.com").child("images/" + filename);
             //올라가거라...

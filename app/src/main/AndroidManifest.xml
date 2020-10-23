@@ -29,8 +29,8 @@
 
 
 
-<!--        <activity android:name=".ProfileActivity">-->
-        <activity android:name=".InterfaceActivity.ProfileActivity">
+        <activity android:name=".InterfaceActivity.ProfileActivity"/>
+        <activity android:name=".InterfaceActivity.LoginActivity">
 <!--        <activity android:name=".UploadActivity">-->
 
             <intent-filter>
@@ -40,8 +40,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".InterfaceActivity.test_viewpager2"/>
-<!--        <activity android:name=".SignupActivity">-->
+<!--        <activity android:name=".InterfaceActivity.test_viewpager2"/>-->
+        <activity android:name=".InterfaceActivity.SignupActivity"/>
 <!--        </activity>-->
 <!--        <activity android:name=".SetGallery">-->
 <!--        </activity>-->

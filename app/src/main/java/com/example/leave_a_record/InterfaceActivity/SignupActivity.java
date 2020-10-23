@@ -11,16 +11,21 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.leave_a_record.R;
+import com.example.leave_a_record.UserData;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class SignupActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private static final String TAG="SignupActivity";
-
+    private static final String TAG2="Member Activity";
+    public EditText id, name, pwd,pwd_c;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +33,11 @@ public class SignupActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         findViewById(R.id.signup_bt).setOnClickListener(onClickListener);
         findViewById(R.id.signTologin_bt).setOnClickListener(onClickListener);
+
+        id = findViewById(R.id.signup_id);
+        name = findViewById(R.id.signup_name);
+        pwd = findViewById(R.id.signup_pw);
+        pwd_c=findViewById(R.id.signup_pwd);
 
     }
 
@@ -53,13 +63,17 @@ public class SignupActivity extends AppCompatActivity {
     };
     //회원가입 확인하기
     private void signUp() {
-        String email =((EditText)findViewById(R.id.signup_id)).getText().toString();
-        String password = ((EditText)findViewById(R.id.signup_pw)).getText().toString();
-        String passwordCheck=((EditText)findViewById(R.id.signup_pwd)).getText().toString();
+        final String email = id.getText().toString();
+        final String passwd = pwd.getText().toString();
+        final String userName = name.getText().toString();
+        String passwd_c=pwd_c.getText().toString();
+//        String email =((EditText)findViewById(R.id.signup_id)).getText().toString();
+//        String password = ((EditText)findViewById(R.id.signup_pw)).getText().toString();
+//        String passwordCheck=((EditText)findViewById(R.id.signup_pwd)).getText().toString();
 
-        if(email.length()>0&&password.length()>0&&passwordCheck.length()>0) {
-            if (password.equals(passwordCheck)) {
-                mAuth.createUserWithEmailAndPassword(email, password)
+        if(email.length()>0&&passwd.length()>0&&passwd_c.length()>0&&userName.length()>0) {
+            if (passwd.equals(passwd_c)) {
+                mAuth.createUserWithEmailAndPassword(email, passwd)
                         .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -67,13 +81,29 @@ public class SignupActivity extends AppCompatActivity {
                                     // Sign in success, update UI with the signed-in user's information
                                     Log.d(TAG, "createUserWithEmail:success");
                                     FirebaseUser user = mAuth.getCurrentUser();
+                                    FirebaseFirestore db=FirebaseFirestore.getInstance();
+                                    UserData userdata=new UserData(email,userName,passwd);
+                                    if(user !=null)
+                                    db.collection("users").document(user.getUid()).set(userdata)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Log.d(TAG, "회원등록 성공");
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Log.w(TAG, "회원등록 실패", e);
+                                                }
+                                            });
                                     goToast("회원가입 성공");
                                     signTologinActivity();
 
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                    goToast("회원가입 실패");
+                                    goToast("이미 존재하는 아이디입니다.");
                                 }
 
                                 // ...
@@ -84,7 +114,7 @@ public class SignupActivity extends AppCompatActivity {
             }
         }
         else{
-            goToast("이메일 또는 비밀번호를 입력해주세요.");
+            goToast("모든항목을 작성해주세요.");
         }
 
 

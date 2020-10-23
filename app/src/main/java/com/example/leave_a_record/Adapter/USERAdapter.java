@@ -10,17 +10,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.leave_a_record.R;
-import com.example.leave_a_record.USER;
+import com.example.leave_a_record.image_edit_data;
 
 import java.util.List;
 
 public class USERAdapter extends RecyclerView.Adapter<USERAdapter.UserViewHolder>{
     Context mContext;
-    List<USER> userList;
+    List<image_edit_data> imageeditdataList;
 
-    public USERAdapter(Context mContext, List<USER> userList) {
+    public USERAdapter(Context mContext, List<image_edit_data> imageeditdataList) {
         this.mContext = mContext;
-        this.userList = userList;
+        this.imageeditdataList = imageeditdataList;
     }
 
     @NonNull
@@ -33,8 +33,8 @@ public class USERAdapter extends RecyclerView.Adapter<USERAdapter.UserViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
-        USER user = userList.get(position);
-        holder.edit_iv.setImageURI(user.getUri()); //test를위해
+        image_edit_data imageeditdata = imageeditdataList.get(position);
+        holder.edit_iv.setImageURI(imageeditdata.getUri()); //test를위해
         ////////test code
 //        holder.edit_iv.setImageResource(user.getEdit_iv());
         ////////
@@ -44,7 +44,7 @@ public class USERAdapter extends RecyclerView.Adapter<USERAdapter.UserViewHolder
 
     @Override
     public int getItemCount() {
-        return userList.size();
+        return imageeditdataList.size();
     }
 
     public class UserViewHolder extends RecyclerView.ViewHolder {

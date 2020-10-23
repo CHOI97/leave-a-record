@@ -31,6 +31,8 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import java.util.ArrayList;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnPolylineClickListener,GoogleMap.OnPolygonClickListener {
 
     // 권한 체크 요청 코드 정의
@@ -89,22 +91,43 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // 서울 위치
-        LatLng seoul = new LatLng(37.566535, 126.97796919);
-        mMap.addMarker(new MarkerOptions().position(seoul).title("Marker in Seoul"));
 
-        // 명지대 위치 추가
-        LatLng MJU = new LatLng(37.221804, 127.186695);
-        mMap.addMarker(new MarkerOptions()
-                .position(MJU)
-                .title("명지대"));
+        String[] xy = new String[]{"37.566535","126.97796919","37.221804","127.186695","37.220000","127.186666"};
 
-        //핀 연결 확인용 좌표 추가
-        LatLng MJU2 = new LatLng(37.220000, 127.186666);
-        mMap.addMarker(new MarkerOptions()
-                .position(MJU2)
-                .title("명지대2"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(MJU2));
+        ArrayList<LatLng> loc=new ArrayList<LatLng>();
+
+        for (int i=0;i<xy.length;i++){
+
+            double tmp = Double.parseDouble(xy[i]);
+            double tmp2 = Double.parseDouble(xy[++i]);
+
+
+            LatLng latLng = new LatLng(tmp, tmp2);
+
+            loc.add(latLng);
+
+            mMap.addMarker(new MarkerOptions().position(latLng).title("Pin"));
+        }
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(loc.get(loc.size()-1)));
+
+
+//        // 서울 위치
+//        LatLng seoul = new LatLng(37.566535, 126.97796919);
+//        mMap.addMarker(new MarkerOptions().position(seoul).title("Marker in Seoul"));
+//
+//        // 명지대 위치 추가
+//        LatLng MJU = new LatLng(37.221804, 127.186695);
+//        mMap.addMarker(new MarkerOptions()
+//                .position(MJU)
+//                .title("명지대"));
+//
+//        //핀 연결 확인용 좌표 추가
+//        LatLng MJU2 = new LatLng(37.220000, 127.186666);
+//        mMap.addMarker(new MarkerOptions()
+//                .position(MJU2)
+//                .title("명지대2"));
+//        mMap.moveCamera(CameraUpdateFactory.newLatLng(MJU2));
 
         // 카메라 줌
         mMap.animateCamera(CameraUpdateFactory.zoomTo(17.0f));
@@ -120,13 +143,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
             }
         });
+
+        LatLng[] line = {
+                loc.get(0),loc.get(1),loc.get(2)
+        };
         //좌표끼리 선 긋기 좌표가 추가 될때마다 새로운 선을 만들어야 하나.. 아니면 그냥 좌표하나씩 추가해야하나 고민
         //일단 좌표에 들어온 순서로 선이 그어짐 -> 시간별로 추가할수 있도록 해야 함
         Polyline polyline1 = googleMap.addPolyline(new PolylineOptions()
                 .clickable(true)
-                .add(   seoul,
-                        MJU,
-                        MJU2
+                .add(   line
                 ) );
         googleMap.setOnPolylineClickListener(this);
         googleMap.setOnPolygonClickListener(this);

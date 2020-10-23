@@ -29,8 +29,11 @@
 
 
 
+
         <activity android:name=".InterfaceActivity.ProfileActivity"/>
         <activity android:name=".InterfaceActivity.LoginActivity">
+
+
 <!--        <activity android:name=".UploadActivity">-->
 
             <intent-filter>

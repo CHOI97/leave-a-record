@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardview"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="13dp"
+        android:elevation="@dimen/_10sdp"
+        app:cardCornerRadius="@dimen/_10sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:paddingTop="@dimen/_6sdp"
+            android:paddingBottom="@dimen/_6sdp">
+
+            <TextView
+                android:id="@+id/TextTripData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2020.10.23"
+                android:textColor="#000000"
+                android:textSize="@dimen/_10sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+
+                ></TextView>
+
+            <TextView
+                android:id="@+id/textStart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Start"
+                android:textColor="#000000"
+                android:textSize="@dimen/_14sdp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/TextTripData"></TextView>
+
+            <TextView
+                android:id="@+id/detailStart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="LasVegas"
+                android:textColor="#000000"
+                android:textSize="@dimen/_10sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textStart"></TextView>
+
+            <TextView
+                android:id="@+id/TextTripTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1hour 30minutes"
+                android:textColor="#000000"
+                android:textSize="@dimen/_10sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+
+                ></TextView>
+
+            <TextView
+                android:id="@+id/textFinish"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Finish"
+                android:textColor="#000000"
+                android:textSize="@dimen/_14sdp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/TextTripData"></TextView>
+
+            <TextView
+                android:id="@+id/detailFinish"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="LosAngeles"
+                android:textColor="#000000"
+                android:textSize="@dimen/_10sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textStart"></TextView>
+
+            <View
+                android:id="@+id/viewLine"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="2dp"
+                android:background="#000000"
+                app:layout_constraintBottom_toBottomOf="@+id/textFinish"
+                app:layout_constraintEnd_toStartOf="@id/textFinish"
+                app:layout_constraintStart_toEndOf="@id/textStart"
+                app:layout_constraintTop_toTopOf="@id/textStart"></View>
+
+            <ImageView
+                android:layout_width="@dimen/_22sdp"
+                android:layout_height="@dimen/_22sdp"
+                android:contentDescription="@string/app_name"
+                android:rotation="90"
+                android:src="@drawable/ic_airplane"
+                app:layout_constraintBottom_toBottomOf="@id/viewLine"
+                app:layout_constraintEnd_toEndOf="@id/viewLine"
+                app:layout_constraintStart_toStartOf="@id/viewLine"
+                app:layout_constraintTop_toTopOf="@id/viewLine"
+                app:tint="#000000"></ImageView>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

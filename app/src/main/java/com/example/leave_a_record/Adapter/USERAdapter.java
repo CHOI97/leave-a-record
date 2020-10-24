@@ -63,6 +63,7 @@ public class USERAdapter extends RecyclerView.Adapter<USERAdapter.UserViewHolder
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
 
+
 //            p1 =  itemView.findViewById(R.id.edit_Pin1);
 //            p2= itemView.findViewById(R.id.edit_Pin2);
 //            p3=itemView.findViewById(R.id.edit_Pin3);

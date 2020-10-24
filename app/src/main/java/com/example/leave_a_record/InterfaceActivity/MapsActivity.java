@@ -1,20 +1,36 @@
 package com.example.leave_a_record.InterfaceActivity;
 
+import android.R.drawable;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.leave_a_record.Adapter.PinCourseListAdapter;
+import com.example.leave_a_record.Adapter.USERAdapter;
+import com.example.leave_a_record.PinCourseListItem;
 import com.example.leave_a_record.R;
+import com.example.leave_a_record.fragment.tripCourse;
+import com.example.leave_a_record.image_edit_data;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -23,31 +39,68 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CustomCap;
+import com.google.android.gms.maps.model.JointType;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.maps.model.RoundCap;
+import com.google.android.gms.maps.model.SquareCap;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnPolylineClickListener,GoogleMap.OnPolygonClickListener {
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnPolylineClickListener,GoogleMap.OnPolygonClickListener {
+
+
 
     // 권한 체크 요청 코드 정의
     public static final int REQUEST_CODE_PERMISSIONS = 1000;
-
+    ArrayList<PinCourseListItem> PincourseDataArray = new ArrayList<>();
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient;
-
+    RecyclerView rv_pincourse;
     // 위치 정보 얻는 객체
     private FusedLocationProviderClient mFusedLocationClient;
+    private PinCourseListAdapter pclAdapter;
+    private List<PinCourseListItem> pclListItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        pclListItem=new ArrayList<>();
+//        pclListItem.add(new PinCourseListItem("2020"));
+        pclListItem.add(new PinCourseListItem("2020"));
+        pclListItem.add(new PinCourseListItem("2030"));
+        pclListItem.add(new PinCourseListItem("2040"));
+
+        Log.d("현재 진행중인 것은", "Recyclerview. ======================================");
+
+        //recyclerview
+        Log.d("success", "tripCourse case:success"); //로그찍기
+        rv_pincourse=findViewById(R.id.rv_pincourse);
+        Log.d("현재 진행중인 것은", "Recyclerview. ======================================find view id");
+        pclAdapter =  new PinCourseListAdapter(this,pclListItem);
+        rv_pincourse.setAdapter(pclAdapter);
+
+//        userAdapter =  new USERAdapter(this, imageditdataList);
+//        viewPager2.setAdapter(userAdapter);
+
+        Toolbar toolbar =findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+//        actionBar = getSupportActionBar();
+//        actionBar.setDisplayShowCustomEnabled(true);
+//        actionBar.setDisplayShowTitleEnabled(false);//기본 제목을 없애줍니다.
+//        actionBar.setDisplayHomeAsUpEnabled(true);
+
 
         // GoogleAPIClient의 인스턴스 생성
         if (mGoogleApiClient == null) {
@@ -64,6 +117,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.logout:
+                //select logout item
+                break;
+            case R.id.account:
+                //select account item
+                break;
+            case android.R.id.home:
+                //select back button
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -92,10 +168,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
 
-        String[] xy = new String[]{"37.566535","126.97796919","37.221804","127.186695","37.220000","127.186666"};
+
+        String[] xy = new String[]{"37.221900","127.18800","37.221804","127.186695","37.220000","127.186666"};
 
         ArrayList<LatLng> loc=new ArrayList<LatLng>();
 
+        int count = 1;
         for (int i=0;i<xy.length;i++){
 
             double tmp = Double.parseDouble(xy[i]);
@@ -106,8 +184,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             loc.add(latLng);
 
-            mMap.addMarker(new MarkerOptions().position(latLng).title("Pin"));
+
+            mMap.addMarker(new MarkerOptions().position(latLng).title("Pin"+count).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_pin_purple)));
+            count++;
         }
+
+
 
         mMap.moveCamera(CameraUpdateFactory.newLatLng(loc.get(loc.size()-1)));
 
@@ -144,19 +226,45 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-
-        //배열에 넣기 하는거 까먹엇다ㅣ
+        //arraylist 다시 배열에 넣는거 아직 않마 까먹ㅇ멋어ㅏ
         LatLng[] line = {
                 loc.get(0),loc.get(1),loc.get(2)
         };
         //좌표끼리 선 긋기 좌표가 추가 될때마다 새로운 선을 만들어야 하나.. 아니면 그냥 좌표하나씩 추가해야하나 고민
         //일단 좌표에 들어온 순서로 선이 그어짐 -> 시간별로 추가할수 있도록 해야 함
+
+
+        //좌표 두개마다 각각의 polyline을 생성해야 각각 화살표로 나올수 있음
+        //for문 사용해서 polyline 만들어보기
+//        for(int i=0; i<line.length;){
+//            Polyline polyline1 = googleMap.addPolyline(new PolylineOptions()
+//                    .clickable(true)
+//                    .add(   line[i], line[++i]
+//                    ) .width(10)
+//
+//                    .geodesic(true));
+//
+//
+//        }
+
+
         Polyline polyline1 = googleMap.addPolyline(new PolylineOptions()
                 .clickable(true)
                 .add(   line
-                ) );
+                ) .width(10)
+
+                .geodesic(true));
+
+        polyline1.setEndCap(new CustomCap(BitmapDescriptorFactory.fromResource(R.drawable.ic_arrow), 15));
+        polyline1.setStartCap(new CustomCap(BitmapDescriptorFactory.fromResource(R.drawable.ic_circle), 15));
+
+
+
         googleMap.setOnPolylineClickListener(this);
         googleMap.setOnPolygonClickListener(this);
+
+
+
     }
 
     //두 좌표간 거리 구함 -> 어디다 쓰지? 아직 안씀

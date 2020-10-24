@@ -20,7 +20,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         >
 
         <meta-data
@@ -30,9 +30,9 @@
 
 
 
-        <activity android:name=".InterfaceActivity.ProfileActivity"/>
-        <activity android:name=".InterfaceActivity.LoginActivity">
-
+<!--        <activity android:name=".InterfaceActivity.ProfileActivity"/>-->
+<!--        <activity android:name=".InterfaceActivity.LoginActivity">-->
+        <activity android:name=".InterfaceActivity.MapsActivity">
 
 <!--        <activity android:name=".UploadActivity">-->
 
@@ -44,7 +44,7 @@
             </intent-filter>
         </activity>
 <!--        <activity android:name=".InterfaceActivity.test_viewpager2"/>-->
-        <activity android:name=".InterfaceActivity.SignupActivity"/>
+<!--        <activity android:name=".InterfaceActivity.SignupActivity"/>-->
 <!--        </activity>-->
 <!--        <activity android:name=".SetGallery">-->
 <!--        </activity>-->

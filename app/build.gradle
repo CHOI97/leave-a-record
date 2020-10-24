@@ -64,4 +64,12 @@ dependencies {
     implementation 'com.makeramen:roundedimageview:2.3.0'
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
     implementation 'com.intuit.ssp:ssp-android:1.0.6'
+
+    //recycler
+    implementation 'com.android.support:appcompat-v7:29.0.3'
+    implementation 'com.android.support:design:29.0.3'
+    implementation 'com.android.support:recyclerview-v7:29.0.3'
+
+
+
 }

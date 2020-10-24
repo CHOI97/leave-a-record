@@ -59,10 +59,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:19.2.0'
     implementation platform('com.google.firebase:firebase-bom:25.12.0')
     implementation 'com.google.firebase:firebase-database'
-<<<<<<< HEAD
-=======
 
->>>>>>> bada12a... firebase
     implementation 'com.android.support:multidex:1.0.3'
 
     //layout
@@ -70,7 +67,7 @@ dependencies {
     implementation 'com.makeramen:roundedimageview:2.3.0'
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
     implementation 'com.intuit.ssp:ssp-android:1.0.6'
-<<<<<<< HEAD
+
 
     //recycler
     implementation 'com.android.support:appcompat-v7:29.0.3'
@@ -79,8 +76,7 @@ dependencies {
 
 
 
-}
-=======
+
     apply plugin: 'com.android.application'
 
     android {
@@ -90,4 +86,4 @@ dependencies {
 // Add the following line to the bottom of the file:
     apply plugin: 'com.google.gms.google-services'  // Google Play services Gradle plugin
 }
->>>>>>> bada12a... firebase
+

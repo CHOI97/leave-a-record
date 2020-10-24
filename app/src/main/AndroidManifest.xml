@@ -34,12 +34,11 @@
 <!--        <activity android:name=".InterfaceActivity.LoginActivity">-->
         <activity android:name=".InterfaceActivity.SignupActivity"/>
         <activity android:name=".InterfaceActivity.LoginActivity">
-<<<<<<< HEAD
+
 
 <!--        <activity android:name=".UploadActivity">-->
 
-=======
->>>>>>> bada12a... firebase
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"
                     />
@@ -47,13 +46,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
+
 <!--        <activity android:name=".InterfaceActivity.test_viewpager2"/>-->
 <!--        <activity android:name=".InterfaceActivity.SignupActivity"/>-->
 =======
         <activity android:name=".InterfaceActivity.edit_viewpager2"/>
-        <activity android:name=".InterfaceActivity.SignupActivity"/>
->>>>>>> bada12a... firebase
+
 <!--        </activity>-->
 <!--        <activity android:name=".SetGallery">-->
 <!--        </activity>-->

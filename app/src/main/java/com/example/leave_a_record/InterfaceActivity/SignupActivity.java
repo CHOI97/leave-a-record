@@ -31,12 +31,10 @@ public class SignupActivity extends AppCompatActivity {
     private static final String TAG="SignupActivity";
     private static final String TAG2="Member Activity";
     public EditText id, name, pwd,pwd_c;
-<<<<<<< HEAD
+
     private DatabaseReference mDatabase;
-=======
-    public DatabaseReference mDatabase;
     public FirebaseDatabase database;
->>>>>>> bada12a... firebase
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

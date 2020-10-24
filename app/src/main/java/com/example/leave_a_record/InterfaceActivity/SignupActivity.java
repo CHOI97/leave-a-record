@@ -39,16 +39,16 @@ public class SignupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mDatabase= FirebaseDatabase.getInstance().getReference().child("users");
-        mDatabase.child("users").child("aaaaabal").setValue("Hello World");
+        mDatabase.child("users").child("aaaaabal").setValue("bye World");
         setContentView(R.layout.page_sign_up);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
+        DatabaseReference myRef = database.getReference("mail");
 
-        myRef.setValue("Hello, World!");
+        myRef.setValue("Bye, World!");
         mDatabase=FirebaseDatabase.getInstance().getReference().child("users");
         mAuth = FirebaseAuth.getInstance();
         mDatabase=FirebaseDatabase.getInstance().getReference().child("users");
-        mDatabase.child("users").setValue("Hello World");
+        mDatabase.child("users").setValue("bye World");
         Log.d("지금은 hello world","출력중입니다...........");
         basicReadWrite();
         Log.d("H             e        l          l        o   1 ","출력중입니다...........");

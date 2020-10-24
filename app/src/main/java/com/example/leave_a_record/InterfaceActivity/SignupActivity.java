@@ -19,6 +19,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class SignupActivity extends AppCompatActivity {
@@ -26,9 +28,12 @@ public class SignupActivity extends AppCompatActivity {
     private static final String TAG="SignupActivity";
     private static final String TAG2="Member Activity";
     public EditText id, name, pwd,pwd_c;
+    private DatabaseReference mDatabase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mDatabase= FirebaseDatabase.getInstance().getReference().child("users");
+        mDatabase.child("users").child("aaaaabal").setValue("Hello World");
         setContentView(R.layout.page_sign_up);
         mAuth = FirebaseAuth.getInstance();
         findViewById(R.id.signup_bt).setOnClickListener(onClickListener);

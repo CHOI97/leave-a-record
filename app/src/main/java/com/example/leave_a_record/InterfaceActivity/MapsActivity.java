@@ -96,6 +96,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         Toolbar toolbar =findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);//뒤로가기
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 //        actionBar = getSupportActionBar();
 //        actionBar.setDisplayShowCustomEnabled(true);
 //        actionBar.setDisplayShowTitleEnabled(false);//기본 제목을 없애줍니다.

@@ -1,0 +1,44 @@
+Index: app/src/main/res/layout/activity_maps.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout\r\n    xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:orientation=\"vertical\"\r\n    >\r\n    <LinearLayout\r\n        android:orientation=\"vertical\"\r\n        android:id=\"@+id/const_actionbar\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"50dp\"\r\n        app:layout_constraintLeft_toLeftOf=\"parent\"\r\n        app:layout_constraintRight_toRightOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\">\r\n    </LinearLayout>\r\n\r\n    <androidx.constraintlayout.widget.ConstraintLayout\r\n        android:id=\"@+id/constraintLayout\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/const_actionbar\">\r\n\r\n        <fragment\r\n            android:id=\"@+id/map\"\r\n            android:name=\"com.google.android.gms.maps.SupportMapFragment\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"@dimen/_200sdp\"\r\n            app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n        <ImageView\r\n            android:id=\"@+id/imageAirplane_outline\"\r\n            android:layout_width=\"@dimen/_20sdp\"\r\n            android:layout_height=\"@dimen/_20sdp\"\r\n            android:layout_marginStart=\"@dimen/_15sdp\"\r\n            android:layout_marginTop=\"@dimen/_20sdp\"\r\n            android:background=\"@drawable/round_outline\"\r\n            android:contentDescription=\"@string/app_name\"\r\n            android:padding=\"@dimen/_4sdp\"\r\n            android:src=\"@drawable/ic_airplane\"\r\n            app:layout_constraintStart_toStartOf=\"parent\"\r\n            app:layout_constraintTop_toTopOf=\"parent\"\r\n            app:tint=\"@color/main_color_100\"></ImageView>\r\n\r\n        <TextView\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginStart=\"@dimen/_8sdp\"\r\n            android:text=\"leave a record\"\r\n            android:textColor=\"@color/main_color_100\"\r\n            android:textSize=\"@dimen/_16sdp\"\r\n            android:textStyle=\"bold\"\r\n            app:layout_constraintBottom_toBottomOf=\"@+id/imageAirplane_outline\"\r\n            app:layout_constraintStart_toEndOf=\"@id/imageAirplane_outline\"\r\n            app:layout_constraintTop_toTopOf=\"@id/imageAirplane_outline\" />\r\n    </androidx.constraintlayout.widget.ConstraintLayout>\r\n\r\n\r\n    <androidx.constraintlayout.widget.ConstraintLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/constraintLayout\">\r\n\r\n        <ImageView\r\n            android:id=\"@+id/imageRightArrow\"\r\n            android:layout_width=\"@dimen/_20sdp\"\r\n            android:layout_height=\"@dimen/_20sdp\"\r\n            android:layout_marginEnd=\"@dimen/_15sdp\"\r\n            android:contentDescription=\"@string/app_name\"\r\n            android:src=\"@drawable/ic_keyboard_arrow_right\"\r\n            app:layout_constraintBottom_toBottomOf=\"parent\"\r\n            app:layout_constraintEnd_toEndOf=\"parent\"\r\n            app:tint=\"#000000\"></ImageView>\r\n\r\n        <TextView\r\n            android:id=\"@+id/textAll\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"All\"\r\n            android:textColor=\"#000000\"\r\n            android:textSize=\"@dimen/_15sdp\"\r\n            app:layout_constraintBottom_toBottomOf=\"@id/imageRightArrow\"\r\n            app:layout_constraintEnd_toStartOf=\"@id/imageRightArrow\"\r\n            app:layout_constraintTop_toTopOf=\"@id/imageRightArrow\"></TextView>\r\n\r\n        <TextView\r\n            android:layout_width=\"0dp\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginStart=\"@dimen/_15sdp\"\r\n            android:layout_marginEnd=\"@dimen/_15sdp\"\r\n            android:text=\"Trip Course\"\r\n            android:textColor=\"#000000\"\r\n            android:textSize=\"@dimen/_14sdp\"\r\n            android:textStyle=\"bold\"\r\n            app:layout_constraintBottom_toBottomOf=\"@id/imageRightArrow\"\r\n            app:layout_constraintEnd_toStartOf=\"@id/textAll\"\r\n            app:layout_constraintStart_toStartOf=\"parent\"\r\n            app:layout_constraintTop_toTopOf=\"@id/imageRightArrow\"></TextView>\r\n    </androidx.constraintlayout.widget.ConstraintLayout>\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>\r\n<!--gg-->
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_maps.xml	(revision 925e2cc09844868509baacf4fb5613eed116f000)
++++ app/src/main/res/layout/activity_maps.xml	(date 1603453985583)
+@@ -30,6 +30,16 @@
+             android:layout_height="@dimen/_200sdp"
+             app:layout_constraintTop_toTopOf="parent" />
+ 
++        <Button
++            android:layout_width="@dimen/_30sdp"
++            android:layout_height="@dimen/_30sdp"
++            android:onClick="onLastLocationButtonClicked"
++            android:background="@drawable/ic_mylocation"
++            app:layout_constraintLeft_toLeftOf="parent"
++            app:layout_constraintRight_toRightOf="parent"
++            app:layout_constraintBottom_toBottomOf="@id/map"
++            />
++
+         <ImageView
+             android:id="@+id/imageAirplane_outline"
+             android:layout_width="@dimen/_20sdp"
+Index: app/src/main/res/drawable-v24/ic_mylocation.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/drawable-v24/ic_mylocation.xml	(date 1603453879528)
++++ app/src/main/res/drawable-v24/ic_mylocation.xml	(date 1603453879528)
+@@ -0,0 +1,10 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="24dp"
++    android:height="24dp"
++    android:viewportWidth="24"
++    android:viewportHeight="24"
++    android:tint="#000000">
++  <path
++      android:fillColor="@android:color/white"
++      android:pathData="M12,8c-2.21,0 -4,1.79 -4,4s1.79,4 4,4 4,-1.79 4,-4 -1.79,-4 -4,-4zM20.94,11c-0.46,-4.17 -3.77,-7.48 -7.94,-7.94L13,1h-2v2.06C6.83,3.52 3.52,6.83 3.06,11L1,11v2h2.06c0.46,4.17 3.77,7.48 7.94,7.94L11,23h2v-2.06c4.17,-0.46 7.48,-3.77 7.94,-7.94L23,13v-2h-2.06zM12,19c-3.87,0 -7,-3.13 -7,-7s3.13,-7 7,-7 7,3.13 7,7 -3.13,7 -7,7z"/>
++</vector>

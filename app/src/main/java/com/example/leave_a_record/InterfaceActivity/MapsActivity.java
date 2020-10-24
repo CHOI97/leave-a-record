@@ -144,6 +144,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+
+        //배열에 넣기 하는거 까먹엇다ㅣ
         LatLng[] line = {
                 loc.get(0),loc.get(1),loc.get(2)
         };

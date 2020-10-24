@@ -20,10 +20,12 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.leave_a_record.DataBase.DatabaseManagement;
 import com.example.leave_a_record.R;
 import com.example.leave_a_record.fragment.myHistory;
 import com.example.leave_a_record.fragment.tripCourse;
 import com.example.leave_a_record.post_data_image;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
@@ -37,10 +39,12 @@ public class ProfileActivity extends AppCompatActivity {
 //    public post_data_image []pd_data;
 //    public ArrayList<Uri> arr_uri;
 //    public ArrayList<String> arr_date;
+    private DatabaseManagement mAuth;
     public ArrayList<post_data_image> pd_datas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("현재 진행중인 것은", "------------프로필페이지.");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_profile);
         txt_myHistory = findViewById(R.id.txt_myHistory);
@@ -48,6 +52,10 @@ public class ProfileActivity extends AppCompatActivity {
         fragment_layout= findViewById(R.id.fragment_layout);
         img_add=findViewById(R.id.img_add);
         img_more=findViewById(R.id.img_more);
+        mAuth=new DatabaseManagement();
+
+        Log.d("지금 로그인중인 아이디",mAuth.getFirebaseUser().getUid());
+
 
 
 //        GridView gridView = (GridView)findViewById(R.id.gridview);
@@ -88,6 +96,7 @@ public class ProfileActivity extends AppCompatActivity {
         img_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("현재 진행중인 것은", "-------------갤러리로 넘기는중입니다.");
                 Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
                 //사진을 여러개 선택할수 있도록 한다
                 intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
@@ -104,6 +113,13 @@ public class ProfileActivity extends AppCompatActivity {
         myHistory fragment1 = new myHistory();
         fragmentTransaction.replace(R.id.fragment_layout, fragment1).commitAllowingStateLoss();
 
+    }
+
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getFirebaseAuth().getCurrentUser();
+//        mAuth.getFirebaseAuth().updateUI(currentUser);
     }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

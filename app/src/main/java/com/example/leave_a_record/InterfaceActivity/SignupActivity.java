@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.leave_a_record.DataBase.Constant;
 import com.example.leave_a_record.R;
 import com.example.leave_a_record.DataBase.UserData;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,20 +23,37 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.auth.User;
 
 public class SignupActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
+
     private static final String TAG="SignupActivity";
     private static final String TAG2="Member Activity";
     public EditText id, name, pwd,pwd_c;
+<<<<<<< HEAD
     private DatabaseReference mDatabase;
+=======
+    public DatabaseReference mDatabase;
+    public FirebaseDatabase database;
+>>>>>>> bada12a... firebase
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mDatabase= FirebaseDatabase.getInstance().getReference().child("users");
         mDatabase.child("users").child("aaaaabal").setValue("Hello World");
         setContentView(R.layout.page_sign_up);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("message");
+
+        myRef.setValue("Hello, World!");
+        mDatabase=FirebaseDatabase.getInstance().getReference().child("users");
         mAuth = FirebaseAuth.getInstance();
+        mDatabase=FirebaseDatabase.getInstance().getReference().child("users");
+        mDatabase.child("users").setValue("Hello World");
+        Log.d("지금은 hello world","출력중입니다...........");
+        basicReadWrite();
+        Log.d("H             e        l          l        o   1 ","출력중입니다...........");
         findViewById(R.id.signup_bt).setOnClickListener(onClickListener);
         findViewById(R.id.signTologin_bt).setOnClickListener(onClickListener);
 
@@ -48,8 +66,9 @@ public class SignupActivity extends AppCompatActivity {
 
     public void onStart() {
         super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-
+//        updateUI(currentUser);
     }
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -85,9 +104,16 @@ public class SignupActivity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     // Sign in success, update UI with the signed-in user's information
                                     Log.d(TAG, "createUserWithEmail:success");
-                                    FirebaseUser user = mAuth.getCurrentUser();
-                                    FirebaseFirestore db=FirebaseFirestore.getInstance();
                                     UserData userdata=new UserData(email,userName,passwd);
+//                                    mDatabase.child("Users").setValue(userdata);
+                                    FirebaseUser user = mAuth.getCurrentUser();
+                                    Log.d(TAG, "유저데이터 객체 생성 성공하였음======================:success");
+
+                                    FirebaseFirestore db=FirebaseFirestore.getInstance();
+
+                                    Log.d(TAG, "db인스턴스 성공했음 ======================:success");
+                                    Log.d(TAG, "child 로 넘겼음 유저데이터 =====================:success");
+
                                     if(user !=null)
                                     db.collection("users").document(user.getUid()).set(userdata)
                                             .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -103,7 +129,7 @@ public class SignupActivity extends AppCompatActivity {
                                                 }
                                             });
                                     goToast("회원가입 성공");
-                                    signTologinActivity();
+//                                    updateUI(user);
 
                                 } else {
                                     // If sign in fails, display a message to the user.
@@ -132,4 +158,25 @@ public class SignupActivity extends AppCompatActivity {
         Intent intent = new Intent (this, LoginActivity.class);
         startActivity(intent);
     }
+    public void basicReadWrite() {
+        // [START write_message]
+        // Write a message to the database
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        Log.d("H             e        l          l        o  2 ","출력중입니다...........");
+        DatabaseReference myRef = database.getReference("message");
+        Log.d("H             e        l          l        o  3 ","출력중입니다...........");
+
+        myRef.setValue("Hello, World!");
+    }
+//    public void updateUI(FirebaseUser account){
+//
+//        if(account != null){
+//            Toast.makeText(this,"U Signed In successfully",Toast.LENGTH_LONG).show();
+//            startActivity(new Intent(this,LoginActivity.class));
+//
+//        }else {
+//            Toast.makeText(this,"U Didnt signed in",Toast.LENGTH_LONG).show();
+//        }
+//
+//    }
 }

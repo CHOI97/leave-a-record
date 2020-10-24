@@ -14,6 +14,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 //import java.io.Serializable;
 import com.example.leave_a_record.Adapter.USERAdapter;
+import com.example.leave_a_record.DataBase.PostData;
 import com.example.leave_a_record.R;
 import com.example.leave_a_record.image_edit_data;
 import com.example.leave_a_record.DataBase.UserData;
@@ -35,21 +36,23 @@ public class edit_viewpager2 extends AppCompatActivity  {
     List<image_edit_data> imageditdataList;
     USERAdapter userAdapter;
     Button save_content;
-    List<String> contentList;
-
+    ArrayList<String> contentList;
+    PostData postData;
     ArrayList<post_data_image> pd_datas_receive;
+    DatabaseManagement mAuth;
 //    DatabaseManagement db
 
 //    ArrayList<post_data_image> list =(ArrayList<post_data_image>)intent.getSerializableExtra("image-data");    ----오류-----
 
     protected void onCreate(Bundle savedInstanceState) {
         final UserData userData;
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.item_viewpager_editpage);
         save_content=findViewById(R.id.save);
         pd_datas_receive = (ArrayList<post_data_image>)getIntent().getSerializableExtra("pd_datas");
         viewPager2 = findViewById(R.id.viewpager2);
-
+        mAuth=new DatabaseManagement();
         Log.d("현재 진행중인 것은", "화면전환에 성공하셨습니다..");
 
         imageditdataList = new ArrayList<>();
@@ -66,6 +69,7 @@ public class edit_viewpager2 extends AppCompatActivity  {
         save_content.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("현재 진행중인것은 ", "게시글작성중");
                 for(int i=0;i<imageditdataList.size();i++) {
                     if (imageditdataList.get(i).getContent() != null) { //예외처리구문
                         contentList.add(imageditdataList.get(i).getContent());
@@ -73,8 +77,9 @@ public class edit_viewpager2 extends AppCompatActivity  {
                     else // content안의 글이 없을 경우 공백으로 채운다.
                         contentList.add(" ");
                 }
+                Log.d("현재 진행중인것은 ", "업로드 진행전");
 
-//                contentList.add(pd_datas_receive.get(i))
+
                 for(int i=0;i<imageditdataList.size();i++) {
                     uploadFile(i);
                 }
@@ -88,17 +93,15 @@ public class edit_viewpager2 extends AppCompatActivity  {
     }
 
     private void uploadFile(int i) {
-        //업로드할 파일이 있으면 수행
         Uri FilePath=Uri.parse(pd_datas_receive.get(i).getUri());
-
+        String user_name= mAuth.getFirebaseUser().getUid();
+        Log.d("넘긴 아이디값은: ", user_name);
         String File_tag=Integer.toString(i);
-        String user_name="user01";  //수정필요
-
         Toast.makeText(getApplicationContext(), "업로드중", Toast.LENGTH_SHORT).show();
         if (FilePath != null) {
             //업로드 진행 Dialog 보이기
             final ProgressDialog progressDialog = new ProgressDialog(this);
-            progressDialog.setTitle("업로드중...");
+            progressDialog.setTitle("기록을 남기는중입니다...");
             progressDialog.show();
 //////////////// storage 와 cloud의 동시에 저장하자 . /////////////////////////////////
             //storage
@@ -117,7 +120,7 @@ public class edit_viewpager2 extends AppCompatActivity  {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             progressDialog.dismiss(); //업로드 진행 Dialog 상자 닫기
-                            Toast.makeText(getApplicationContext(), "기록을 남겼습니다!", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getApplicationContext(), "기록을 남겼습니다!", Toast.LENGTH_SHORT).show();
                         }
                     })
                     //실패시
@@ -135,7 +138,7 @@ public class edit_viewpager2 extends AppCompatActivity  {
                             @SuppressWarnings("VisibleForTests") //이걸 넣어 줘야 아랫줄에 에러가 사라진다. 넌 누구냐?
                                     double progress = (100 * taskSnapshot.getBytesTransferred()) /  taskSnapshot.getTotalByteCount();
                             //dialog에 진행률을 퍼센트로 출력해 준다
-                            progressDialog.setMessage("leave a record... " + ((int) progress) + "% ...");
+                            progressDialog.setMessage("기록 작성중.. " + ((int) progress) + "% ...");
                         }
                     });
         } else {

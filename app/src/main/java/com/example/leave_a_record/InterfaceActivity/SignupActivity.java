@@ -32,29 +32,18 @@ public class SignupActivity extends AppCompatActivity {
     private static final String TAG2="Member Activity";
     public EditText id, name, pwd,pwd_c;
 
-    private DatabaseReference mDatabase;
+    public DatabaseReference mDatabase;
     public FirebaseDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mDatabase= FirebaseDatabase.getInstance().getReference().child("users");
-        mDatabase.child("users").child("aaaaabal").setValue("Hello World");
         setContentView(R.layout.page_sign_up);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
-
-        myRef.setValue("Hello, World!");
-        mDatabase=FirebaseDatabase.getInstance().getReference().child("users");
+        mDatabase=database.getReference().child("users");
         mAuth = FirebaseAuth.getInstance();
-        mDatabase=FirebaseDatabase.getInstance().getReference().child("users");
-        mDatabase.child("users").setValue("Hello World");
-        Log.d("지금은 hello world","출력중입니다...........");
-        basicReadWrite();
-        Log.d("H             e        l          l        o   1 ","출력중입니다...........");
         findViewById(R.id.signup_bt).setOnClickListener(onClickListener);
         findViewById(R.id.signTologin_bt).setOnClickListener(onClickListener);
-
         id = findViewById(R.id.signup_id);
         name = findViewById(R.id.signup_name);
         pwd = findViewById(R.id.signup_pw);
@@ -89,6 +78,7 @@ public class SignupActivity extends AppCompatActivity {
         final String passwd = pwd.getText().toString();
         final String userName = name.getText().toString();
         String passwd_c=pwd_c.getText().toString();
+
 //        String email =((EditText)findViewById(R.id.signup_id)).getText().toString();
 //        String password = ((EditText)findViewById(R.id.signup_pw)).getText().toString();
 //        String passwordCheck=((EditText)findViewById(R.id.signup_pwd)).getText().toString();
@@ -102,18 +92,22 @@ public class SignupActivity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     // Sign in success, update UI with the signed-in user's information
                                     Log.d(TAG, "createUserWithEmail:success");
-                                    UserData userdata=new UserData(email,userName,passwd);
+                                    FirebaseUser user =  mAuth.getCurrentUser();
+
+                                    UserData userdata=new UserData(email,userName,passwd,user.getUid());
 //                                    mDatabase.child("Users").setValue(userdata);
-                                    FirebaseUser user = mAuth.getCurrentUser();
+
+
                                     Log.d(TAG, "유저데이터 객체 생성 성공하였음======================:success");
 
-                                    FirebaseFirestore db=FirebaseFirestore.getInstance();
+//                                    FirebaseFirestore db=FirebaseFirestore.getInstance();
 
                                     Log.d(TAG, "db인스턴스 성공했음 ======================:success");
                                     Log.d(TAG, "child 로 넘겼음 유저데이터 =====================:success");
 
                                     if(user !=null)
-                                    db.collection("users").document(user.getUid()).set(userdata)
+                                        mDatabase.child(user.getUid()).setValue(userdata)
+//                                    db.collection("users").document(user.getUid()).set(userdata)
                                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
                                                 public void onSuccess(Void aVoid) {
@@ -156,16 +150,7 @@ public class SignupActivity extends AppCompatActivity {
         Intent intent = new Intent (this, LoginActivity.class);
         startActivity(intent);
     }
-    public void basicReadWrite() {
-        // [START write_message]
-        // Write a message to the database
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        Log.d("H             e        l          l        o  2 ","출력중입니다...........");
-        DatabaseReference myRef = database.getReference("message");
-        Log.d("H             e        l          l        o  3 ","출력중입니다...........");
 
-        myRef.setValue("Hello, World!");
-    }
 //    public void updateUI(FirebaseUser account){
 //
 //        if(account != null){

@@ -34,6 +34,11 @@
             android:layout_height="50dp"
             android:hint="title"
             android:maxLength="10"/>
+        <TextView
+            android:id="@+id/edit_date_time"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:hint="date" />
     </com.google.android.material.textfield.TextInputLayout>
     <LinearLayout
         android:layout_width="match_parent"

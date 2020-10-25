@@ -4,44 +4,36 @@ import android.net.Uri;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import java.net.URI;
 
 public class image_edit_data {
 //    private String edit_title;
-//    private RadioButton p1,p2,p3,p4,p5;
-    private String content;
-    private String date_time;
-    private Uri uri;
+    private RadioGroup radioGroup;
+    private String content; // 내용 직접 써야하는 내용
+    private Uri uri; //받아서 뿌리는것
 
-
-
-
-    //////////////////////////test code
-public image_edit_data(Uri uri , String data_time,String content) {
+public image_edit_data(Uri uri) {
 //    this.edit_title = edit_title;
-//    this.p1 = p1;
-//    this.p2 = p2;
-//    this.p3 = p3;
-//    this.p4 = p4;
-//    this.p5 = p5;
-//    this.edit_iv = edit_iv;
+
+//    this.content=content;
+
     this.uri=uri;
-    this.content=content;
-    this.date_time = date_time;
+
 //    this.save = save;
 }
 /////////////////////////////////////
 
 
-    public String getDate_time() {
-        return date_time;
-    }
-
-    public void setDate_time(String date_time) {
-        this.date_time = date_time;
-    }
+//    public String getDate_time() {
+//        return date_time;
+//    }
+//
+//    public void setDate_time(String date_time) {
+//        this.date_time = date_time;
+//    }
 
     public String getContent() {
         return content;
@@ -59,5 +51,11 @@ public image_edit_data(Uri uri , String data_time,String content) {
         this.uri = uri;
     }
 
+    public RadioGroup getRadioGroup() {
+        return radioGroup;
+    }
 
+    public void setRadioGroup(RadioGroup radioGroup) {
+        this.radioGroup = radioGroup;
+    }
 }

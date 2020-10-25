@@ -9,10 +9,14 @@ import java.io.Serializable;
 public class post_data_image  implements Serializable {
     private String uri;
     private String date_time;
+    private String data_gps_Latitude;
+    private String data_gps_Longitude;
 
-    public post_data_image(String uri,String date_time){
+    public post_data_image(String uri,String date_time,String data_gps_Latitude,String data_gps_Longitude){
         this.uri=uri;
         this.date_time=date_time;
+        this.data_gps_Latitude=data_gps_Latitude;
+        this.data_gps_Longitude=data_gps_Longitude;
     }
     public String getUri() {
         return uri;
@@ -30,5 +34,19 @@ public class post_data_image  implements Serializable {
         this.date_time = date_time;
     }
 
+    public String getData_gps_Latitude() {
+        return data_gps_Latitude;
+    }
 
+    public void setData_gps_Latitude(String data_gps_Latitude) {
+        this.data_gps_Latitude = data_gps_Latitude;
+    }
+
+    public String getData_gps_Longitude() {
+        return data_gps_Longitude;
+    }
+
+    public void setData_gps_Longitude(String data_gps_Longitude) {
+        this.data_gps_Longitude = data_gps_Longitude;
+    }
 }

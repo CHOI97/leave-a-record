@@ -9,20 +9,30 @@ public class UserData {
 //    private String user_phone;   // 사용자 핸드폰번호(향후)
 //    private String user_birth; // 생년월일(향후)
     private String user_pwd;// 사용자 비밀번호
+    private String uid;
 
 //    private String signupDate; //오늘 날짜 (향후)
 
 
     public UserData(){}
 
-    public UserData(String user_id, String user_name, String user_pwd) {
+    public UserData(String user_id, String user_name, String user_pwd,String uid) {
         this.user_id = user_id;
         this.user_name = user_name;
 //        this.user_phone = user_phone; 향후
         this.user_pwd = user_pwd;
+        this.uid= uid;
 //        this.user_birth=user_birth; 향후
 
 
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public String getUser_id() {

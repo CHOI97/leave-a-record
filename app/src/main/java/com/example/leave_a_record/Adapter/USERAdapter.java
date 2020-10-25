@@ -38,7 +38,7 @@ public class USERAdapter extends RecyclerView.Adapter<USERAdapter.UserViewHolder
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
         image_edit_data imageditdata = imageditdataList.get(position);
         holder.edit_iv.setImageURI(imageditdata.getUri()); //test를위해
-        holder.edit_date_time.setText(imageditdata.getDate_time());
+//        holder.edit_date_time.setText(imageditdata.getDate_time());
 
         ////////test code
 //        holder.edit_iv.setImageResource(user.getEdit_iv());

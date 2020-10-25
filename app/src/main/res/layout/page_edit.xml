@@ -11,49 +11,49 @@
 
 
 
-    <RadioGroup
-        android:id="@+id/pin_group"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
-        >
+<!--    <RadioGroup-->
+<!--        android:id="@+id/pin_group"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:orientation="horizontal"-->
+<!--        >-->
 
-        <RadioButton
-        android:id="@+id/edit_Pin1"
-        android:layout_width="70dp"
-        android:layout_height="50dp"
-        android:layout_weight="0.2"
-        android:text="Pin 1"/>
+<!--        <RadioButton-->
+<!--        android:id="@+id/edit_Pin1"-->
+<!--        android:layout_width="70dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:layout_weight="0.2"-->
+<!--        android:text="Pin 1"/>-->
 
-        <RadioButton
-            android:id="@+id/edit_Pin2"
-            android:layout_width="70dp"
-            android:layout_height="50dp"
-            android:layout_weight="0.2"
-            android:text="Pin 2" />
+<!--        <RadioButton-->
+<!--            android:id="@+id/edit_Pin2"-->
+<!--            android:layout_width="70dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_weight="0.2"-->
+<!--            android:text="Pin 2" />-->
 
-        <RadioButton
-            android:id="@+id/edit_Pin3"
-            android:layout_width="70dp"
-            android:layout_height="50dp"
-            android:layout_weight="0.2"
-            android:text="Pin 3"/>
-        <RadioButton
-            android:id="@+id/edit_Pin4"
-            android:layout_width="70dp"
-            android:layout_height="50dp"
-            android:layout_weight="0.2"
-            android:text="Pin 4"/>
-        <RadioButton
-            android:id="@+id/edit_Pin5"
-            android:layout_width="70dp"
-            android:layout_height="50dp"
-            android:layout_weight="0.2"
-            android:text="Pin 5"/>
-</RadioGroup>
+<!--        <RadioButton-->
+<!--            android:id="@+id/edit_Pin3"-->
+<!--            android:layout_width="70dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_weight="0.2"-->
+<!--            android:text="Pin 3"/>-->
+<!--        <RadioButton-->
+<!--            android:id="@+id/edit_Pin4"-->
+<!--            android:layout_width="70dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_weight="0.2"-->
+<!--            android:text="Pin 4"/>-->
+<!--        <RadioButton-->
+<!--            android:id="@+id/edit_Pin5"-->
+<!--            android:layout_width="70dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_weight="0.2"-->
+<!--            android:text="Pin 5"/>-->
+<!--</RadioGroup>-->
 
 <!--    viewpager-->
-    <androidx.viewpager.widget.ViewPager
+    <ImageView
         android:id="@+id/edit_iv"
         android:layout_width="400dp"
         android:layout_height="400dp"
@@ -62,30 +62,17 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp">
 
-    </androidx.viewpager.widget.ViewPager>
+    </ImageView>
 
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/edit_date_time"
-            android:layout_width="150dp"
-            android:layout_height="50dp"
-            android:hint="date" />
+
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/edit_content"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:hint="content" />
-    </com.google.android.material.textfield.TextInputLayout>
 
 
     </LinearLayout>

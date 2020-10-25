@@ -20,6 +20,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.leave_a_record.BackPressHandler;
 import com.example.leave_a_record.DataBase.DatabaseManagement;
 import com.example.leave_a_record.R;
 import com.example.leave_a_record.fragment.myHistory;
@@ -36,11 +37,12 @@ public class ProfileActivity extends AppCompatActivity {
     private Button img_more;
     private FragmentManager fragmentManager;            // Framgent 매니저 클래스 변수
     private FragmentTransaction fragmentTransaction;    // Fragment 트랜잭션클래스 변수
-//    public post_data_image []pd_data;
+    //    public post_data_image []pd_data;
 //    public ArrayList<Uri> arr_uri;
 //    public ArrayList<String> arr_date;
     private DatabaseManagement mAuth;
     public ArrayList<post_data_image> pd_datas;
+    private BackPressHandler backPressHandler = new BackPressHandler(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,13 +51,12 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.page_profile);
         txt_myHistory = findViewById(R.id.txt_myHistory);
         txt_tripCourse = findViewById(R.id.txt_tripCourse);
-        fragment_layout= findViewById(R.id.fragment_layout);
-        img_add=findViewById(R.id.img_add);
-        img_more=findViewById(R.id.img_more);
-        mAuth=new DatabaseManagement();
+        fragment_layout = findViewById(R.id.fragment_layout);
+        img_add = findViewById(R.id.img_add);
+        img_more = findViewById(R.id.img_more);
+        mAuth = new DatabaseManagement();
 
-        Log.d("지금 로그인중인 아이디",mAuth.getFirebaseUser().getUid());
-
+        Log.d("지금 로그인중인 아이디", mAuth.getFirebaseUser().getUid());
 
 
 //        GridView gridView = (GridView)findViewById(R.id.gridview);
@@ -102,7 +103,7 @@ public class ProfileActivity extends AppCompatActivity {
                 intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"),  101);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), 101);
             }
         });
         // Fragment 정보 초기화
@@ -121,14 +122,12 @@ public class ProfileActivity extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getFirebaseAuth().getCurrentUser();
 //        mAuth.getFirebaseAuth().updateUI(currentUser);
     }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         ExifInterface exif;
-        String DatetimeArray[];
         Intent intent;
         Uri urione;
-
-        DatetimeArray=new String[2];
         if (requestCode == 101) {
             if (resultCode == RESULT_OK) {
 
@@ -156,7 +155,7 @@ public class ProfileActivity extends AppCompatActivity {
                             try {
                                 urione = clipData.getItemAt(i).getUri();
                                 exif = new ExifInterface(getPath(urione));
-                                pd_datas.add(new post_data_image(urione.toString(),getDateTime(exif)));
+                                pd_datas.add(new post_data_image(urione.toString(), getDateTime(exif),getGPS_Latitude(exif),getGps_Longitude(exif)));
 //                                arr_uri.add(urione);
 //                                arr_date.add(getDateTime(exif));
 //                                pd_data[i].setUri(urione);
@@ -174,17 +173,14 @@ public class ProfileActivity extends AppCompatActivity {
 //                        to_edit.putExtra("image data - Uri", arr_uri);
 //                        to_edit.putExtra("image data - date",arr_date);
 //                    }
-                    intent.putExtra("pd_datas",pd_datas);
+                    intent.putExtra("pd_datas", pd_datas);
                     Log.d("현재 진행중인 것은", "인텐트로 넘기기전입니다.");
                     startActivity(intent);
-                }
-
-                 else if (uri != null) {
-                    try{
+                } else if (uri != null) {
+                    try {
                         goToast("여러장의 이미지를 선택해주세요");  // 일단 여러이미지만 받는걸로 수정.
 
-                    }catch(Exception e)
-                    {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
@@ -195,18 +191,20 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-    private String getDateTime(ExifInterface exif){
-        String Datetime = getTagString(ExifInterface.TAG_DATETIME_ORIGINAL,exif);
+    private String getDateTime(ExifInterface exif) {
+        String Datetime = getTagString(ExifInterface.TAG_DATETIME_ORIGINAL, exif);
         return Datetime;
     }
-    private String getTagString(String tag,ExifInterface exif){
-        return (exif.getAttribute(tag)+"\n");
+
+    private String getTagString(String tag, ExifInterface exif) {
+        return (exif.getAttribute(tag) + "\n");
     }
+
     private String getPath(Uri uri) {
 
         Cursor cursor = getContentResolver().query(uri, null, null, null, null);
         String path = null;
-        if(cursor!=null) {
+        if (cursor != null) {
             if (cursor.moveToFirst()) {
                 String document_id = cursor.getString(0);
                 document_id = document_id.substring(document_id.lastIndexOf(":") + 1);
@@ -226,14 +224,14 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     // 내 기록, 여행코스를 눌렀을때 이벤트 리스너
-    private class menuClickListener implements View.OnClickListener{
+    private class menuClickListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
             fragmentTransaction = fragmentManager.beginTransaction();
             // Fragment 정보 초기화
-            switch (view.getId()){
+            switch (view.getId()) {
                 // 내 기록을 눌렀을때
-                case R.id.txt_myHistory :
+                case R.id.txt_myHistory:
                     // 1. Fragment를 대체하고
                     myHistory fragment1 = new myHistory();
                     fragmentTransaction.replace(R.id.fragment_layout, fragment1).commitAllowingStateLoss();
@@ -243,7 +241,7 @@ public class ProfileActivity extends AppCompatActivity {
                     txt_tripCourse.setBackgroundColor(Color.parseColor("#ffffff"));
                     break;
                 // 코스여행을 눌렀을때
-                case R.id.txt_tripCourse :
+                case R.id.txt_tripCourse:
                     // 1. Fragment를 대체하고
                     txt_myHistory.setBackgroundColor(Color.parseColor("#ffffff"));
                     txt_tripCourse.setBackground(ContextCompat.getDrawable(ProfileActivity.this, R.drawable.border));
@@ -257,8 +255,51 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-    private void goToast(String msg){
-        Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
+    private void goToast(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
+    private String getGPS_Latitude(ExifInterface exif) {
+        String Latitude =getTagString(ExifInterface.TAG_GPS_LATITUDE, exif);
+        String Longitude= getTagString(ExifInterface.TAG_GPS_LONGITUDE, exif);
+//        String Datetime = getTagString(ExifInterface.TAG_DATETIME_ORIGINAL,exif);
+        return  gps_conventer(Latitude);
+    }
+    private String getGps_Longitude(ExifInterface exif){
+        String Longitude= getTagString(ExifInterface.TAG_GPS_LONGITUDE, exif);
+        return gps_conventer(Longitude);
+    }
+
+
+    public String gps_conventer(String tag){
+        String s1 =tag;
+        String s2;
+        String[] s3;
+        double StrTemp=0;
+        String result; //반환
+
+        s2 = s1.replace("/1,",".");
+        tag = s2.replace ("/100","");//문자열 필요없는 부분삭제
+
+
+        s3=tag.split("\\.");//문자열 분리 각 배열 3개의 각각 들어있음
+
+        // dms to dd
+        StrTemp+=Double.parseDouble(s3[0]);
+        StrTemp+=(Double.parseDouble(s3[1]))/60;
+        StrTemp+=(Double.parseDouble(s3[2]))/360000;
+
+        result =(String.format("%.5f",StrTemp)); //Double to String
+        return result;
+    }
+    public void onBackPressed() {
+        backPressHandler.onBackPressed("뒤로가기 버튼 한번 더 누르면 종료", 3000);
+    }
+//    public String time_conventer(String tag){
+//        String s1 =tag;
+//
+//        tag = s1.replaceAll("[^0-9}]"," ");//문자열 필요없는 부분삭제
+//
+//        return tag;
+//    }
 }

@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.leave_a_record.BackPressHandler;
 import com.example.leave_a_record.DataBase.Callback;
 import com.example.leave_a_record.DataBase.DatabaseManagement;
 import com.example.leave_a_record.DataBase.UserData;
@@ -24,6 +25,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class LoginActivity extends AppCompatActivity {
     private DatabaseManagement mAuth;
     private static final String TAG = "LoginActivity";
+    private BackPressHandler backPressHandler = new BackPressHandler(this);
 
     Callback<Boolean> callback;
     @Override
@@ -72,18 +74,18 @@ public class LoginActivity extends AppCompatActivity {
                             goToast("로그인 성공");
                             // DB에서 유저데이터 가져오기
 //                            mAuth.getUserDataFromDatabase(email, new Callback<UserData>() {
-//                                @Override
-//                                public void onCallback(UserData data) {
-//                                    // 유저데이터를 성공적으로 가져왔을 때
-//                                    if(data != null) {
+////                                @Override
+////                                public void onCallback(UserData data) {
+////                                    // 유저데이터를 성공적으로 가져왔을 때
+////                                    if(data != null) {
 ////                                        mAuth.getInstance().setUserData(post);
-//
-//                                        callback.onCallback(true);
-//                                    } else {
-//                                        callback.onCallback(false);
-//                                    }
-//                                }
-//                            });
+////
+////                                        callback.onCallback(true);
+////                                    } else {
+////                                        callback.onCallback(false);
+////                                    }
+////                                }
+////                            });
                         } else {
                             // 로그인 실패시
                             goToast("로그인 실패");
@@ -146,4 +148,7 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent (this, SignupActivity.class);
         startActivity(intent);
 }
+    public void onBackPressed() {
+        backPressHandler.onBackPressed("뒤로가기 버튼 한번 더 누르면 종료", 3000);
+    }
 }

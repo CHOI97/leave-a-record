@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">leave_a_record</string>
+    <string name="hello">안녕하세요</string>
+    <string name="username">세미콜론</string>
 </resources>

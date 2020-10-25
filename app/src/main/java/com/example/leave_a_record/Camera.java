@@ -17,15 +17,15 @@ public class Camera extends Activity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_camera);
+        setContentView(R.layout.take_picture);
 
         setup();
     }
 
     private void setup()
     {
-        btn = (Button)findViewById(R.id.btn);
-        iv = (ImageView)findViewById(R.id.iv);
+        btn = (Button)findViewById(R.id.take_bt);
+        iv = (ImageView)findViewById(R.id.take_iv);
 
         btn.setOnClickListener(new View.OnClickListener()
         {

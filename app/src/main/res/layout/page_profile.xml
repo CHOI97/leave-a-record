@@ -4,9 +4,48 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileActivity">
+    tools:context=".InterfaceActivity.ProfileActivity">
 
-    <androidx.appcompat.widget.Toolbar
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/const_actionbar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/img_back"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="?attr/actionModeCloseDrawable"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <Button
+                android:id="@+id/img_add"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/img_more"
+                app:layout_constraintTop_toTopOf="parent"
+
+                android:background="@android:drawable/ic_menu_add"/>
+
+            <Button
+                android:id="@+id/img_more"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:background="@android:drawable/ic_menu_info_details"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.Toolbar
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"

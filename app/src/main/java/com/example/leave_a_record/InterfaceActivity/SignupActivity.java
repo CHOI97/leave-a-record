@@ -47,6 +47,7 @@ public class SignupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_sign_up);
+//        signTologinActivity();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         mDatabase=database.getReference().child("users");
         mAuth = FirebaseAuth.getInstance();
@@ -168,7 +169,7 @@ public class SignupActivity extends AppCompatActivity {
         Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
     }
     private void signTologinActivity(){
-        Intent intent = new Intent (this, LoginActivity.class);
+        Intent intent = new Intent (this, MapsActivity.class);
         startActivity(intent);
     }
     public void onBackPressed() {

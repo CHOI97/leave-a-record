@@ -4,15 +4,15 @@ import java.util.List;
 
 public class PostData_image {
     private List<String> post_images_URI;
-    private List<String> post_content;
+    private String post_content;
     private List<String> post_meta_gps_Latitue;
     private List<String> post_meta_gps_Longitude;
     private List<String> post_meta_datetime;
     private List<String> post_pin;
 
-    PostData_image(){}
+    public PostData_image(){}
 
-    PostData_image(List<String> post_images_URI, List<String> post_content,List<String> post_meta_gps_Latitue,List<String> post_meta_gps_Longitude, List<String> post_meta_datetime,List<String> post_pin) {
+    public PostData_image(List<String> post_images_URI, String post_content,List<String> post_meta_gps_Latitue,List<String> post_meta_gps_Longitude, List<String> post_meta_datetime,List<String> post_pin) {
         this.post_content = post_content;
         this.post_images_URI = post_images_URI;
         this.post_meta_gps_Latitue=post_meta_gps_Latitue;
@@ -29,11 +29,11 @@ public class PostData_image {
         this.post_images_URI = post_images_URI;
     }
 
-    public List<String> getPost_content() {
+    public String getPost_content() {
         return post_content;
     }
 
-    public void setPost_content(List<String> post_content) {
+    public void setPost_content(String post_content) {
         this.post_content = post_content;
     }
 

@@ -30,7 +30,7 @@
 
 
 
-<!--        <activity android:name=".InterfaceActivity.ProfileActivity"/>-->
+        <activity android:name=".InterfaceActivity.ProfileActivity"/>
 <!--        <activity android:name=".InterfaceActivity.LoginActivity">-->
         <activity android:name=".InterfaceActivity.SignupActivity"/>
         <activity android:name=".InterfaceActivity.LoginActivity">

@@ -20,6 +20,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.leave_a_record.BackPressHandler;
 import com.example.leave_a_record.DataBase.DatabaseManagement;
 import com.example.leave_a_record.R;
 import com.example.leave_a_record.fragment.myHistory;
@@ -41,6 +42,7 @@ public class ProfileActivity extends AppCompatActivity {
 //    public ArrayList<String> arr_date;
     private DatabaseManagement mAuth;
     public ArrayList<post_data_image> pd_datas;
+    private BackPressHandler backPressHandler = new BackPressHandler(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -289,6 +291,9 @@ public class ProfileActivity extends AppCompatActivity {
 
         result =(String.format("%.5f",StrTemp)); //Double to String
         return result;
+    }
+    public void onBackPressed() {
+        backPressHandler.onBackPressed("뒤로가기 버튼 한번 더 누르면 종료", 3000);
     }
 //    public String time_conventer(String tag){
 //        String s1 =tag;

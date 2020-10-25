@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.leave_a_record.BackPressHandler;
 import com.example.leave_a_record.DataBase.Constant;
 import com.example.leave_a_record.R;
 import com.example.leave_a_record.DataBase.UserData;
@@ -34,6 +35,7 @@ public class SignupActivity extends AppCompatActivity {
 
     public DatabaseReference mDatabase;
     public FirebaseDatabase database;
+    private BackPressHandler backPressHandler = new BackPressHandler(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,6 +151,9 @@ public class SignupActivity extends AppCompatActivity {
     private void signTologinActivity(){
         Intent intent = new Intent (this, LoginActivity.class);
         startActivity(intent);
+    }
+    public void onBackPressed() {
+        backPressHandler.onBackPressed("뒤로가기 버튼 한번 더 누르면 종료", 3000);
     }
 
 //    public void updateUI(FirebaseUser account){

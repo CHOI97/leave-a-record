@@ -9,6 +9,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -17,6 +20,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -65,6 +69,12 @@ public class ProfileActivity extends AppCompatActivity {
         img_more = findViewById(R.id.img_more);
         mAuth = FirebaseAuth.getInstance();
         Textname= findViewById(R.id.profile_name);
+
+        //toolbar
+        Toolbar toolbar =findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);//뒤로가기
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         Log.d("지금 로그인중인 아이디", mAuth.getCurrentUser().getUid());
 
@@ -280,6 +290,30 @@ public class ProfileActivity extends AppCompatActivity {
             }
         }
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home: //뒤로가기 버튼
+                onBackPressed();
+                return true;
+
+            case R.id.tool_edit: //수정하기 버튼
+
+            case R.id.tool_add: //추가하기 버튼
+
+            case R.id.tool_logout: //로그아웃 버튼
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_profile, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
 
     private void goToast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();

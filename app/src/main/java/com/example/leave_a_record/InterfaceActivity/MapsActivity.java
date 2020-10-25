@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -104,7 +105,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mAdapter = new MyAdapter(myDataset);
         recyclerView.setAdapter(mAdapter);
 
-        //배열로 해야할거같아용용
+
 
        ///////////////////////////////////////////////////////////////////
 
@@ -117,6 +118,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 //        userAdapter =  new USERAdapter(this, imageditdataList);
 //        viewPager2.setAdapter(userAdapter);
 
+
+        //toolbar
         Toolbar toolbar =findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);//뒤로가기
@@ -152,6 +155,19 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         menuInflater.inflate(R.menu.menu_map, menu);
         return super.onCreateOptionsMenu(menu);
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home: //뒤로가기 버튼
+                onBackPressed();
+                return true;
+
+            case R.id.tool_map: //지도 버튼
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
 //    @Override
 //    public boolean onOptionsItemSelected(@NonNull MenuItem item) {

@@ -15,18 +15,26 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.leave_a_record.BackPressHandler;
+import com.example.leave_a_record.DataBase.Constant;
 import com.example.leave_a_record.DataBase.DatabaseManagement;
+import com.example.leave_a_record.DataBase.UserData;
 import com.example.leave_a_record.R;
 import com.example.leave_a_record.fragment.myHistory;
 import com.example.leave_a_record.fragment.tripCourse;
 import com.example.leave_a_record.post_data_image;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -36,11 +44,12 @@ public class ProfileActivity extends AppCompatActivity {
     private Button img_add;
     private Button img_more;
     private FragmentManager fragmentManager;            // Framgent 매니저 클래스 변수
-    private FragmentTransaction fragmentTransaction;    // Fragment 트랜잭션클래스 변수
+    private FragmentTransaction fragmentTransaction;    // Fragment 트랜잭션클래스 변수\
+    private TextView Textname;
     //    public post_data_image []pd_data;
 //    public ArrayList<Uri> arr_uri;
 //    public ArrayList<String> arr_date;
-    private DatabaseManagement mAuth;
+    private FirebaseAuth mAuth;
     public ArrayList<post_data_image> pd_datas;
     private BackPressHandler backPressHandler = new BackPressHandler(this);
 
@@ -54,10 +63,27 @@ public class ProfileActivity extends AppCompatActivity {
         fragment_layout = findViewById(R.id.fragment_layout);
         img_add = findViewById(R.id.img_add);
         img_more = findViewById(R.id.img_more);
-        mAuth = new DatabaseManagement();
+        mAuth = FirebaseAuth.getInstance();
+        Textname= findViewById(R.id.profile_name);
 
-        Log.d("지금 로그인중인 아이디", mAuth.getFirebaseUser().getUid());
+        Log.d("지금 로그인중인 아이디", mAuth.getCurrentUser().getUid());
 
+        FirebaseDatabase.getInstance().getReference()
+                .child("users")
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot data : dataSnapshot.getChildren()) {
+                            UserData userdata;
+                            userdata = data.getValue(UserData.class);
+                            Textname.setText(userdata.getUser_name());
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
 
 //        GridView gridView = (GridView)findViewById(R.id.gridview);
 //        gridView.setAdapter(new HistoryListAdapter(this,));
@@ -119,7 +145,7 @@ public class ProfileActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getFirebaseAuth().getCurrentUser();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
 //        mAuth.getFirebaseAuth().updateUI(currentUser);
     }
 

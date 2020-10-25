@@ -7,17 +7,12 @@
     <item
         android:id="@+id/action_post"
         android:title="post"
-        android:icon="@drawable/ic_edit"
+        android:icon="@drawable/ic_map"
         app:showAsAction="ifRoom"
         />
 
 
-        <item
-            android:id="@+id/content"
-            android:title="content" />
-        <item
-            android:id="@+id/cousre"
-            android:title="course" />
+
 
 
 </menu>

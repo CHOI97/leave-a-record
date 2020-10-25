@@ -4,11 +4,16 @@
     <color name="colorPrimaryDark">#0760FF</color>
     <color name="colorAccent">#FF2020</color>
     <color name="colorWhite">#FFFFFF</color>
-    <color name="colorBackground">#FBFBFB</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorBackground">#EBEBEB</color>
     <color name="colorTextPrimary">#212121</color>
     <color name="colorTextSecondary">#757575</color>
     <color name="main_color_100">#A566FF</color>
     <color name="main_color_70">#AF7CFF</color>
     <color name="main_color_50">#C7A2FF</color>
     <color name="main_color_20">#D4B9FE</color>
+    <color name="colorBlue">#B0C1FF</color>
+    <color name="colorTextHint">#808080</color>
+    <color name="colorSemiPurple">#9618F7</color>
+    <color name="colorSemiBlue">#A3C9E2</color>
 </resources>

@@ -5,8 +5,8 @@
 
 
     <item
-        android:id="@+id/action_post"
-        android:title="post"
+        android:id="@+id/tool_map"
+        android:title="map"
         android:icon="@drawable/ic_map"
         app:showAsAction="ifRoom"
         />

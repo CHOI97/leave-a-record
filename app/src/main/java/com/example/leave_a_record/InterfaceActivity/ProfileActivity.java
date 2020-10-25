@@ -9,6 +9,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -44,8 +47,11 @@ public class ProfileActivity extends AppCompatActivity {
     public ArrayList<post_data_image> pd_datas;
     private BackPressHandler backPressHandler = new BackPressHandler(this);
 
+    Toolbar myToolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         Log.d("현재 진행중인 것은", "------------프로필페이지.");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_profile);
@@ -57,6 +63,11 @@ public class ProfileActivity extends AppCompatActivity {
         mAuth = new DatabaseManagement();
 
         Log.d("지금 로그인중인 아이디", mAuth.getFirebaseUser().getUid());
+
+        myToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(myToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
 
 //        GridView gridView = (GridView)findViewById(R.id.gridview);
@@ -114,6 +125,14 @@ public class ProfileActivity extends AppCompatActivity {
         myHistory fragment1 = new myHistory();
         fragmentTransaction.replace(R.id.fragment_layout, fragment1).commitAllowingStateLoss();
 
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //return super.onCreateOptionsMenu(menu);
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_profile, menu);
+
+        return true;
     }
 
     public void onStart() {

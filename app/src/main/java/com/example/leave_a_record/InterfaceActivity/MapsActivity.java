@@ -123,7 +123,7 @@
 //
 //    public boolean onCreateOptionsMenu(Menu menu) {
 //        MenuInflater menuInflater = getMenuInflater();
-//        menuInflater.inflate(R.menu.menu, menu);
+//        menuInflater.inflate(R.menu.menu_map, menu);
 //        return super.onCreateOptionsMenu(menu);
 //    }
 //

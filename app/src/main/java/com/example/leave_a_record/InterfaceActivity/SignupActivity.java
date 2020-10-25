@@ -2,10 +2,13 @@ package com.example.leave_a_record.InterfaceActivity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -37,6 +40,9 @@ public class SignupActivity extends AppCompatActivity {
     public FirebaseDatabase database;
     private BackPressHandler backPressHandler = new BackPressHandler(this);
 
+
+    Toolbar myToolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +57,19 @@ public class SignupActivity extends AppCompatActivity {
         pwd = findViewById(R.id.signup_pw);
         pwd_c=findViewById(R.id.signup_pwd);
 
+        myToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(myToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //return super.onCreateOptionsMenu(menu);
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu, menu);
+
+        return true;
     }
 
     public void onStart() {

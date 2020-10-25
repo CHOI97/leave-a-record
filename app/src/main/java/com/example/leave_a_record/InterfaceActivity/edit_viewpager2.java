@@ -19,8 +19,10 @@ import androidx.viewpager2.widget.ViewPager2;
 //import java.io.Serializable;
 import com.example.leave_a_record.Adapter.USERAdapter;
 import com.example.leave_a_record.BackPressHandler;
+import com.example.leave_a_record.DataBase.Callback;
 import com.example.leave_a_record.DataBase.PostData;
 import com.example.leave_a_record.DataBase.PostData_image;
+import com.example.leave_a_record.DataBase.postUpdate;
 import com.example.leave_a_record.R;
 import com.example.leave_a_record.image_edit_data;
 import com.example.leave_a_record.DataBase.UserData;
@@ -65,10 +67,13 @@ public class edit_viewpager2 extends AppCompatActivity  {
     List<String> post_pin;
     List<String> post_meta_gps_Latitue;
     List<String> post_meta_gps_Longitude;
+    ArrayList<String> post_update_time;
     EditText content;
     String content_data;
     EditText title;
     String title_data;
+
+    postUpdate postUpdate_time;
     PostData postData;
     PostData_image postData_image;
 //    DatabaseManagement db
@@ -95,8 +100,11 @@ public class edit_viewpager2 extends AppCompatActivity  {
         Date mDate = new Date(now);
         String current_post_Time = simpleDate.format(mDate); //포스트용  시간
         String post_upload_time = post_upload_time_simple.format(mDate); // 게시물등록 고유 시간
+        post_update_time=new ArrayList<>();
         current_time.setText(post_upload_time);
+        post_update_time.add(current_post_Time);
 
+        postUpdate_time=new postUpdate(post_update_time);
         imageditdataList = new ArrayList<>(); //이미지를 위한 리스트
         post_images_URI = new ArrayList<>();
         post_meta_gps_Latitue=new ArrayList<>();
@@ -110,6 +118,8 @@ public class edit_viewpager2 extends AppCompatActivity  {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         mdatabase=database.getReference();
         mDatabase=database.getReference().child("posts").child(mAuth.getCurrentUser().getUid()).child(current_post_Time);
+        mdatabase.child("posts").child(mAuth.getCurrentUser().getUid()).setValue(postUpdate_time);
+
         //데이터 필드 posts -> uid -> current time(게시물들) -> (게시물내용)child(uri,content,pin), title,datetime
 ////////////////////////////////////////////////////////////////////////////////////
 

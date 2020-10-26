@@ -12,6 +12,8 @@ import android.widget.ImageView;
 
 import androidx.appcompat.widget.AppCompatImageView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 public class HistoryListAdapter extends BaseAdapter {
@@ -60,10 +62,14 @@ public class HistoryListAdapter extends BaseAdapter {
             Log.d("success", "myHistory"); //로그찍기
             imageView = new ImageView(context);
             imageView.setLayoutParams(new GridView.LayoutParams(300,300));
+//            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            Glide.with(context).load(img.get(position)).into(imageView);
+            Log.d("what the Fuck sibal",img.get(position));
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            imageView.setPadding(1, 1, 1, 1);
-            Log.d("success", "good"); //로그찍기
-//            Log.d("success", img.get(position)); //로그찍기
+//            imageView.set
+//            imageView.setPadding(1, 1, 1, 1);
+//            Log.d("success", "good"); //로그찍기
+////            Log.d("success", img.get(position)); //로그찍기
 
         }else{
             imageView = (ImageView)convertView;

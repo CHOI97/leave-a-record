@@ -17,11 +17,12 @@ import androidx.fragment.app.Fragment;
 
 import com.example.leave_a_record.Adapter.HistoryListAdapter;
 
+import com.example.leave_a_record.DataBase.Callback;
 import com.example.leave_a_record.DataBase.DatabaseManagement;
 import com.example.leave_a_record.DataBase.PostData;
-import com.example.leave_a_record.DataBase.PostData_image;
+
 import com.example.leave_a_record.DataBase.UserData;
-import com.example.leave_a_record.DataBase.postUpdate;
+//import com.example.leave_a_record.DataBase.postUpdate;
 import com.example.leave_a_record.R;
 import com.example.leave_a_record.post_data_image;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -30,6 +31,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -43,8 +45,12 @@ import java.util.List;
  */
 
 public class myHistory extends Fragment {
-   private FirebaseAuth mAuth;
-
+    private FirebaseAuth mAuth;
+    final ArrayList<String> img_key_name = new ArrayList<>();
+    final ArrayList<String> img = new ArrayList<>();
+    DatabaseReference mDatabase;
+    DatabaseManagement m;
+    Callback<String> callback;
     @Nullable
     @Override
 
@@ -52,87 +58,93 @@ public class myHistory extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         String pd_datas_receive;
         Intent intent = getActivity().getIntent();
-        View view = inflater.inflate(R.layout.item_myhistory, container, false);
+        final View view = inflater.inflate(R.layout.item_myhistory, container, false);
         Log.d("success", "myHistory"); //로그찍기
-        final ArrayList<String> img = new ArrayList<>();
-        ArrayList<String> URI = new ArrayList<>();
-        final ArrayList<String> call = new ArrayList<>();
+        final ArrayList<String> URI = new ArrayList<>();
+        ArrayList<String> img=new ArrayList<>();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        m =new DatabaseManagement();
+        HistoryListAdapter adapter;
+
+//        mDatabase=database.getInstance().getReference()
+//                .child("posts")
+//                .child(mAuth.getCurrentUser().getUid()).child(img.)
         FirebaseStorage storage;
         StorageReference storageRef;
         storage = FirebaseStorage.getInstance();
-        final String uriToString;
-        postUpdate postdata_uploadtime;
-        int j;
-        pd_datas_receive = intent.getStringExtra("first-image");// 커스텀 아답타 생성
         FirebaseDatabase.getInstance().getReference()
-                .child("posts").child(mAuth.getCurrentUser().getUid()).child("postUpdate_time")
+                .child("posts")
+                .child(mAuth.getCurrentUser().getUid())
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot data : dataSnapshot.getChildren()) {
-                            postUpdate postUpdate=data.getValue(postUpdate.class);
-                            for (int i = 0; i < postUpdate.getPostUpdate_time().size(); i++) {
-                                call.add(postUpdate.getPostUpdate_time().get(i));
-                            }
+                        img_key_name.clear();
+//                        img_key_name.add("");
+                        URI.clear();
+                        int i = 0;
+                        for (DataSnapshot child : dataSnapshot.getChildren()) {
+                            img_key_name.add(child.getKey());
+                            Log.d("key : ", img_key_name.get(i));
+//                            gs://leave-a-record.appspot.com/images/"+current_post_Time+filename
+//                            URI.add("gs://leave-a-record.appspot.com/images/"+img_key_name.get(i)+"0"+".jpg"); //key == 202010261243 i .jpg
+                            URI.add(img_key_name.get(i)+"0"+".jpg"); //key == 202010261243 i .jpg
+                            Log.d("key : ", URI.get(i));
+                            i++;
+
                         }
+                        HistoryListAdapter adapter = new HistoryListAdapter(
+                                getContext(),
+                                R.layout.item_history_list,       // GridView 항목의 레이아웃 row.xml
+                                URI);    // 데이터
+
+
+                        GridView gv = view.findViewById(R.id.gridview);
+                        ViewCompat.setNestedScrollingEnabled(gv, true);
+                        gv.setAdapter(adapter);  // 커스텀 아답타를 GridView 에 적용
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-
+                        callback.onCallback(null);
                     }
                 });
-        for (j = 0; j < call.size(); j++) {
-            final int finalJ = j;
-            FirebaseDatabase.getInstance().getReference()
-                    .child("posts").child(mAuth.getCurrentUser().getUid()).child(call.get(j)).child("postData_image")
-                    .addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            for (DataSnapshot data : dataSnapshot.getChildren()) {
-                                PostData_image postdata;
-                                postdata = data.getValue(PostData_image.class);
-                                img.add(postdata.getPost_images_URI().get(finalJ));
-                            }
-                        }
+//        HistoryListAdapter adapter = new HistoryListAdapter(
+//                getContext(),
+//                R.layout.item_history_list,       // GridView 항목의 레이아웃 row.xml
+//                URI);    // 데이터
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-        }
-        for (int k = 0; k < img.size(); k++) {
-            storageRef = storage.getReferenceFromUrl("gs://leave-a-record.appspot.com")
-                    .child("imagse/")
-                    .child(img.get(k));
-            storageRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    if (task.isSuccessful()) {
-                        Uri uri = task.getResult();
-                        String string_dwload = uri.toString();
-                        img.add(string_dwload);
-                    } else {
-                    }
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-
-                }
-            });
-        }
-
-        HistoryListAdapter adapter = new HistoryListAdapter(
-                getContext(),
-                R.layout.item_history_list,       // GridView 항목의 레이아웃 row.xml
-                img);    // 데이터
-
-        GridView gv = view.findViewById(R.id.gridview);
-        ViewCompat.setNestedScrollingEnabled(gv, true);
-        gv.setAdapter(adapter);  // 커스텀 아답타를 GridView 에 적용
+//        GridView gv = view.findViewById(R.id.gridview);
+//        ViewCompat.setNestedScrollingEnabled(gv, true);
+//        gv.setAdapter(adapter);  // 커스텀 아답타를 GridView 에 적용
+//        GridView gv = view.findViewById(R.id.gridview);
+//        ViewCompat.setNestedScrollingEnabled(gv, true);
+//        gv.setAdapter(adapter);  // 커스텀 아답타를 GridView 에 적용
 
         return view;
     }
 }
+//    }
+//    public void imageLoad(final int i) {
+//        FirebaseDatabase.getInstance().getReference()
+//                .child("posts")
+//                .child(mAuth.getCurrentUser().getUid())
+//                .child(img.get(i))
+//                .addListenerForSingleValueEvent(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(DataSnapshot dataSnapshot) {
+//                        for (DataSnapshot data : dataSnapshot.getChildren()) {
+//                            PostData postdata;
+//                            postdata = data.getValue(PostData.class);
+//                            img.add(postdata.getPost_images_URI().get(i));
+////                        }
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(DatabaseError databaseError) {
+//
+//                    }
+//                });
+//    }
+//
+//}

@@ -69,15 +69,16 @@ public class ProfileActivity extends AppCompatActivity {
         Log.d("지금 로그인중인 아이디", mAuth.getCurrentUser().getUid());
 
         FirebaseDatabase.getInstance().getReference()
-                .child("users")
+                .child("users").child(mAuth.getCurrentUser().getUid())
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot data : dataSnapshot.getChildren()) {
+//                        for (DataSnapshot data : dataSnapshot.getChildren()) {
                             UserData userdata;
-                            userdata = data.getValue(UserData.class);
+                            userdata = dataSnapshot.getValue(UserData.class);
+                        Log.d("postupdate time is : ",userdata.getUser_name());
                             Textname.setText(userdata.getUser_name());
-                        }
+//                        }
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {

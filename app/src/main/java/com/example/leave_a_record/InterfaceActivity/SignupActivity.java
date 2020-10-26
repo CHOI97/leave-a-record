@@ -150,6 +150,11 @@ public class SignupActivity extends AppCompatActivity {
     }
     private void signTologinActivity(){
         Intent intent = new Intent (this, LoginActivity.class);
+//        Intent intent = new Intent(this, NextActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+//        startActivity(intent);
         startActivity(intent);
     }
     public void onBackPressed() {

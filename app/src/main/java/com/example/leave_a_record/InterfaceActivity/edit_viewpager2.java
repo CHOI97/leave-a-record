@@ -21,8 +21,8 @@ import com.example.leave_a_record.Adapter.USERAdapter;
 import com.example.leave_a_record.BackPressHandler;
 import com.example.leave_a_record.DataBase.Callback;
 import com.example.leave_a_record.DataBase.PostData;
-import com.example.leave_a_record.DataBase.PostData_image;
-import com.example.leave_a_record.DataBase.postUpdate;
+
+
 import com.example.leave_a_record.R;
 import com.example.leave_a_record.image_edit_data;
 import com.example.leave_a_record.DataBase.UserData;
@@ -73,9 +73,9 @@ public class edit_viewpager2 extends AppCompatActivity  {
     EditText title;
     String title_data;
 
-    postUpdate postUpdate_time;
+
     PostData postData;
-    PostData_image postData_image;
+//    PostData_image postData_image;
 //    DatabaseManagement db
     private UserData userdata;
     private BackPressHandler backPressHandler = new BackPressHandler(this);
@@ -94,17 +94,16 @@ public class edit_viewpager2 extends AppCompatActivity  {
         pd_datas_receive = (ArrayList<post_data_image>)getIntent().getSerializableExtra("pd_datas");
         viewPager2 = findViewById(R.id.viewpager2);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN); /////////키보드 가림방지
-        SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        SimpleDateFormat simpleDate = new SimpleDateFormat("yyyyMMddHHmmss");
         SimpleDateFormat post_upload_time_simple =new SimpleDateFormat("yyyy년 MM월 dd일의 기록");
         long now = System.currentTimeMillis();
         Date mDate = new Date(now);
-        String current_post_Time = simpleDate.format(mDate); //포스트용  시간
+        final String current_post_Time = simpleDate.format(mDate); //포스트용  시간
         String post_upload_time = post_upload_time_simple.format(mDate); // 게시물등록 고유 시간
         post_update_time=new ArrayList<>();
         current_time.setText(post_upload_time);
         post_update_time.add(current_post_Time);
 
-        postUpdate_time=new postUpdate(post_update_time);
         imageditdataList = new ArrayList<>(); //이미지를 위한 리스트
         post_images_URI = new ArrayList<>();
         post_meta_gps_Latitue=new ArrayList<>();
@@ -118,7 +117,7 @@ public class edit_viewpager2 extends AppCompatActivity  {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         mdatabase=database.getReference();
         mDatabase=database.getReference().child("posts").child(mAuth.getCurrentUser().getUid()).child(current_post_Time);
-        mdatabase.child("posts").child(mAuth.getCurrentUser().getUid()).setValue(postUpdate_time);
+//        mdatabase.child("posts").child(mAuth.getCurrentUser().getUid()).child("post_upload_time").setValue(current_post_Time);
 
         //데이터 필드 posts -> uid -> current time(게시물들) -> (게시물내용)child(uri,content,pin), title,datetime
 ////////////////////////////////////////////////////////////////////////////////////
@@ -147,7 +146,7 @@ public class edit_viewpager2 extends AppCompatActivity  {
                     content_data = " ";
                 }
                 for (int i = 0; i < imageditdataList.size(); i++) {
-                    uploadFile(i);
+                    uploadFile(current_post_Time,i);
                 }
 
                 for (int i = 0; i < pd_datas_receive.size(); i++) {  //post_data에 넣기전 처리과정
@@ -163,18 +162,18 @@ public class edit_viewpager2 extends AppCompatActivity  {
                     }
                 }
                 autopin(post_meta_gps_Latitue, post_meta_gps_Longitude, post_pin);
-                postData = new PostData(mAuth.getUid(), title_data);
-                postData_image = new PostData_image(post_images_URI, content_data, post_meta_gps_Latitue, post_meta_gps_Longitude, post_meta_datetime, post_pin);
+                postData = new PostData(mAuth.getUid(), title_data,post_images_URI, content_data, post_meta_gps_Latitue, post_meta_gps_Longitude, post_meta_datetime, post_pin);
+//                postData_image = new PostData_image(post_images_URI, content_data, post_meta_gps_Latitue, post_meta_gps_Longitude, post_meta_datetime, post_pin);
 
 
                 mDatabase.child("postData").setValue(postData);
-                mDatabase.child("postData_image").setValue(postData_image);
+//                mDatabase.child("postData_image").setValue(postData_image);
                 goProfile();
 
             }
         });
     }
-    private void uploadFile(int i) {
+    private void uploadFile(String current_post_Time,int i) {
 
         Uri FilePath=Uri.parse(pd_datas_receive.get(i).getUri());
         String user_name= mAuth.getCurrentUser().getUid();
@@ -191,10 +190,10 @@ public class edit_viewpager2 extends AppCompatActivity  {
             FirebaseStorage storage = FirebaseStorage.getInstance();
 
             //Unique한 파일명을 만들자.
-            SimpleDateFormat formatter = new SimpleDateFormat("yymmss"+File_tag);
-            Date now = new Date();
-            String filename = formatter.format(now) +user_name+ ".jpg";
-            post_images_URI.add("images/"+filename);
+//            SimpleDateFormat formatter = new SimpleDateFormat(File_tag);
+//            Date now = new Date();
+            String filename =current_post_Time+File_tag+".jpg"; //filename 202010261243 1 . jpg
+            post_images_URI.add(filename);
             //storage 주소와 폴더 파일명을 지정해 준다.
             StorageReference storageRef = storage.getReferenceFromUrl("gs://leave-a-record.appspot.com").child("images/" + filename);
             //올라가거라...

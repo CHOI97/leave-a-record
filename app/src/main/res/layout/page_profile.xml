@@ -51,6 +51,7 @@
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="wrap_content">-->
 
+<<<<<<< HEAD
 <!--        <TextView-->
 <!--            android:layout_width="wrap_content"-->
 <!--            android:layout_height="wrap_content"-->
@@ -59,6 +60,10 @@
 <!--            android:text="Title">-->
 
 <!--        </TextView>-->
+=======
+
+
+>>>>>>> 5aa638b85284c729baf27bb642bf10eddc03ba15
 
 
 <!--    </androidx.appcompat.widget.Toolbar>-->

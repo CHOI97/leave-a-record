@@ -47,10 +47,10 @@
             </intent-filter>
         </activity>
 
-<!--        <activity android:name=".InterfaceActivity.test_viewpager2"/>-->
-<!--        <activity android:name=".InterfaceActivity.SignupActivity"/>-->
-=======
         <activity android:name=".InterfaceActivity.edit_viewpager2"/>
+<!--        <activity android:name=".InterfaceActivity.SignupActivity"/>-->
+<!--=======-->
+<!--        <activity android:name=".InterfaceActivity.edit_viewpager2"/>-->
 
 <!--        </activity>-->
 <!--        <activity android:name=".SetGallery">-->

@@ -9,6 +9,16 @@
     android:layout_height="match_parent"
     android:scrollbarSize="24sp" >
 
+    <androidx.appcompat.widget.Toolbar
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+    </androidx.appcompat.widget.Toolbar>
+
 <!--    <androidx.appcompat.widget.Toolbar-->
 <!--        app:layout_constraintTop_toTopOf="parent"-->
 <!--        android:id="@+id/toolbar"-->
@@ -243,13 +253,13 @@
             android:textSize="13sp"
             android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@id/signup_pwd"/>
-        <Button
-            android:id="@+id/signTologin_bt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="BACK"
-            app:layout_constraintTop_toBottomOf="@id/signup_bt"
-            />
+<!--        <Button-->
+<!--            android:id="@+id/signTologin_bt"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="BACK"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/signup_bt"-->
+<!--            />-->
 
 
 

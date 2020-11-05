@@ -72,42 +72,42 @@ public class myHistory extends Fragment {
         FirebaseStorage storage;
         StorageReference storageRef;
         storage = FirebaseStorage.getInstance();
-        FirebaseDatabase.getInstance().getReference()
-                .child("posts")
-                .child(mAuth.getCurrentUser().getUid())
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        img_key_name.clear();
-//                        img_key_name.add("");
-                        URI.clear();
-                        int i = 0;
-                        for (DataSnapshot child : dataSnapshot.getChildren()) {
-                            img_key_name.add(child.getKey());
-                            Log.d("key : ", img_key_name.get(i));
-//                            gs://leave-a-record.appspot.com/images/"+current_post_Time+filename
-//                            URI.add("gs://leave-a-record.appspot.com/images/"+img_key_name.get(i)+"0"+".jpg"); //key == 202010261243 i .jpg
-                            URI.add(img_key_name.get(i)+"0"+".jpg"); //key == 202010261243 i .jpg
-                            Log.d("key : ", URI.get(i));
-                            i++;
-
-                        }
-                        HistoryListAdapter adapter = new HistoryListAdapter(
-                                getContext(),
-                                R.layout.item_history_list,       // GridView 항목의 레이아웃 row.xml
-                                URI);    // 데이터
-
-
-                        GridView gv = view.findViewById(R.id.gridview);
-                        ViewCompat.setNestedScrollingEnabled(gv, true);
-                        gv.setAdapter(adapter);  // 커스텀 아답타를 GridView 에 적용
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        callback.onCallback(null);
-                    }
-                });
+//        FirebaseDatabase.getInstance().getReference()
+//                .child("posts")
+//                .child(mAuth.getCurrentUser().getUid())
+//                .addValueEventListener(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(DataSnapshot dataSnapshot) {
+//                        img_key_name.clear();
+////                        img_key_name.add("");
+//                        URI.clear();
+//                        int i = 0;
+//                        for (DataSnapshot child : dataSnapshot.getChildren()) {
+//                            img_key_name.add(child.getKey());
+//                            Log.d("key : ", img_key_name.get(i));
+////                            gs://leave-a-record.appspot.com/images/"+current_post_Time+filename
+////                            URI.add("gs://leave-a-record.appspot.com/images/"+img_key_name.get(i)+"0"+".jpg"); //key == 202010261243 i .jpg
+//                            URI.add(img_key_name.get(i)+"0"+".jpg"); //key == 202010261243 i .jpg
+//                            Log.d("key : ", URI.get(i));
+//                            i++;
+//
+//                        }
+//                        HistoryListAdapter adapter = new HistoryListAdapter(
+//                                getContext(),
+//                                R.layout.item_history_list,       // GridView 항목의 레이아웃 row.xml
+//                                URI);    // 데이터
+//
+//
+//                        GridView gv = view.findViewById(R.id.gridview);
+//                        ViewCompat.setNestedScrollingEnabled(gv, true);
+//                        gv.setAdapter(adapter);  // 커스텀 아답타를 GridView 에 적용
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError error) {
+//                        callback.onCallback(null);
+//                    }
+//                });
 //        HistoryListAdapter adapter = new HistoryListAdapter(
 //                getContext(),
 //                R.layout.item_history_list,       // GridView 항목의 레이아웃 row.xml

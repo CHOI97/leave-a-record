@@ -116,7 +116,7 @@ public class edit_viewpager2 extends AppCompatActivity  {
         FirebaseUser user =  mAuth.getCurrentUser();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         mdatabase=database.getReference();
-        mDatabase=database.getReference().child("posts").child(mAuth.getCurrentUser().getUid()).child(current_post_Time);
+        mDatabase=database.getReference().child("posts").child(mAuth.getCurrentUser().getUid());
 //        mdatabase.child("posts").child(mAuth.getCurrentUser().getUid()).child("post_upload_time").setValue(current_post_Time);
 
         //데이터 필드 posts -> uid -> current time(게시물들) -> (게시물내용)child(uri,content,pin), title,datetime
@@ -159,6 +159,12 @@ public class edit_viewpager2 extends AppCompatActivity  {
                         post_meta_gps_Longitude.add(pd_datas_receive.get(i).getData_gps_Longitude());
                     } else {
                         post_meta_gps_Latitue.add(" ");
+                    }
+                    if(pd_datas_receive.get(i).getDate_time()!=null){
+                        post_meta_datetime.add(pd_datas_receive.get(i).getDate_time());
+                    }
+                    else{
+                        post_meta_gps_Longitude.add(" ");
                     }
                 }
                 autopin(post_meta_gps_Latitue, post_meta_gps_Longitude, post_pin);

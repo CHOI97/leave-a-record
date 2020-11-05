@@ -70,11 +70,13 @@ public class ProfileActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         Textname= findViewById(R.id.profile_name);
 
+
         //toolbar
-        Toolbar toolbar =findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);//뒤로가기
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+//        Toolbar toolbar =findViewById(R.id.toolbar);
+
+//        setSupportActionBar(toolbar);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);//뒤로가기
+//        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         Log.d("지금 로그인중인 아이디", mAuth.getCurrentUser().getUid());
 
@@ -131,7 +133,7 @@ public class ProfileActivity extends AppCompatActivity {
 //        });
 
 
-        img_add.setOnClickListener(new View.OnClickListener() {
+       img_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("현재 진행중인 것은", "-------------갤러리로 넘기는중입니다.");
@@ -143,12 +145,13 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), 101);
             }
         });
+
         // Fragment 정보 초기화
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
 
         // "내 기록" Fragment 먼저 보여줌
-        myHistory fragment1 = new myHistory();
+        tripCourse fragment1 = new tripCourse();
         fragmentTransaction.replace(R.id.fragment_layout, fragment1).commitAllowingStateLoss();
 
     }
@@ -277,7 +280,7 @@ public class ProfileActivity extends AppCompatActivity {
                     txt_myHistory.setBackground(ContextCompat.getDrawable(ProfileActivity.this, R.drawable.border));
                     txt_tripCourse.setBackgroundColor(Color.parseColor("#ffffff"));
                     break;
-                // 코스여행을 눌렀을때
+//                 코스여행을 눌렀을때
                 case R.id.txt_tripCourse:
                     // 1. Fragment를 대체하고
                     txt_myHistory.setBackgroundColor(Color.parseColor("#ffffff"));
@@ -292,27 +295,27 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home: //뒤로가기 버튼
-                onBackPressed();
-                return true;
-
-            case R.id.tool_edit: //수정하기 버튼
-
-            case R.id.tool_add: //추가하기 버튼
-
-            case R.id.tool_logout: //로그아웃 버튼
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_profile, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case android.R.id.home: //뒤로가기 버튼
+//                onBackPressed();
+//                return true;
+//
+//            case R.id.tool_edit: //수정하기 버튼
+//
+//            case R.id.tool_add: //추가하기 버튼
+//
+//            case R.id.tool_logout: //로그아웃 버튼
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
+//
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater menuInflater = getMenuInflater();
+//        menuInflater.inflate(R.menu.menu_profile, menu);
+//        return super.onCreateOptionsMenu(menu);
+//    }
 
 
 

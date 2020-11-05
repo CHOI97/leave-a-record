@@ -29,7 +29,7 @@
 
 
 
-
+        <activity android:name=".InterfaceActivity.MapsActivity"/>
         <activity android:name=".InterfaceActivity.ProfileActivity"/>
 <!--        <activity android:name=".InterfaceActivity.LoginActivity">-->
         <activity android:name=".InterfaceActivity.SignupActivity"/>
@@ -48,6 +48,7 @@
         </activity>
 
         <activity android:name=".InterfaceActivity.edit_viewpager2"/>
+
 <!--        <activity android:name=".InterfaceActivity.SignupActivity"/>-->
 <!--=======-->
 <!--        <activity android:name=".InterfaceActivity.edit_viewpager2"/>-->

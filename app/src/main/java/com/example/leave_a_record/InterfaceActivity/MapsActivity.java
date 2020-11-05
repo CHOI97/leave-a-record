@@ -64,9 +64,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private List<PinCourseListItem> pclListItem;
 
     //recyclerview/////////////////////////////////
-    private RecyclerView recyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager layoutManager;
+//    private RecyclerView recyclerView;
+//    private RecyclerView.Adapter mAdapter;
+//    private RecyclerView.LayoutManager layoutManager;
 
     //private String[] myDataset = {"1","2","3"};
 
@@ -82,28 +82,28 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         myDataset.add("1");
         pclListItem=new ArrayList<>();
 //        pclListItem.add(new PinCourseListItem("2020"));
-        pclListItem.add(new PinCourseListItem("2020"));
-        pclListItem.add(new PinCourseListItem("2030"));
-        pclListItem.add(new PinCourseListItem("2040"));
+//        pclListItem.add(new PinCourseListItem("2020"));
+//        pclListItem.add(new PinCourseListItem("2030"));
+//        pclListItem.add(new PinCourseListItem("2040"));
 
 
 
         Log.d("현재 진행중인 것은", "Recyclerview. ======================================");
 
         //recyclerview
-        recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+//        recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
-        recyclerView.setHasFixedSize(true);
+//        recyclerView.setHasFixedSize(true);
 
         // use a linear layout manager
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
+//        layoutManager = new LinearLayoutManager(this);
+//        recyclerView.setLayoutManager(layoutManager);
 
         // specify an adapter (see also next example)
-        mAdapter = new MyAdapter(myDataset);
-        recyclerView.setAdapter(mAdapter);
+//        mAdapter = new MyAdapter(myDataset);
+//        recyclerView.setAdapter(mAdapter);
 
 
 

@@ -3,6 +3,7 @@ package com.example.leave_a_record.InterfaceActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -35,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         findViewById(R.id.login_bt).setOnClickListener(onClickListener);
         findViewById(R.id.loginTosignup_bt).setOnClickListener(onClickListener);
+        Handler hand = new Handler();
 
     }
 
@@ -72,6 +74,7 @@ public class LoginActivity extends AppCompatActivity {
                             logintomainActivity();
                             Log.d("현재 진행중인 것은", "-------------로그인중입니다.");
                             goToast("로그인 성공");
+                            logintomainActivity();
                             // DB에서 유저데이터 가져오기
 //                            mAuth.getUserDataFromDatabase(email, new Callback<UserData>() {
 ////                                @Override
@@ -144,16 +147,14 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent (this, ProfileActivity.class);
         startActivity(intent);
     }
-    private void loginTosignup(){
-        Intent intent = new Intent (this, SignupActivity.class);
+    private void loginTosignup() {
+        Intent intent = new Intent(this, SignupActivity.class);
 //        Intent intent = new Intent(this, NextActivity.class);
-
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-//        startActivity(intent);
         startActivity(intent);
-}
+        finish();
+
+    }
+
     public void onBackPressed() {
         backPressHandler.onBackPressed("뒤로가기 버튼 한번 더 누르면 종료", 3000);
     }

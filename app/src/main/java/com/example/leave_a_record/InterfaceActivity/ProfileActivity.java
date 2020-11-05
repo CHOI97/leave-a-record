@@ -65,18 +65,20 @@ public class ProfileActivity extends AppCompatActivity {
         txt_myHistory = findViewById(R.id.txt_myHistory);
         txt_tripCourse = findViewById(R.id.txt_tripCourse);
         fragment_layout = findViewById(R.id.fragment_layout);
-        img_add = findViewById(R.id.img_add);
-        img_more = findViewById(R.id.img_more);
+//        img_add = findViewById(R.id.img_add);
+//        img_more = findViewById(R.id.img_more);
         mAuth = FirebaseAuth.getInstance();
         Textname= findViewById(R.id.profile_name);
 
 
         //toolbar
-//        Toolbar toolbar =findViewById(R.id.toolbar);
+        Toolbar toolbar =findViewById(R.id.toolbar);
 
-//        setSupportActionBar(toolbar);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);//뒤로가기
-//        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);//뒤로가기
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+
 
         Log.d("지금 로그인중인 아이디", mAuth.getCurrentUser().getUid());
 
@@ -97,6 +99,7 @@ public class ProfileActivity extends AppCompatActivity {
 
                     }
                 });
+
 
 //        GridView gridView = (GridView)findViewById(R.id.gridview);
 //        gridView.setAdapter(new HistoryListAdapter(this,));
@@ -133,18 +136,19 @@ public class ProfileActivity extends AppCompatActivity {
 //        });
 
 
-       img_add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("현재 진행중인 것은", "-------------갤러리로 넘기는중입니다.");
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
-                //사진을 여러개 선택할수 있도록 한다
-                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), 101);
-            }
-        });
+
+//       img_add.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.d("현재 진행중인 것은", "-------------갤러리로 넘기는중입니다.");
+//                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
+//                //사진을 여러개 선택할수 있도록 한다
+//                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+//                intent.setType("image/*");
+//                intent.setAction(Intent.ACTION_GET_CONTENT);
+//                startActivityForResult(Intent.createChooser(intent, "Select Picture"), 101);
+//            }
+//        });
 
         // Fragment 정보 초기화
         fragmentManager = getSupportFragmentManager();
@@ -155,6 +159,35 @@ public class ProfileActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.fragment_layout, fragment1).commitAllowingStateLoss();
 
     }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //return super.onCreateOptionsMenu(menu);
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_profile, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home: //뒤로가기 버튼
+                onBackPressed();
+                return true;
+            case R.id.tool_add:
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
+//                //사진을 여러개 선택할수 있도록 한다
+                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), 101);
+
+            case R.id.tool_edit:
+
+            case R.id.tool_logout:
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
     public void onStart() {
         super.onStart();

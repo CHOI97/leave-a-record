@@ -26,7 +26,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.leave_a_record.BackPressHandler;
-import com.example.leave_a_record.DataBase.Constant;
+
 import com.example.leave_a_record.DataBase.DatabaseManagement;
 import com.example.leave_a_record.DataBase.UserData;
 import com.example.leave_a_record.R;
@@ -50,9 +50,6 @@ public class ProfileActivity extends AppCompatActivity {
     private FragmentManager fragmentManager;            // Framgent 매니저 클래스 변수
     private FragmentTransaction fragmentTransaction;    // Fragment 트랜잭션클래스 변수\
     private TextView Textname;
-    //    public post_data_image []pd_data;
-//    public ArrayList<Uri> arr_uri;
-//    public ArrayList<String> arr_date;
     private FirebaseAuth mAuth;
     public ArrayList<post_data_image> pd_datas;
     private BackPressHandler backPressHandler = new BackPressHandler(this);
@@ -62,6 +59,8 @@ public class ProfileActivity extends AppCompatActivity {
         Log.d("현재 진행중인 것은", "------------프로필페이지.");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_profile);
+
+
         txt_myHistory = findViewById(R.id.txt_myHistory);
         txt_tripCourse = findViewById(R.id.txt_tripCourse);
         fragment_layout = findViewById(R.id.fragment_layout);
@@ -71,14 +70,9 @@ public class ProfileActivity extends AppCompatActivity {
         Textname= findViewById(R.id.profile_name);
 
 
-        //toolbar
-//        Toolbar toolbar =findViewById(R.id.toolbar);
-
-//        setSupportActionBar(toolbar);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);//뒤로가기
-//        getSupportActionBar().setDisplayShowTitleEnabled(false);
-
         Log.d("지금 로그인중인 아이디", mAuth.getCurrentUser().getUid());
+
+
 
         FirebaseDatabase.getInstance().getReference()
                 .child("users").child(mAuth.getCurrentUser().getUid())
@@ -98,42 +92,10 @@ public class ProfileActivity extends AppCompatActivity {
                     }
                 });
 
-//        GridView gridView = (GridView)findViewById(R.id.gridview);
-//        gridView.setAdapter(new HistoryListAdapter(this,));
 
         txt_myHistory.setOnClickListener(new menuClickListener());
         txt_tripCourse.setOnClickListener(new menuClickListener());
-        //--------------- 메뉴 팝업 부분 -----------------//
-//        img_more.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                Log.d("팝업메뉴","=======눌렸음.");
-//                PopupMenu popup= new PopupMenu(getApplicationContext(), v);//v는 클릭된 뷰를 의미
-//                Log.d("팝업메뉴","=======생성중");
-//                getMenuInflater().inflate(R.menu.menu_all, popup.getMenu());
-//                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-//                    @Override
-//                    public boolean onMenuItemClick(MenuItem item) {
-//                        switch (item.getItemId()){
-//                            case R.id.Logout:
-//                                Toast.makeText(getApplication(),"로그아웃",Toast.LENGTH_SHORT).show();
-//                                break;
-//                            case R.id.settings:
-//                                Toast.makeText(getApplication(),"설정",Toast.LENGTH_SHORT).show();
-//                                break;
-//                            default:
-//                                break;
-//                        }
-//                        return false;
-//                    }
-//                });
-//
-//            }
-//        });
-
-
-       img_add.setOnClickListener(new View.OnClickListener() {
+        img_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("현재 진행중인 것은", "-------------갤러리로 넘기는중입니다.");
@@ -160,7 +122,6 @@ public class ProfileActivity extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-//        mAuth.getFirebaseAuth().updateUI(currentUser);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -170,11 +131,6 @@ public class ProfileActivity extends AppCompatActivity {
         Uri urione;
         if (requestCode == 101) {
             if (resultCode == RESULT_OK) {
-
-                //기존 이미지 지우기
-//                vi.setImageResource(0);
-//                vi2.setImageResource(0);
-                //ClipData 또는 Uri를 가져온다
                 Uri uri = data.getData(); //-----------이게 필요한가?..
                 ClipData clipData = data.getClipData();
 //                pd_data=new post_data_image[clipData.getItemCount()];-------일단보류
@@ -249,14 +205,12 @@ public class ProfileActivity extends AppCompatActivity {
                 String document_id = cursor.getString(0);
                 document_id = document_id.substring(document_id.lastIndexOf(":") + 1);
                 cursor.close();
-
                 cursor = getContentResolver().query(
                         MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                         null, MediaStore.Images.Media._ID + " = ? ", new String[]{document_id}, null);
                 cursor.moveToFirst();
                 path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
                 cursor.close();
-
                 return path;
             }
         }

@@ -20,8 +20,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 
-
-import static com.example.leave_a_record.DataBase.Constant.DB_COLLECTION_USERS;
 public class DatabaseManagement {
 
     private static DatabaseManagement dbM = new DatabaseManagement();
@@ -117,11 +115,11 @@ public class DatabaseManagement {
         this.img_key_name = img_key_name;
     }
 
-    public void setUserData(UserData userData) {
-        this.userData = userData;
-    }
     public UserData getUserData() {
         return userData;
+    }
+    public void setUserData(UserData userData) {
+        this.userData = userData;
     }
 
     public static DatabaseManagement getDbM() {

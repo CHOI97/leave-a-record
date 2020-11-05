@@ -29,13 +29,11 @@
 
 
 
+
         <activity android:name=".InterfaceActivity.MapsActivity"/>
         <activity android:name=".InterfaceActivity.ProfileActivity"/>
         <activity android:name=".InterfaceActivity.SignupActivity"/>
         <activity android:name=".InterfaceActivity.LoginActivity">
-
-
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"
                     />

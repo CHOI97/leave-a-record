@@ -150,12 +150,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
+    //toolbar menu_map
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu_map, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
+    //버튼을 눌렀을때
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -212,12 +214,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap = googleMap;
 
 
-
+        //좌표 값 배열로 넘겨받음
         String[] xy = new String[]{"37.221900","127.18800","37.221804","127.186695","37.220000","127.186666"};
+
 
         ArrayList<LatLng> loc=new ArrayList<LatLng>();
 
         int count = 1;
+        //배열로 받은 좌표값을 arraylist에 저장
         for (int i=0;i<xy.length;i++){
 
             double tmp = Double.parseDouble(xy[i]);
@@ -229,6 +233,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             loc.add(latLng);
 
 
+            //핀추가 메소드
             mMap.addMarker(new MarkerOptions().position(latLng).title("Pin"+count).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_pin_purple)));
             count++;
         }
@@ -259,23 +264,28 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.animateCamera(CameraUpdateFactory.zoomTo(17.0f));
 
         // 인포 윈도우 클릭시 전화 걸기 -> 뭔가 게시물 쓸때 쓸수있을거 같아서 남겨둠
-        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-            @Override
-            public void onInfoWindowClick(Marker marker) {
-                Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse("tel:0312365043"));
-                if (intent.resolveActivity(getPackageManager()) != null) {
-                    startActivity(intent);
-                }
-            }
-        });
+//        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+//            @Override
+//            public void onInfoWindowClick(Marker marker) {
+//                Intent intent = new Intent(Intent.ACTION_DIAL);
+//                intent.setData(Uri.parse("tel:0312365043"));
+//                if (intent.resolveActivity(getPackageManager()) != null) {
+//                    startActivity(intent);
+//                }
+//            }
+//        });
 
-        //arraylist 다시 배열에 넣는거 아직 않마 까먹ㅇ멋어ㅏ
-        LatLng[] line = {
-                loc.get(0),loc.get(1),loc.get(2)
-        };
-        //좌표끼리 선 긋기 좌표가 추가 될때마다 새로운 선을 만들어야 하나.. 아니면 그냥 좌표하나씩 추가해야하나 고민
-        //일단 좌표에 들어온 순서로 선이 그어짐 -> 시간별로 추가할수 있도록 해야 함
+        //arraylist 다시 배열에 넣어서 polyline 연결 가능하게 함 -> arraylist는 polyline에서 쓸수 없는거 같아서
+
+        LatLng[] line = new LatLng[loc.size()];
+        for (int i=0;i<loc.size();i++){
+            line[i]=loc.get(i);
+        }
+
+//        LatLng[] line = {
+//                loc.get(0),loc.get(1),loc.get(2)
+//        };
+
 
 
         //좌표 두개마다 각각의 polyline을 생성해야 각각 화살표로 나올수 있음
@@ -291,7 +301,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 //
 //        }
 
-
+        //좌표에 들어온 순서로 선이 그어짐
+        //좌표끼리 연결 line 배열에 각각의 좌표값들 저장되어 있음 -> arraylist는 안되는 것 같음
         Polyline polyline1 = googleMap.addPolyline(new PolylineOptions()
                 .clickable(true)
                 .add(   line
@@ -299,6 +310,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 .geodesic(true));
 
+        //polyline 디자인
         polyline1.setEndCap(new CustomCap(BitmapDescriptorFactory.fromResource(R.drawable.ic_arrow), 15));
         polyline1.setStartCap(new CustomCap(BitmapDescriptorFactory.fromResource(R.drawable.ic_circle), 15));
 
@@ -312,18 +324,18 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     //두 좌표간 거리 구함 -> 어디다 쓰지? 아직 안씀
-    public double getDistance(LatLng LatLng1, LatLng LatLng2) {
-        double distance = 0;
-        Location locationA = new Location("A");
-        locationA.setLatitude(LatLng1.latitude);
-        locationA.setLongitude(LatLng1.longitude);
-        Location locationB = new Location("B");
-        locationB.setLatitude(LatLng2.latitude);
-        locationB.setLongitude(LatLng2.longitude);
-        distance = locationA.distanceTo(locationB);
-
-        return distance;
-    }
+//    public double getDistance(LatLng LatLng1, LatLng LatLng2) {
+//        double distance = 0;
+//        Location locationA = new Location("A");
+//        locationA.setLatitude(LatLng1.latitude);
+//        locationA.setLongitude(LatLng1.longitude);
+//        Location locationB = new Location("B");
+//        locationB.setLatitude(LatLng2.latitude);
+//        locationB.setLongitude(LatLng2.longitude);
+//        distance = locationA.distanceTo(locationB);
+//
+//        return distance;
+//    }
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {

@@ -64,13 +64,22 @@ public class ProfileActivity extends AppCompatActivity {
         txt_myHistory = findViewById(R.id.txt_myHistory);
         txt_tripCourse = findViewById(R.id.txt_tripCourse);
         fragment_layout = findViewById(R.id.fragment_layout);
-        img_add = findViewById(R.id.img_add);
-        img_more = findViewById(R.id.img_more);
+//        img_add = findViewById(R.id.img_add);
+//        img_more = findViewById(R.id.img_more);
         mAuth = FirebaseAuth.getInstance();
         Textname= findViewById(R.id.profile_name);
 
 
+
         Log.d("지금 로그인중인 아이디", mAuth.getCurrentUser().getUid());
+
+        //toolbar
+        Toolbar toolbar =findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);//뒤로가기
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
 
 
 
@@ -92,21 +101,70 @@ public class ProfileActivity extends AppCompatActivity {
                     }
                 });
 
+        txt_myHistory.setOnClickListener(new menuClickListener());
+        txt_tripCourse.setOnClickListener(new menuClickListener());
+//        img_add.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.d("현재 진행중인 것은", "-------------갤러리로 넘기는중입니다.");
+//                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
+//                //사진을 여러개 선택할수 있도록 한다
+//                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+//                intent.setType("image/*");
+//                intent.setAction(Intent.ACTION_GET_CONTENT);
+//                startActivityForResult(Intent.createChooser(intent, "Select Picture"), 101);
+//            }
+//        });
+
+//        GridView gridView = (GridView)findViewById(R.id.gridview);
+//        gridView.setAdapter(new HistoryListAdapter(this,));
 
         txt_myHistory.setOnClickListener(new menuClickListener());
         txt_tripCourse.setOnClickListener(new menuClickListener());
-        img_add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("현재 진행중인 것은", "-------------갤러리로 넘기는중입니다.");
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
-                //사진을 여러개 선택할수 있도록 한다
-                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), 101);
-            }
-        });
+        //--------------- 메뉴 팝업 부분 -----------------//
+//        img_more.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                Log.d("팝업메뉴","=======눌렸음.");
+//                PopupMenu popup= new PopupMenu(getApplicationContext(), v);//v는 클릭된 뷰를 의미
+//                Log.d("팝업메뉴","=======생성중");
+//                getMenuInflater().inflate(R.menu.menu_all, popup.getMenu());
+//                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+//                    @Override
+//                    public boolean onMenuItemClick(MenuItem item) {
+//                        switch (item.getItemId()){
+//                            case R.id.Logout:
+//                                Toast.makeText(getApplication(),"로그아웃",Toast.LENGTH_SHORT).show();
+//                                break;
+//                            case R.id.settings:
+//                                Toast.makeText(getApplication(),"설정",Toast.LENGTH_SHORT).show();
+//                                break;
+//                            default:
+//                                break;
+//                        }
+//                        return false;
+//                    }
+//                });
+//
+//            }
+//        });
+
+
+
+//       img_add.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.d("현재 진행중인 것은", "-------------갤러리로 넘기는중입니다.");
+//                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
+//                //사진을 여러개 선택할수 있도록 한다
+//                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+//                intent.setType("image/*");
+//                intent.setAction(Intent.ACTION_GET_CONTENT);
+//                startActivityForResult(Intent.createChooser(intent, "Select Picture"), 101);
+//            }
+//        });
+
 
         // Fragment 정보 초기화
         fragmentManager = getSupportFragmentManager();
@@ -117,6 +175,35 @@ public class ProfileActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.fragment_layout, fragment1).commitAllowingStateLoss();
 
     }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //return super.onCreateOptionsMenu(menu);
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_profile, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home: //뒤로가기 버튼
+                onBackPressed();
+                return true;
+            case R.id.tool_add:
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
+//                //사진을 여러개 선택할수 있도록 한다
+                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), 101);
+
+            case R.id.tool_edit:
+
+            case R.id.tool_logout:
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
     public void onStart() {
         super.onStart();

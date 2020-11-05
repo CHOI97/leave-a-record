@@ -197,7 +197,7 @@ public class ProfileActivity extends AppCompatActivity {
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), 101);
 
-            case R.id.tool_edit:
+            case R.id.tool_setting:
 
             case R.id.tool_logout:
         }

@@ -5,23 +5,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PostData {
-    private String user_id;      // 사용자 id
-    private String post_title;
-    private List<String> post_images_URI;
-    private String post_content;
-    private List<String> post_meta_gps_Latitue;
-    private List<String> post_meta_gps_Longitude;
-    private List<String> post_meta_datetime;
-    private List<String> post_pin;
+public class PostData{ //게시물에 대한 데이터를 임시저장하는 객체
+    private String post_title; // 포스트 제목
+    private List<String> post_images_URI; // 포스트 이미지 uri (리스트로 구현)
+    private String post_content; // 포스트에 대한 게시글
+    private List<String> post_meta_gps_Latitue; // 포스트 이미지 좌표
+    private List<String> post_meta_gps_Longitude; // 포스트 이미지 좌표
+    private List<String> post_meta_datetime; // 포스트 이미지 시간
+    private List<String> post_pin; //포스트 이미지 핀
+    private String post_date;
 
-    public Map<String, Boolean> stars = new HashMap<>();
+    public PostData(){}
 
 
-   public PostData(){}
-
-    public PostData(String user_id, String post_title,List<String> post_images_URI, String post_content,List<String> post_meta_gps_Latitue,List<String> post_meta_gps_Longitude, List<String> post_meta_datetime,List<String> post_pin) {
-        this.user_id = user_id;
+    public PostData(String post_title,List<String> post_images_URI, String post_content,List<String> post_meta_gps_Latitue,List<String> post_meta_gps_Longitude, List<String> post_meta_datetime,List<String> post_pin,String post_date) {
         this.post_title = post_title;
         this.post_content = post_content;
         this.post_images_URI = post_images_URI;
@@ -29,20 +26,10 @@ public class PostData {
         this.post_meta_gps_Longitude=post_meta_gps_Longitude;
         this.post_meta_datetime = post_meta_datetime;
         this.post_pin=post_pin;
-
+        this.post_date=post_date;
 
 
     }
-
-    public String getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
-    }
-
-
     public String getPost_title() {
         return post_title;
     }
@@ -99,4 +86,11 @@ public class PostData {
         this.post_pin = post_pin;
     }
 
+    public String getPost_date() {
+        return post_date;
+    }
+
+    public void setPost_date(String post_date) {
+        this.post_date = post_date;
+    }
 }

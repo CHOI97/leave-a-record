@@ -19,7 +19,6 @@ import androidx.viewpager2.widget.ViewPager2;
 //import java.io.Serializable;
 import com.example.leave_a_record.Adapter.USERAdapter;
 import com.example.leave_a_record.BackPressHandler;
-import com.example.leave_a_record.DataBase.Callback;
 import com.example.leave_a_record.DataBase.PostData;
 
 
@@ -31,25 +30,19 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.example.leave_a_record.DataBase.DatabaseManagement;
-import com.google.protobuf.StringValue;
 
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class edit_viewpager2 extends AppCompatActivity  {
+public class editActivity extends AppCompatActivity  {
     ViewPager2 viewPager2;
     USERAdapter userAdapter;
     Button save_content;
@@ -94,16 +87,18 @@ public class edit_viewpager2 extends AppCompatActivity  {
         pd_datas_receive = (ArrayList<post_data_image>)getIntent().getSerializableExtra("pd_datas");
         viewPager2 = findViewById(R.id.viewpager2);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN); /////////키보드 가림방지
+
+       //시간측정용
         SimpleDateFormat simpleDate = new SimpleDateFormat("yyyyMMddHHmmss");
         SimpleDateFormat post_upload_time_simple =new SimpleDateFormat("yyyy년 MM월 dd일의 기록");
         long now = System.currentTimeMillis();
         Date mDate = new Date(now);
         final String current_post_Time = simpleDate.format(mDate); //포스트용  시간
-        String post_upload_time = post_upload_time_simple.format(mDate); // 게시물등록 고유 시간
+        final String post_upload_time = post_upload_time_simple.format(mDate); // 게시물등록 고유 시간
+
         post_update_time=new ArrayList<>();
         current_time.setText(post_upload_time);
         post_update_time.add(current_post_Time);
-
         imageditdataList = new ArrayList<>(); //이미지를 위한 리스트
         post_images_URI = new ArrayList<>();
         post_meta_gps_Latitue=new ArrayList<>();
@@ -135,10 +130,10 @@ public class edit_viewpager2 extends AppCompatActivity  {
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(), "업로드중", Toast.LENGTH_SHORT).show();
                 Log.d("현재 진행중인것은 ", "게시글작성중");
-                if (title.getText().toString() != null) {
-                    title_data = title.getText().toString();
-                } else {
+                if (title.getText().toString().equals("")) {
                     title_data = "기록일지";
+                } else {
+                    title_data = title.getText().toString();
                 }
                 if (content.getText().toString() != null) {
                     content_data = content.getText().toString();
@@ -168,17 +163,17 @@ public class edit_viewpager2 extends AppCompatActivity  {
                     }
                 }
                 autopin(post_meta_gps_Latitue, post_meta_gps_Longitude, post_pin);
-                postData = new PostData(mAuth.getUid(), title_data,post_images_URI, content_data, post_meta_gps_Latitue, post_meta_gps_Longitude, post_meta_datetime, post_pin);
+                postData = new PostData(title_data,post_images_URI, content_data, post_meta_gps_Latitue, post_meta_gps_Longitude, post_meta_datetime, post_pin,post_upload_time);
 //                postData_image = new PostData_image(post_images_URI, content_data, post_meta_gps_Latitue, post_meta_gps_Longitude, post_meta_datetime, post_pin);
-
-
-                mDatabase.child("postData").setValue(postData);
+                mDatabase.child("postData").child(current_post_Time).setValue(postData);
 //                mDatabase.child("postData_image").setValue(postData_image);
                 goProfile();
 
             }
         });
     }
+
+
     private void uploadFile(String current_post_Time,int i) {
 
         Uri FilePath=Uri.parse(pd_datas_receive.get(i).getUri());
@@ -232,60 +227,8 @@ public class edit_viewpager2 extends AppCompatActivity  {
             Toast.makeText(getApplicationContext(), "파일을 먼저 선택하세요.", Toast.LENGTH_SHORT).show();
         }
     }
-//    private void uploadFile(int i) {
-//
-//        Uri FilePath=Uri.parse(pd_datas_receive.get(i).getUri());
-//        String user_name= mAuth.getCurrentUser().getUid();
-//        Log.d("넘긴 아이디값은: ", user_name);
-//        String File_tag=Integer.toString(i);
-//        Toast.makeText(getApplicationContext(), "업로드중", Toast.LENGTH_SHORT).show();
-//        if (FilePath != null) {
-//            //업로드 진행 Dialog 보이기
-//            final ProgressDialog progressDialog = new ProgressDialog(this);
-//            progressDialog.setTitle("기록을 남기는중입니다...");
-//            progressDialog.show();
-////////////////// storage 와 cloud의 동시에 저장하자 . /////////////////////////////////
-//            //storage
-//            FirebaseStorage storage = FirebaseStorage.getInstance();
-//
-//            //Unique한 파일명을 만들자.
-//            SimpleDateFormat formatter = new SimpleDateFormat("yymmss"+File_tag);
-//            Date now = new Date();
-//            String filename = formatter.format(now) +user_name+ ".jpg";
-//            //storage 주소와 폴더 파일명을 지정해 준다.
-//            StorageReference storageRef = storage.getReferenceFromUrl("gs://leave-a-record.appspot.com").child("images/" + filename);
-//            //올라가거라...
-//            storageRef.putFile(FilePath)
-//                    //성공시
-//                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                        @Override
-//                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                            progressDialog.dismiss(); //업로드 진행 Dialog 상자 닫기
-//                            Toast.makeText(getApplicationContext(), "기록을 남겼습니다!", Toast.LENGTH_SHORT).show();
-//                        }
-//                    })
-//                    //실패시
-//                    .addOnFailureListener(new OnFailureListener() {
-//                        @Override
-//                        public void onFailure(@NonNull Exception e) {
-//                            progressDialog.dismiss();
-//                            Toast.makeText(getApplicationContext(), "기록 실패!", Toast.LENGTH_SHORT).show();
-//                        }
-//                    })
-//                    //진행중
-//                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-//                        @Override
-//                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-//                            @SuppressWarnings("VisibleForTests") //이걸 넣어 줘야 아랫줄에 에러가 사라진다. 넌 누구냐?
-//                                    double progress = (100 * taskSnapshot.getBytesTransferred()) /  taskSnapshot.getTotalByteCount();
-//                            //dialog에 진행률을 퍼센트로 출력해 준다
-//                            progressDialog.setMessage("기록 작성중.. " + ((int) progress) + "% ...");
-//                        }
-//                    });
-//        } else {
-//            Toast.makeText(getApplicationContext(), "파일을 먼저 선택하세요.", Toast.LENGTH_SHORT).show();
-//        }
-//    }
+
+
     public void autopin(List<String> lat ,List<String> lon,List<String> pin){
         int i;
         double sum=0;

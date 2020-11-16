@@ -42,7 +42,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".InterfaceActivity.edit_viewpager2"/>
+        <activity android:name=".InterfaceActivity.editActivity"/>
 
     </application>
 

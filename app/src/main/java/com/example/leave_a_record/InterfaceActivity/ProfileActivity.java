@@ -13,10 +13,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -25,89 +27,170 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.leave_a_record.BackPressHandler;
 
-import com.example.leave_a_record.DataBase.Callback;
-import com.example.leave_a_record.DataBase.Data_M;
-import com.example.leave_a_record.DataBase.Database_M;
+import com.example.leave_a_record.DataBase.DatabaseManagement;
+import com.example.leave_a_record.DataBase.UserData;
 import com.example.leave_a_record.R;
 import com.example.leave_a_record.fragment.myHistory;
 import com.example.leave_a_record.fragment.tripCourse;
 import com.example.leave_a_record.post_data_image;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class ProfileActivity extends AppCompatActivity {
     private TextView txt_myHistory, txt_tripCourse; // 내 기록, 여행코스 메뉴버튼을 제어하기 위한 변수
     private LinearLayout fragment_layout;        // 바뀌는 화면을 담당할 변수
-
+    private Button img_add;
+    private Button img_more;
     private FragmentManager fragmentManager;            // Framgent 매니저 클래스 변수
     private FragmentTransaction fragmentTransaction;    // Fragment 트랜잭션클래스 변수\
     private TextView Textname;
-    String name;
-    //    private FirebaseAuth mAuth;
+    private FirebaseAuth mAuth;
     public ArrayList<post_data_image> pd_datas;
     private BackPressHandler backPressHandler = new BackPressHandler(this);
-    public Database_M database_m;
-    public Data_M data_m;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("현재 진행중인 것은", "------------프로필페이지.");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_profile);
+
+
         txt_myHistory = findViewById(R.id.txt_myHistory);
         txt_tripCourse = findViewById(R.id.txt_tripCourse);
         fragment_layout = findViewById(R.id.fragment_layout);
+//        img_add = findViewById(R.id.img_add);
+//        img_more = findViewById(R.id.img_more);
+        mAuth = FirebaseAuth.getInstance();
+        Textname= findViewById(R.id.profile_name);
 
-        database_m=new Database_M().getInstance();
-        Textname=findViewById(R.id.profile_name);
 
-        Log.d("지금 로그인중인 아이디", database_m.getFirebaseUser().getUid());//  ---성공----
-//        Textname.setText(data_m.getUserData().getUser_name());
+
+        Log.d("지금 로그인중인 아이디", mAuth.getCurrentUser().getUid());
+
         //toolbar
         Toolbar toolbar =findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);//뒤로가기
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        database_m.userName(new Callback<String>() {
-            @Override
-            public void onCallback(String data) {
-                if(data!=null){
-                    Textname.setText(data);
-                }
-                else{
-                    Log.d("에러다 에러!!!", "에러다에러!!! set Text부분 에러!!");
-                }
-            }
-        });
+
+
+
+        FirebaseDatabase.getInstance().getReference()
+                .child("users").child(mAuth.getCurrentUser().getUid())
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+//                        for (DataSnapshot data : dataSnapshot.getChildren()) {
+                            UserData userdata;
+                            userdata = dataSnapshot.getValue(UserData.class);
+                        Log.d("postupdate time is : ",userdata.getUser_name());
+                            Textname.setText(userdata.getUser_name());
+//                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
 
         txt_myHistory.setOnClickListener(new menuClickListener());
         txt_tripCourse.setOnClickListener(new menuClickListener());
+//        img_add.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.d("현재 진행중인 것은", "-------------갤러리로 넘기는중입니다.");
+//                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
+//                //사진을 여러개 선택할수 있도록 한다
+//                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+//                intent.setType("image/*");
+//                intent.setAction(Intent.ACTION_GET_CONTENT);
+//                startActivityForResult(Intent.createChooser(intent, "Select Picture"), 101);
+//            }
+//        });
+
+//        GridView gridView = (GridView)findViewById(R.id.gridview);
+//        gridView.setAdapter(new HistoryListAdapter(this,));
+
+        txt_myHistory.setOnClickListener(new menuClickListener());
+        txt_tripCourse.setOnClickListener(new menuClickListener());
+        //--------------- 메뉴 팝업 부분 -----------------//
+//        img_more.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                Log.d("팝업메뉴","=======눌렸음.");
+//                PopupMenu popup= new PopupMenu(getApplicationContext(), v);//v는 클릭된 뷰를 의미
+//                Log.d("팝업메뉴","=======생성중");
+//                getMenuInflater().inflate(R.menu.menu_all, popup.getMenu());
+//                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+//                    @Override
+//                    public boolean onMenuItemClick(MenuItem item) {
+//                        switch (item.getItemId()){
+//                            case R.id.Logout:
+//                                Toast.makeText(getApplication(),"로그아웃",Toast.LENGTH_SHORT).show();
+//                                break;
+//                            case R.id.settings:
+//                                Toast.makeText(getApplication(),"설정",Toast.LENGTH_SHORT).show();
+//                                break;
+//                            default:
+//                                break;
+//                        }
+//                        return false;
+//                    }
+//                });
+//
+//            }
+//        });
+
+
+
+//       img_add.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.d("현재 진행중인 것은", "-------------갤러리로 넘기는중입니다.");
+//                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
+//                //사진을 여러개 선택할수 있도록 한다
+//                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+//                intent.setType("image/*");
+//                intent.setAction(Intent.ACTION_GET_CONTENT);
+//                startActivityForResult(Intent.createChooser(intent, "Select Picture"), 101);
+//            }
+//        });
+
+
         // Fragment 정보 초기화
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
 
         // "내 기록" Fragment 먼저 보여줌
-        myHistory fragment1 = new myHistory();
+        tripCourse fragment1 = new tripCourse();
         fragmentTransaction.replace(R.id.fragment_layout, fragment1).commitAllowingStateLoss();
+
     }
     public boolean onCreateOptionsMenu(Menu menu) {
+        //return super.onCreateOptionsMenu(menu);
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu_profile, menu);
 
         return true;
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent;
         switch (item.getItemId()) {
             case android.R.id.home: //뒤로가기 버튼
                 onBackPressed();
                 return true;
-            case R.id.tool_photo:
-                intent = new Intent(Intent.ACTION_PICK, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
+            case R.id.tool_add:
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
 //                //사진을 여러개 선택할수 있도록 한다
                 intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                 intent.setType("image/*");
@@ -115,7 +198,6 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), 101);
 
             case R.id.tool_edit:
-//                intent=new Intent(ProfileActivity.this,SettingActivity.class);
 
             case R.id.tool_logout:
         }
@@ -126,9 +208,8 @@ public class ProfileActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
-//        FirebaseUser currentUser = database_m.getFirebaseUser();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
     }
-
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -158,14 +239,23 @@ public class ProfileActivity extends AppCompatActivity {
                                 urione = clipData.getItemAt(i).getUri();
                                 exif = new ExifInterface(getPath(urione));
                                 pd_datas.add(new post_data_image(urione.toString(), getDateTime(exif),getGPS_Latitude(exif),getGps_Longitude(exif)));
+//                                arr_uri.add(urione);
+//                                arr_date.add(getDateTime(exif));
+//                                pd_data[i].setUri(urione);
+//                                pd_data[i].setDate_time(getDateTime(exif));
+
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         }
                     }
-                    pdSort(pd_datas);
                     Log.d("현재 진행중인 것은", "인텐트로 넘기기전입니다.");
-                    intent = new Intent(this, editActivity.class);
+                    intent = new Intent(this, edit_viewpager2.class);
+//                    intent.putExtra("image-data",pd_datas);
+//                    for(int j=0;j<pd_data.length;j++) {
+//                        to_edit.putExtra("image data - Uri", arr_uri);
+//                        to_edit.putExtra("image data - date",arr_date);
+//                    }
                     intent.putExtra("pd_datas", pd_datas);
                     Log.d("현재 진행중인 것은", "인텐트로 넘기기전입니다.");
                     startActivity(intent);
@@ -184,13 +274,34 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
+    private String getDateTime(ExifInterface exif) {
+        String Datetime = getTagString(ExifInterface.TAG_DATETIME_ORIGINAL, exif);
+        return Datetime;
+    }
 
+    private String getTagString(String tag, ExifInterface exif) {
+        return (exif.getAttribute(tag) + "\n");
+    }
 
+    private String getPath(Uri uri) {
 
-
-
-    public void pdSort(ArrayList<post_data_image> pd_datas){
-        Collections.sort(pd_datas);
+        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+        String path = null;
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                String document_id = cursor.getString(0);
+                document_id = document_id.substring(document_id.lastIndexOf(":") + 1);
+                cursor.close();
+                cursor = getContentResolver().query(
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                        null, MediaStore.Images.Media._ID + " = ? ", new String[]{document_id}, null);
+                cursor.moveToFirst();
+                path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+                cursor.close();
+                return path;
+            }
+        }
+        return path;
     }
 
     // 내 기록, 여행코스를 눌렀을때 이벤트 리스너
@@ -225,6 +336,27 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case android.R.id.home: //뒤로가기 버튼
+//                onBackPressed();
+//                return true;
+//
+//            case R.id.tool_edit: //수정하기 버튼
+//
+//            case R.id.tool_add: //추가하기 버튼
+//
+//            case R.id.tool_logout: //로그아웃 버튼
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
+//
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater menuInflater = getMenuInflater();
+//        menuInflater.inflate(R.menu.menu_profile, menu);
+//        return super.onCreateOptionsMenu(menu);
+//    }
 
 
 
@@ -242,6 +374,8 @@ public class ProfileActivity extends AppCompatActivity {
         String Longitude= getTagString(ExifInterface.TAG_GPS_LONGITUDE, exif);
         return gps_conventer(Longitude);
     }
+
+
     public String gps_conventer(String tag){
         String s1 =tag;
         String s2;
@@ -251,7 +385,10 @@ public class ProfileActivity extends AppCompatActivity {
 
         s2 = s1.replace("/1,",".");
         tag = s2.replace ("/100","");//문자열 필요없는 부분삭제
+
+
         s3=tag.split("\\.");//문자열 분리 각 배열 3개의 각각 들어있음
+
         // dms to dd
         StrTemp+=Double.parseDouble(s3[0]);
         StrTemp+=(Double.parseDouble(s3[1]))/60;
@@ -270,34 +407,4 @@ public class ProfileActivity extends AppCompatActivity {
 //
 //        return tag;
 //    }
-
-    private String getDateTime(ExifInterface exif) {
-        String Datetime = getTagString(ExifInterface.TAG_DATETIME_ORIGINAL, exif);
-        return Datetime;
-    }
-
-    private String getTagString(String tag, ExifInterface exif) {
-        return (exif.getAttribute(tag) + "\n");
-    }
-
-    private String getPath(Uri uri) {
-
-        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
-        String path = null;
-        if (cursor != null) {
-            if (cursor.moveToFirst()) {
-                String document_id = cursor.getString(0);
-                document_id = document_id.substring(document_id.lastIndexOf(":") + 1);
-                cursor.close();
-                cursor = getContentResolver().query(
-                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                        null, MediaStore.Images.Media._ID + " = ? ", new String[]{document_id}, null);
-                cursor.moveToFirst();
-                path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
-                cursor.close();
-                return path;
-            }
-        }
-        return path;
-    }
 }

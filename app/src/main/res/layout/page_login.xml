@@ -57,7 +57,8 @@
         android:paddingEnd="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/viewSuppoter"
-        >
+        app:layout_constraintVertical_bias="1.0"
+        tools:layout_editor_absoluteX="0dp">
 
         <TextView
             android:id="@+id/login_text_login"
@@ -100,7 +101,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:background="@color/colorTextHint"
-            app:layout_constraintTop_toBottomOf="@id/login_id"/>
+            app:layout_constraintTop_toBottomOf="@id/login_id" />
 
         <ImageView
             android:layout_width="20dp"
@@ -108,9 +109,9 @@
             android:layout_marginStart="10dp"
             android:contentDescription="@string/app_name"
             android:src="@drawable/ic_email"
-            app:tint="@color/colorTextHint"
             app:layout_constraintBottom_toBottomOf="@id/login_id"
-            app:layout_constraintStart_toStartOf="@id/login_id" />
+            app:layout_constraintStart_toStartOf="@id/login_id"
+            app:tint="@color/colorTextHint" />
 
         <EditText
             android:id="@+id/login_pw"
@@ -128,8 +129,7 @@
             android:textColor="@color/colorTextPrimary"
             android:textSize="15sp"
             app:layout_constraintTop_toBottomOf="@id/view_email"
-            tools:ignore="Autofill"
-            />
+            tools:ignore="Autofill" />
 
         <View
             android:id="@+id/view_password"
@@ -139,7 +139,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:background="@color/colorTextHint"
-            app:layout_constraintTop_toBottomOf="@id/login_pw"/>
+            app:layout_constraintTop_toBottomOf="@id/login_pw" />
 
         <ImageView
             android:layout_width="20dp"
@@ -147,9 +147,9 @@
             android:layout_marginStart="10dp"
             android:contentDescription="@string/app_name"
             android:src="@drawable/ic_lock"
-            app:tint="@color/colorTextHint"
             app:layout_constraintBottom_toBottomOf="@id/login_pw"
-            app:layout_constraintStart_toStartOf="@id/login_pw" />
+            app:layout_constraintStart_toStartOf="@id/login_pw"
+            app:tint="@color/colorTextHint" />
 
         <Button
             android:id="@+id/login_bt"
@@ -164,7 +164,7 @@
             android:textColor="@color/colorWhite"
             android:textSize="13sp"
             android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/view_password"/>
+            app:layout_constraintTop_toBottomOf="@id/view_password" />
 
         <TextView
             android:id="@+id/login_text_notMember"
@@ -176,8 +176,8 @@
             android:gravity="center"
             android:text="회원이 아니신가요?"
             android:textSize="13sp"
-            app:layout_constraintTop_toBottomOf="@id/login_bt"
-            app:layout_constraintBottom_toTopOf="@id/loginTosignup_bt"/>
+            app:layout_constraintBottom_toTopOf="@id/loginTosignup_bt"
+            app:layout_constraintTop_toBottomOf="@id/login_bt" />
 
         <Button
             android:id="@+id/loginTosignup_bt"
@@ -196,7 +196,6 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

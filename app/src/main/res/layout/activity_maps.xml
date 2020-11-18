@@ -37,39 +37,14 @@
             android:layout_height="@dimen/_30sdp"
             android:background="@drawable/ic_mylocation"
             android:onClick="onLastLocationButtonClicked"
-            app:layout_constraintBottom_toBottomOf="@id/textView"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="@id/map"
-
             />
 
 
-        <ImageView
-            android:id="@+id/imageAirplane_outline"
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp"
-            android:layout_marginStart="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:background="@drawable/round_outline"
-            android:contentDescription="@string/app_name"
-            android:padding="@dimen/_4sdp"
-            android:src="@drawable/ic_pin"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="#000000"></ImageView>
+          </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_8sdp"
-            android:text="leave a record"
-            android:textColor="#000000"
-            android:textSize="@dimen/_16sdp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/imageAirplane_outline"
-            app:layout_constraintStart_toEndOf="@id/imageAirplane_outline"
-            app:layout_constraintTop_toTopOf="@id/imageAirplane_outline" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -77,6 +52,7 @@
         android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
         <ImageView
@@ -119,229 +95,32 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:paddingBottom="@dimen/_15sdp"-->
-<!--        android:paddingLeft="@dimen/_15sdp"-->
-<!--        android:paddingRight="@dimen/_15sdp"-->
-<!--        android:paddingTop="@dimen/_15sdp"-->
-<!--        app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
-<!--        android:orientation="vertical"-->
-<!--        tools:context="com.recipes4dev.examples.fragmentexample1.MainActivity"-->
-<!--        tools:showIn="@layout/item_cardview">-->
-<!--        <androidx.recyclerview.widget.RecyclerView-->
-<!--            android:id="@+id/my_recycler_view"-->
-<!--            android:scrollbarFadeDuration="0"-->
-<!--            android:scrollbarSize="5dp"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">-->
-
-<!--        </androidx.recyclerview.widget.RecyclerView>-->
-
-
-<!--    </LinearLayout>-->
-
-    <RelativeLayout
-
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="13dp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginEnd="13dp"
-        android:elevation="@dimen/_10sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/_15sdp"
+        android:paddingLeft="@dimen/_15sdp"
+        android:paddingRight="@dimen/_15sdp"
+        android:paddingTop="@dimen/_15sdp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:orientation="vertical"
+        tools:context="com.recipes4dev.examples.fragmentexample1.MainActivity"
+        tools:showIn="@layout/item_cardview">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/my_recycler_view"
+            android:scrollbarFadeDuration="0"
+            android:scrollbarSize="5dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_8sdp"
-            android:layout_marginEnd="@dimen/_8sdp"
-            android:paddingTop="@dimen/_6sdp"
-            android:paddingBottom="@dimen/_6sdp">
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
 
-            <TextView
-                android:id="@+id/TextTripData1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="2020.10.23"
-                android:textColor="#000000"
-                android:textSize="@dimen/_10sdp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-
-                ></TextView>
-
-            <TextView
-                android:id="@+id/textStart1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="코스 start"
-                android:textColor="#000000"
-                android:textSize="@dimen/_14sdp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/TextTripData1"></TextView>
-
-            <TextView
-                android:id="@+id/TextTripTime1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" 38minutes"
-                android:textColor="#000000"
-                android:textSize="@dimen/_10sdp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-
-                ></TextView>
-
-            <TextView
-                android:id="@+id/textFinish1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="코스 Finish"
-                android:textColor="#000000"
-                android:textSize="@dimen/_14sdp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/TextTripData1"></TextView>
-
-            <View
-                android:id="@+id/viewLine1"
-                android:layout_width="@dimen/_80sdp"
-                android:layout_height="2dp"
-                android:background="#000000"
-                app:layout_constraintBottom_toBottomOf="@+id/textFinish1"
-                app:layout_constraintEnd_toStartOf="@id/textFinish1"
-                app:layout_constraintStart_toEndOf="@id/textStart1"
-                app:layout_constraintTop_toTopOf="@id/textStart1"></View>
-
-            <ImageView
-                android:id="@+id/airplane1"
-                android:layout_width="@dimen/_22sdp"
-                android:layout_height="@dimen/_22sdp"
-                android:contentDescription="@string/app_name"
-                android:rotation="90"
-                android:src="@drawable/ic_airplane"
-                app:layout_constraintBottom_toBottomOf="@id/viewLine1"
-                app:layout_constraintEnd_toEndOf="@id/viewLine1"
-                app:layout_constraintStart_toStartOf="@id/viewLine1"
-                app:layout_constraintTop_toTopOf="@id/viewLine1"
-                app:tint="#000000"></ImageView>
+        </androidx.recyclerview.widget.RecyclerView>
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/cardview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="13dp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginEnd="13dp"
-        android:elevation="@dimen/_10sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_8sdp"
-            android:layout_marginEnd="@dimen/_8sdp"
-            android:paddingTop="@dimen/_6sdp"
-            android:paddingBottom="@dimen/_6sdp">
-
-            <TextView
-                android:id="@+id/TextTripData"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="2020.10.23"
-                android:textColor="#000000"
-                android:textSize="@dimen/_10sdp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-
-                ></TextView>
-
-            <TextView
-                android:id="@+id/textStart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="코스2 Start"
-                android:textColor="#000000"
-                android:textSize="@dimen/_14sdp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/TextTripData"></TextView>
-
-            <TextView
-                android:id="@+id/TextTripTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="51minutes"
-                android:textColor="#000000"
-                android:textSize="@dimen/_10sdp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-
-                ></TextView>
-
-            <TextView
-                android:id="@+id/textFinish"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="코스2 Finish"
-                android:textColor="#000000"
-                android:textSize="@dimen/_14sdp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/TextTripData"></TextView>
-
-            <View
-                android:id="@+id/viewLine"
-                android:layout_width="@dimen/_80sdp"
-                android:layout_height="2dp"
-                android:background="#000000"
-                app:layout_constraintBottom_toBottomOf="@+id/textFinish"
-                app:layout_constraintEnd_toStartOf="@id/textFinish"
-                app:layout_constraintStart_toEndOf="@id/textStart"
-                app:layout_constraintTop_toTopOf="@id/textStart"></View>
-
-            <ImageView
-                android:id="@+id/airplane"
-                android:layout_width="@dimen/_22sdp"
-                android:layout_height="@dimen/_22sdp"
-                android:contentDescription="@string/app_name"
-                android:rotation="90"
-                android:src="@drawable/ic_airplane"
-                app:layout_constraintBottom_toBottomOf="@id/viewLine"
-                app:layout_constraintEnd_toEndOf="@id/viewLine"
-                app:layout_constraintStart_toStartOf="@id/viewLine"
-                app:layout_constraintTop_toTopOf="@id/viewLine"
-                app:tint="#000000"></ImageView>
+    </LinearLayout>
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/cardview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="13dp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginEnd="13dp"
-        android:elevation="@dimen/_10sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
 
 </LinearLayout>
     <!--gg-->

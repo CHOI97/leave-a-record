@@ -30,7 +30,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         public TextView course_time;
         public TextView place1, place2;
         public TextView start,finish;
-        public ImageView airplane;
+//        public ImageView airplane;
 
 
         public MyViewHolder(View v) {
@@ -39,13 +39,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 //            TextView_content=v.findViewById(R.id.TextView_content);
 //            ImageView_title=v.findViewById(R.id.ImageView_title);
 
-            date_time = v.findViewById(R.id.TextTripData);
+
+            date_time = itemView.findViewById(R.id.TextTripData);
             course_time= itemView.findViewById(R.id.TextTripTime);
             place1=itemView.findViewById(R.id.detailStart);
             place2=itemView.findViewById(R.id.detailFinish);
             start=itemView.findViewById(R.id.textStart);
             finish=itemView.findViewById(R.id.textFinish);
-            airplane=itemView.findViewById(R.id.airplane);
+//            airplane=itemView.findViewById(R.id.airplane);
 
         }
     }

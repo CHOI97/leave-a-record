@@ -2,19 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="@dimen/_75sdp"
+    >
 
-    <RelativeLayout
-        android:id="@+id/cardview"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="13dp"
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginEnd="13dp"
-        android:elevation="@dimen/_10sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:cardCornerRadius="@dimen/_10sdp"
+        android:elevation="@dimen/_20sdp"
+        >
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -22,7 +26,8 @@
             android:layout_marginStart="@dimen/_8sdp"
             android:layout_marginEnd="@dimen/_8sdp"
             android:paddingTop="@dimen/_6sdp"
-            android:paddingBottom="@dimen/_6sdp">
+            android:paddingBottom="@dimen/_6sdp"
+            >
 
             <TextView
                 android:id="@+id/TextTripData"
@@ -51,7 +56,7 @@
                 android:id="@+id/detailStart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="LasVegas"
+                android:text="Start Pin"
                 android:textColor="#000000"
                 android:textSize="@dimen/_10sdp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -84,7 +89,7 @@
                 android:id="@+id/detailFinish"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="LosAngeles"
+                android:text="Finish Pin"
                 android:textColor="#000000"
                 android:textSize="@dimen/_10sdp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -93,7 +98,7 @@
             <View
                 android:id="@+id/viewLine"
                 android:layout_width="@dimen/_80sdp"
-                android:layout_height="2dp"
+                android:layout_height="1.5dp"
                 android:background="#000000"
                 app:layout_constraintBottom_toBottomOf="@+id/textFinish"
                 app:layout_constraintEnd_toStartOf="@id/textFinish"
@@ -102,11 +107,11 @@
 
             <ImageView
                 android:id="@+id/airplane"
-                android:layout_width="@dimen/_22sdp"
-                android:layout_height="@dimen/_22sdp"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
                 android:contentDescription="@string/app_name"
-                android:rotation="90"
                 android:src="@drawable/ic_airplane"
+                android:rotation="90"
                 app:layout_constraintBottom_toBottomOf="@id/viewLine"
                 app:layout_constraintEnd_toEndOf="@id/viewLine"
                 app:layout_constraintStart_toStartOf="@id/viewLine"
@@ -116,6 +121,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </RelativeLayout>
+    </androidx.cardview.widget.CardView>
 
 </LinearLayout>

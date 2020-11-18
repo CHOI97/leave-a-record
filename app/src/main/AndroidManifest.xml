@@ -45,5 +45,5 @@
         <activity android:name=".InterfaceActivity.edit_viewpager2"/>
 
     </application>
-
+<!--지금 상태는 음 -->
 </manifest>

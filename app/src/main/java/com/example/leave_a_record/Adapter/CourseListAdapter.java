@@ -1,6 +1,7 @@
 package com.example.leave_a_record.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,9 @@ import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatImageView;
 
 import com.example.leave_a_record.CourseListItem;
+import com.example.leave_a_record.DataBase.Callback;
+import com.example.leave_a_record.DataBase.Database_M;
+import com.example.leave_a_record.DataBase.PostData;
 import com.example.leave_a_record.R;
 
 import java.util.ArrayList;
@@ -21,7 +25,7 @@ import java.util.ArrayList;
 public class CourseListAdapter extends BaseAdapter {
 
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
-    private ArrayList<CourseListItem> listViewItemList = new ArrayList<CourseListItem>() ;
+    private ArrayList<CourseListItem> listViewItemList = new ArrayList<>() ;
 
     // Adapter에 사용되는 데이터의 개수를 리턴. : 필수 구현
     @Override
@@ -31,6 +35,7 @@ public class CourseListAdapter extends BaseAdapter {
     // position에 위치한 데이터를 화면에 출력하는데 사용될 View를 리턴. : 필수 구현
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        Log.d("getView시작","CourseList get View----------------시작됌");
         final int pos = position;
         final Context context = parent.getContext();
 
@@ -54,6 +59,7 @@ public class CourseListAdapter extends BaseAdapter {
         courseIcon.setImageResource(listViewItem.getIcon());
 //        horizontal_graph.setLayoutParams(params);
 
+        Log.d("getView끝","CourseList get View----------------끝남");
         return convertView;
     }
 
@@ -82,4 +88,5 @@ public class CourseListAdapter extends BaseAdapter {
 
         listViewItemList.add(item);
     }
+
 }

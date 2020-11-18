@@ -1,44 +1,30 @@
 package com.example.leave_a_record.fragment;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.leave_a_record.Adapter.HistoryListAdapter;
 
 import com.example.leave_a_record.DataBase.Callback;
-import com.example.leave_a_record.DataBase.DatabaseManagement;
-import com.example.leave_a_record.DataBase.PostData;
+import com.example.leave_a_record.DataBase.Database_M;
 
-import com.example.leave_a_record.DataBase.UserData;
 //import com.example.leave_a_record.DataBase.postUpdate;
 import com.example.leave_a_record.R;
-import com.example.leave_a_record.post_data_image;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * "내 기록" 탭을 눌렀을때 나오는 화면에 대한 java 코드
@@ -49,7 +35,7 @@ public class myHistory extends Fragment {
     final ArrayList<String> img_key_name = new ArrayList<>();
     final ArrayList<String> img = new ArrayList<>();
     DatabaseReference mDatabase;
-    DatabaseManagement m;
+    Database_M m;
     Callback<String> callback;
     @Nullable
     @Override
@@ -63,7 +49,7 @@ public class myHistory extends Fragment {
         final ArrayList<String> URI = new ArrayList<>();
         ArrayList<String> img=new ArrayList<>();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        m =new DatabaseManagement();
+        m =new Database_M();
         HistoryListAdapter adapter;
 
 //        mDatabase=database.getInstance().getReference()

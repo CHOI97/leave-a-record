@@ -6,7 +6,7 @@ import android.os.Parcelable;
 
 import java.io.Serializable;
 
-public class post_data_image  implements Serializable {
+public class post_data_image  implements Serializable,Comparable<post_data_image>{
     private String uri;
     private String date_time;
     private String data_gps_Latitude;
@@ -48,5 +48,29 @@ public class post_data_image  implements Serializable {
 
     public void setData_gps_Longitude(String data_gps_Longitude) {
         this.data_gps_Longitude = data_gps_Longitude;
+    }
+
+    @Override
+    public int compareTo(post_data_image o) {
+
+        String date1=(this.date_time);
+        String date2=(o.date_time);
+        if(date1.compareTo(date2)>0){
+            return 1;
+        }
+        else if(date1.compareTo(date2)<0){
+            return -1;
+        }
+        else{
+            return 0;
+        }
+//        return 0;
+    }
+        public String time_conventer(String tag){
+        String s1 =tag;
+
+        tag = s1.replaceAll("[^0-9}]","");//문자열 필요없는 부분삭제
+
+        return tag;
     }
 }

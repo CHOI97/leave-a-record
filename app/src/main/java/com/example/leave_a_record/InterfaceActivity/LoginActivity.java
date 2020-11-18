@@ -1,34 +1,26 @@
 package com.example.leave_a_record.InterfaceActivity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.leave_a_record.BackPressHandler;
 import com.example.leave_a_record.DataBase.Callback;
-import com.example.leave_a_record.DataBase.DatabaseManagement;
-import com.example.leave_a_record.DataBase.UserData;
 import com.example.leave_a_record.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+
+import com.example.leave_a_record.DataBase.Database_M;
+
 public class LoginActivity extends AppCompatActivity {
-    private FirebaseAuth mAuth;
-    private static final String TAG = "LoginActivity";
+    private FirebaseAuth mAuth; //인증객체
     private BackPressHandler backPressHandler = new BackPressHandler(this);
 
-    Callback<Boolean> callback;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
         findViewById(R.id.login_bt).setOnClickListener(onClickListener);
         findViewById(R.id.loginTosignup_bt).setOnClickListener(onClickListener);
         Handler hand = new Handler();
+
 
     }
 
@@ -52,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.login_bt:
-                    signInEmail(callback);
+                    signIn();
                     break;
                 case R.id.loginTosignup_bt:
                     loginTosignup();
@@ -60,96 +53,28 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
     };
-    public void signInEmail(final Callback<Boolean> callback) {
+    private void signIn() {
         final String email = ((EditText) findViewById(R.id.login_id)).getText().toString();
         final String password = ((EditText) findViewById(R.id.login_pw)).getText().toString();
-        if (email.length() > 0 && password.length() > 0) {
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    // 작업 완료시
+        // 로그인 인증하기
+        Database_M.getInstance().SignInEmail(this,email,password
+                , new Callback<Boolean>() {
                     @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        // 이메일 로그인 성공
-                        if(task.isSuccessful()) {
-                            logintomainActivity();
-                            Log.d("현재 진행중인 것은", "-------------로그인중입니다.");
-                            goToast("로그인 성공");
-                            logintomainActivity();
-                            // DB에서 유저데이터 가져오기
-//                            mAuth.getUserDataFromDatabase(email, new Callback<UserData>() {
-////                                @Override
-////                                public void onCallback(UserData data) {
-////                                    // 유저데이터를 성공적으로 가져왔을 때
-////                                    if(data != null) {
-////                                        mAuth.getInstance().setUserData(post);
-////
-////                                        callback.onCallback(true);
-////                                    } else {
-////                                        callback.onCallback(false);
-////                                    }
-////                                }
-////                            });
-                        } else {
-                            // 로그인 실패시
-                            goToast("로그인 실패");
+                    public void onCallback(Boolean data) {
+                        // 로그인 작업 성공
+                        if(data) {
+                            Intent intent;
+                            intent = new Intent(LoginActivity.this,ProfileActivity.class);
+                            //ProfileActivity로 이동
+                            startActivity(intent);
+                            finish();
                         }
+
                     }
                 });
-        }
-        else{
-            goToast("아이디와 비밀번호를 입력해주세요.");
-        }
-    }
-
-//    private void toLogin() {
-//        String email = ((EditText) findViewById(R.id.login_id)).getText().toString();
-//        String password = ((EditText) findViewById(R.id.login_pw)).getText().toString();
-//
-//
-//        if (email.length() > 0 && password.length() > 0) {
-//
-//            mAuth.signInWithEmailAndPassword(email, password)
-//                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<AuthResult> task) {
-//                            if (task.isSuccessful()) {
-//
-//                                Log.d(TAG, "signInWithEmail:success");
-//                                FirebaseUser user = mAuth.getCurrentUser();
-//                                getUserDataFromDatabase(email,new CallBack(UserData))
-//                                updateUI(user);
-//                                goToast("로그인 성공");
-//                                logintomainActivity();
-//                            } else {
-//
-//                                Log.w(TAG, "signInWithEmail:failure", task.getException());
-//                                goToast("로그인 실패");
-//                                updateUI(null);
-//
-//                                // ...
-//                            }
-//
-//                            // ...
-//                        }
-//                    });
-//
-//        } else {
-//            goToast("아이디와 비밀번호를 입력해주세요.");
-//        }
-//    }
-
-
-    private void goToast(String msg){
-        Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
-    }
-
-    private void logintomainActivity(){
-        Intent intent = new Intent (this, ProfileActivity.class);
-        startActivity(intent);
     }
     private void loginTosignup() {
-        Intent intent = new Intent(this, SignupActivity.class);
-//        Intent intent = new Intent(this, NextActivity.class);
+        Intent intent = new Intent(LoginActivity.this , SignupActivity.class);
         startActivity(intent);
         finish();
 

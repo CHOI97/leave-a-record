@@ -53,7 +53,7 @@ public class SignupActivity extends AppCompatActivity {
         mDatabase=database.getReference().child("users");
         mAuth = FirebaseAuth.getInstance();
         findViewById(R.id.signup_bt).setOnClickListener(onClickListener);
-//        findViewById(R.id.signTologin_bt).setOnClickListener(onClickListener);
+        findViewById(R.id.signTologin_bt).setOnClickListener(onClickListener);
         id = findViewById(R.id.signup_id);
         name = findViewById(R.id.signup_name);
         pwd = findViewById(R.id.signup_pw);
@@ -80,8 +80,8 @@ public class SignupActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home: //뒤로가기 버튼
-                signTologinActivity();
-                break;
+                onBackPressed();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -100,9 +100,9 @@ public class SignupActivity extends AppCompatActivity {
                 case R.id.signup_bt:
                     signUp();
                     break;
-//                case R.id.signTologin_bt:
-//                    signTologinActivity();
-//                    break;
+                case R.id.signTologin_bt:
+                    signTologinActivity();
+                    break;
 
             }
         }

@@ -27,7 +27,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.leave_a_record.BackPressHandler;
 
-import com.example.leave_a_record.DataBase.DatabaseManagement;
+import com.example.leave_a_record.DataBase.Database_M;
 import com.example.leave_a_record.DataBase.UserData;
 import com.example.leave_a_record.R;
 import com.example.leave_a_record.fragment.myHistory;
@@ -250,7 +250,7 @@ public class ProfileActivity extends AppCompatActivity {
                         }
                     }
                     Log.d("현재 진행중인 것은", "인텐트로 넘기기전입니다.");
-                    intent = new Intent(this, edit_viewpager2.class);
+                    intent = new Intent(this, editActivity.class);
 //                    intent.putExtra("image-data",pd_datas);
 //                    for(int j=0;j<pd_data.length;j++) {
 //                        to_edit.putExtra("image data - Uri", arr_uri);

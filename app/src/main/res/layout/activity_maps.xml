@@ -7,16 +7,15 @@
     android:orientation="vertical"
     >
 
+
     <androidx.appcompat.widget.Toolbar
-        app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
 
 
     </androidx.appcompat.widget.Toolbar>
-
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -97,7 +96,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-<<<<<<< HEAD
+
         android:layout_height="match_parent"
         android:paddingBottom="@dimen/_15sdp"
         android:paddingLeft="@dimen/_15sdp"
@@ -122,45 +121,45 @@
 
 
 
-=======
-        android:layout_height="wrap_content"
-        android:layout_marginStart="13dp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginEnd="13dp"
-        android:elevation="@dimen/_10sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+<!--=======-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="13dp"-->
+<!--        android:layout_marginTop="@dimen/_10sdp"-->
+<!--        android:layout_marginEnd="13dp"-->
+<!--        android:elevation="@dimen/_10sdp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent">-->
 
 
 
-    </RelativeLayout>
+<!--    </RelativeLayout>-->
 
-    <RelativeLayout
-        android:id="@+id/cardview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="13dp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginEnd="13dp"
-        android:elevation="@dimen/_10sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-    </RelativeLayout>
+<!--    <RelativeLayout-->
+<!--        android:id="@+id/cardview"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="13dp"-->
+<!--        android:layout_marginTop="@dimen/_10sdp"-->
+<!--        android:layout_marginEnd="13dp"-->
+<!--        android:elevation="@dimen/_10sdp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent">-->
+<!--    </RelativeLayout>-->
 
-    <RelativeLayout
-        android:id="@+id/cardview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="13dp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginEnd="13dp"
-        android:elevation="@dimen/_10sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
->>>>>>> 0871f8a00c3e704ce40c49e8a5bae52a9b034135
+<!--    <RelativeLayout-->
+<!--        android:id="@+id/cardview"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="13dp"-->
+<!--        android:layout_marginTop="@dimen/_10sdp"-->
+<!--        android:layout_marginEnd="13dp"-->
+<!--        android:elevation="@dimen/_10sdp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"/>-->
+<!--&gt;>>>>>> 0871f8a00c3e704ce40c49e8a5bae52a9b034135-->
 
 </LinearLayout>
     <!--gg-->

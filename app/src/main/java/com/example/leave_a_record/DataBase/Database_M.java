@@ -39,6 +39,7 @@ public class Database_M  {
     private DatabaseReference mDatabase;
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
+    StorageReference desertRef;
 
     // Create a reference with an initial file path and name
 //    StorageReference pathReference = storageRef.child("images/stars.jpg");
@@ -399,6 +400,35 @@ public class Database_M  {
 
         return true;
     }
+    public void SingleImageUri(String image_str,final Callback<Uri> callback){
+        storageRef.child("images/" + image_str).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Log.d("Single이미지 다운로드 성공", ": Success - SINGLE 이미지가 다운로드되었습니다.");
+                callback.onCallback(uri);
+            }
+        });
+    }
+    public void setProfileImage(String profileimage) {
+        FirebaseDatabase.getInstance().getReference().child("users").child(mAuth.getCurrentUser().getUid()).child("user_image").setValue(profileimage);
+    }
+    public void DeleteImage(String image_file,final Callback<Boolean> callback){
+        desertRef=storageRef.child("images/"+image_file+".jpg");
+        desertRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d("이미지파일이 삭제되었습니다 : ","Success");
+                callback.onCallback(true);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Log.d("삭제할 이미지가 없습니다. : ","Failed");
+                callback.onCallback(true);
+            }
+        });
+    }
+
 
 
 

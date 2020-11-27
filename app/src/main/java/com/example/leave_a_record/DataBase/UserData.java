@@ -10,7 +10,7 @@ public class UserData {
 //    private String user_birth; // 생년월일(향후)
     private String user_pwd;// 사용자 비밀번호
     private String uid;
-
+    private String user_image;
 
 
     public UserData(){}
@@ -21,9 +21,16 @@ public class UserData {
 //        this.user_phone = user_phone; 향후
         this.user_pwd = user_pwd;
         this.uid= uid;
+        this.user_image=null;
 //        this.user_birth=user_birth; 향후
+    }
 
+    public String getUser_image() {
+        return user_image;
+    }
 
+    public void setUser_image(String user_image) {
+        this.user_image = user_image;
     }
 
     public String getUid() {
@@ -59,12 +66,4 @@ public class UserData {
     }
 
 
-//    -------------향후 계획-----------
-//    public String getSignupDate() {
-//        return signupDate;
-//    }
-//
-//    public void setSignupDate(String signupDate) {
-//        this.signupDate = signupDate;
-//    }
 }

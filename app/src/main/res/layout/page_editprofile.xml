@@ -23,49 +23,66 @@
         android:id="@+id/image_header"
         android:layout_width="match_parent"
         android:layout_height="350dp"
+        android:layout_marginTop="325dp"
+        android:layout_marginBottom="325dp"
         android:contentDescription="@string/app_name"
         android:scaleType="centerCrop"
         android:src="@drawable/bg_gradation"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        tools:layout_editor_absoluteX="85dp" />
-
-
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.692" />
 
     <TextView
+        android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:gravity="center"
         android:text="프로필 수정"
         android:textColor="@color/colorBlack"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="25dp"
-        app:layout_constraintBottom_toTopOf="@+id/circleImageView"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/image_header"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/circleImageView"
+        android:id="@+id/edit_profile_image"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:src="@drawable/ic_user"
         app:civ_border_color="@color/colorWhite"
         app:civ_border_width="2dp"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
+        android:id="@+id/edit_name"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:hint="세미콜론"
-        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/circleImageView" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_profile_image" />
 
+    <Button
+        android:id="@+id/edit_bt"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_login"
+        android:text="Apply"
+        android:textAllCaps="false"
+        android:textColor="@color/colorWhite"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/viewSuppoter"
+        app:layout_constraintTop_toBottomOf="@+id/edit_name" />
 
     <View
         android:id="@+id/viewSuppoter"
@@ -74,152 +91,6 @@
         android:layout_marginBottom="30dp"
         app:layout_constraintBottom_toBottomOf="@+id/image_header"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@drawable/bg_login"
-        android:paddingStart="30dp"
-        android:paddingEnd="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/viewSuppoter">
-
-        <TextView
-            android:id="@+id/text_setting"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="25dp"
-            android:layout_marginEnd="10dp"
-            android:gravity="center"
-            android:text="프로필 정보"
-            android:textColor="@color/colorTextPrimary"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/text_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="10dp"
-            android:text="Email"
-            android:paddingStart="60dp"
-            android:paddingEnd="10dp"
-            android:textSize="20sp"
-            android:textColor="@color/colorBlack"
-            app:layout_constraintTop_toBottomOf="@id/text_setting"/>
-
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginStart="10dp"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_email"
-            app:tint="@color/colorBlack"
-            app:layout_constraintBottom_toBottomOf="@id/text_email"
-            app:layout_constraintStart_toStartOf="@id/text_email" />
-
-        <TextView
-            android:id="@+id/text_myEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:text="h7208865@gmail.com"
-            android:paddingStart="60dp"
-            android:paddingEnd="10dp"
-            android:textSize="20sp"
-            android:textColor="@color/colorTextHint"
-            app:layout_constraintTop_toBottomOf="@id/text_email"/>
-
-        <TextView
-            android:id="@+id/text_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="10dp"
-            android:text="Password"
-            android:paddingStart="60dp"
-            android:paddingEnd="10dp"
-            android:textSize="20sp"
-            android:textColor="@color/colorBlack"
-            app:layout_constraintTop_toBottomOf="@id/text_myEmail"/>
-
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginStart="10dp"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_lock"
-            app:tint="@color/colorBlack"
-            app:layout_constraintBottom_toBottomOf="@id/text_password"
-            app:layout_constraintStart_toStartOf="@id/text_password" />
-
-        <TextView
-            android:id="@+id/text_myPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:text="123456!!"
-            android:paddingStart="60dp"
-            android:paddingEnd="10dp"
-            android:textSize="20sp"
-            android:textColor="@color/colorTextHint"
-            app:layout_constraintTop_toBottomOf="@id/text_password"/>
-
-        <TextView
-            android:id="@+id/text_SignUpDay"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="10dp"
-            android:text="가입일"
-            android:paddingStart="60dp"
-            android:paddingEnd="10dp"
-            android:textSize="20sp"
-            android:textColor="@color/colorBlack"
-            app:layout_constraintTop_toBottomOf="@id/text_myPassword"/>
-
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginStart="10dp"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_calendar"
-            app:tint="@color/colorBlack"
-            app:layout_constraintBottom_toBottomOf="@id/text_SignUpDay"
-            app:layout_constraintStart_toStartOf="@id/text_SignUpDay" />
-
-        <TextView
-            android:id="@+id/text_mySignUpDay"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:text="2020.10.25"
-            android:paddingStart="60dp"
-            android:paddingEnd="10dp"
-            android:textSize="20sp"
-            android:textColor="@color/colorTextHint"
-            app:layout_constraintTop_toBottomOf="@id/text_SignUpDay"/>
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

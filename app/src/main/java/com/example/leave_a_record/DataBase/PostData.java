@@ -15,6 +15,12 @@ public class PostData{ //게시물에 대한 데이터를 임시저장하는 객
     private List<String> post_pin; //포스트 이미지 핀
     private String post_date;
 
+
+    //2차 내용
+    private int secret;
+    private List<String> scrap;
+
+
     public PostData(){}
 
 

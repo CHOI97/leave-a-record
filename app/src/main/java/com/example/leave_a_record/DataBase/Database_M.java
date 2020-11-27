@@ -1,5 +1,6 @@
 package com.example.leave_a_record.DataBase;
 import android.app.Activity;
+import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -19,9 +20,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 public class Database_M  {
 
@@ -32,6 +37,19 @@ public class Database_M  {
     private FirebaseUser firebaseUser;
     private FirebaseFirestore database;
     private DatabaseReference mDatabase;
+    private FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference storageRef = storage.getReference();
+
+    // Create a reference with an initial file path and name
+//    StorageReference pathReference = storageRef.child("images/stars.jpg");
+
+    // Create a reference to a file from a Google Cloud Storage URI
+//    StorageReference gsReference = storage.getReferenceFromUrl("gs://bucket/images/stars.jpg");
+
+    // Create a reference from an HTTPS URL
+// Note that in the URL, characters are URL escaped!
+//    StorageReference httpsReference = storage.getReferenceFromUrl("https://firebasestorage.googleapis.com/b/bucket/o/images%20stars.jpg");
+
     String TAG="실행중 : ";
     // 생성자
     public Database_M() {
@@ -71,7 +89,7 @@ public class Database_M  {
                                         }
                                     }
                                 });
-                                Toast.makeText(activity,"로그인클래스",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(activity,"로그인되었습니다.",Toast.LENGTH_SHORT).show();
                             } else {
                                 // 로그인 실패시
                                 Toast.makeText(activity,"아이디와 비밀번호를 확인해주세요.",Toast.LENGTH_SHORT).show();
@@ -83,6 +101,9 @@ public class Database_M  {
         else {
             Toast.makeText(activity, "아이디와 비밀번호를 입력해주세요.", Toast.LENGTH_SHORT).show();
         }
+    }
+    public void SignOut(){
+        mAuth.getInstance().signOut();
     }
     //유저데이터를 가져오는 메소드
     public void getUserData(String uid, final Callback<UserData> callback) {
@@ -245,7 +266,6 @@ public class Database_M  {
 
             }
         });
-
     }
     public void readPost(final String post_date,final Callback<PostData> callback){
         FirebaseDatabase.getInstance().getReference().child("posts").child(mAuth.getCurrentUser().getUid()).child("postData")
@@ -266,6 +286,7 @@ public class Database_M  {
             }
         });
     }
+
 
     //유저이름 동기화
     public void userName(final Callback<String> callback) {
@@ -319,6 +340,69 @@ public class Database_M  {
             callback.onCallback(false);
         }
     }
+    public void LoadImage(List<URI> Uri){
+
+    }
+    public void AllgetImageUri(final List<String> str,final Vector<Uri> postImageUri,final Callback<Vector<Uri>> callback){
+        for(int i=0;i<str.size();i++){
+            getImageUri(i, str,postImageUri, new Callback <Vector<Uri>>() {
+                @Override
+                public void onCallback(Vector<Uri> data) {
+                    if(data!=null) {
+                        Log.d("AllgetImageUri : ",postImageUri.toString());
+                    }
+                    else{
+                        Log.d("AllgetImageUri : ","error");
+                    }
+                    if(NulllCheck(postImageUri)){
+                        callback.onCallback(postImageUri);
+                    }
+                }
+            });
+        }
+
+    }
+
+    public void getImageUri(final int i , List<String> str, final Vector<Uri> postImageUri, final Callback<Vector<Uri>> callback) {
+            storageRef.child("images/" + str.get(i)).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    Log.d("이미지다운로드 성공", ": Success -이미지가 다운로드되었습니다.");
+                    Log.d("이미지다운로도된 Uri 는 : ", uri.toString());
+                    Log.d("현재 벡터의 사이즈는 : ", Integer.toString(postImageUri.size()));
+
+                    postImageUri.set(i, uri);
+                    callback.onCallback(postImageUri);
+//                    if(!uri.equals(null)){
+//                        callback.onCallback(uri);
+//                    }
+
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    Log.d("이미지다운로드 실패", ": failed -이미지가 다운로드되지 않았습니다.");
+                }
+            });
+    }
+    public Boolean NulllCheck(Vector<Uri> temp) {
+        for (int i = 0; i < temp.size(); i++) {
+            try {
+                //액션을 취해야함. 확인체크
+                if(temp.get(i).equals(null)){
+                    return false;
+                }
+                Log.d("널포인터 체크 pass index:", Integer.toString(i));
+            }
+            catch(NullPointerException e){
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+
 
 
 

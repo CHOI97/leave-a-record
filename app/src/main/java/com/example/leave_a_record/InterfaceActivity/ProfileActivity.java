@@ -189,15 +189,13 @@ public class ProfileActivity extends AppCompatActivity {
             case android.R.id.home: //뒤로가기 버튼
                 onBackPressed();
                 return true;
-            case R.id.tool_add:
+            case R.id.tool_edit:
                 Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
 //                //사진을 여러개 선택할수 있도록 한다
                 intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), 101);
-
-            case R.id.tool_edit:
 
             case R.id.tool_logout:
         }

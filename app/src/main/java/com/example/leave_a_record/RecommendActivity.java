@@ -168,26 +168,6 @@ public class RecommendActivity extends AppCompatActivity implements OnMapReadyCa
 
 
 
-        //arraylist 다시 배열에 넣는거 아직 않마 까먹ㅇ멋어ㅏ
-//        LatLng[] line = {
-//                loc.get(0),loc.get(1),loc.get(2)
-//        };
-        //좌표끼리 선 긋기 좌표가 추가 될때마다 새로운 선을 만들어야 하나.. 아니면 그냥 좌표하나씩 추가해야하나 고민
-        //일단 좌표에 들어온 순서로 선이 그어짐 -> 시간별로 추가할수 있도록 해야 함
-
-
-        //좌표 두개마다 각각의 polyline을 생성해야 각각 화살표로 나올수 있음
-        //for문 사용해서 polyline 만들어보기
-//        for(int i=0; i<line.length;){
-//            Polyline polyline1 = googleMap.addPolyline(new PolylineOptions()
-//                    .clickable(true)
-//                    .add(   line[i], line[++i]
-//                    ) .width(10)
-//
-//                    .geodesic(true));
-//
-//
-//        }
 
 
 

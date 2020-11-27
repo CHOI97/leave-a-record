@@ -64,6 +64,7 @@ public class HistoryListAdapter extends BaseAdapter {
         }else{
             imageView = (ImageView)convertView;
         }
+        Log.d("getView 탈출","History");
         return imageView;
     }
 

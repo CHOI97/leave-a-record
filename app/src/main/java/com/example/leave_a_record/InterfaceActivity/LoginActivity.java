@@ -25,6 +25,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_login);
+
+
         mAuth = FirebaseAuth.getInstance();
         findViewById(R.id.login_bt).setOnClickListener(onClickListener);
         findViewById(R.id.loginTosignup_bt).setOnClickListener(onClickListener);
@@ -64,10 +66,11 @@ public class LoginActivity extends AppCompatActivity {
                         // 로그인 작업 성공
                         if(data) {
                             Intent intent;
-                            intent = new Intent(LoginActivity.this,ProfileActivity.class);
+                            intent = new Intent(LoginActivity.this,MainActivity.class);
                             //ProfileActivity로 이동
-                            startActivity(intent);
                             finish();
+                            startActivity(intent);
+
                         }
 
                     }

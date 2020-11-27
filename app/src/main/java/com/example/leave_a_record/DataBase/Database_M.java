@@ -340,9 +340,7 @@ public class Database_M  {
             callback.onCallback(false);
         }
     }
-    public void LoadImage(List<URI> Uri){
 
-    }
     public void AllgetImageUri(final List<String> str,final Vector<Uri> postImageUri,final Callback<Vector<Uri>> callback){
         for(int i=0;i<str.size();i++){
             getImageUri(i, str,postImageUri, new Callback <Vector<Uri>>() {

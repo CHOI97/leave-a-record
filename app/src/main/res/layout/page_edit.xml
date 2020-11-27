@@ -1,79 +1,173 @@
-
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_white"
     android:orientation="vertical"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingTop="16dp"
-    >
+    android:scrollbarSize="24sp">
 
-
-
-<!--    <RadioGroup-->
-<!--        android:id="@+id/pin_group"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="50dp"-->
-<!--        android:orientation="horizontal"-->
-<!--        >-->
-
-<!--        <RadioButton-->
-<!--        android:id="@+id/edit_Pin1"-->
-<!--        android:layout_width="70dp"-->
-<!--        android:layout_height="50dp"-->
-<!--        android:layout_weight="0.2"-->
-<!--        android:text="Pin 1"/>-->
-
-<!--        <RadioButton-->
-<!--            android:id="@+id/edit_Pin2"-->
-<!--            android:layout_width="70dp"-->
-<!--            android:layout_height="50dp"-->
-<!--            android:layout_weight="0.2"-->
-<!--            android:text="Pin 2" />-->
-
-<!--        <RadioButton-->
-<!--            android:id="@+id/edit_Pin3"-->
-<!--            android:layout_width="70dp"-->
-<!--            android:layout_height="50dp"-->
-<!--            android:layout_weight="0.2"-->
-<!--            android:text="Pin 3"/>-->
-<!--        <RadioButton-->
-<!--            android:id="@+id/edit_Pin4"-->
-<!--            android:layout_width="70dp"-->
-<!--            android:layout_height="50dp"-->
-<!--            android:layout_weight="0.2"-->
-<!--            android:text="Pin 4"/>-->
-<!--        <RadioButton-->
-<!--            android:id="@+id/edit_Pin5"-->
-<!--            android:layout_width="70dp"-->
-<!--            android:layout_height="50dp"-->
-<!--            android:layout_weight="0.2"-->
-<!--            android:text="Pin 5"/>-->
-<!--</RadioGroup>-->
-
-<!--    viewpager-->
-    <ImageView
-        android:id="@+id/edit_iv"
-        android:layout_width="400dp"
-        android:layout_height="400dp"
-        android:layout_gravity="center"
-        android:background="@drawable/bin_purple"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp">
-
-    </ImageView>
-
-
-    <com.google.android.material.textfield.TextInputLayout
+    <androidx.appcompat.widget.Toolbar
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/edit_myimg"
+        android:layout_width="@dimen/_120sdp"
+        android:layout_height="@dimen/_120sdp"
+        android:scaleType="centerCrop"
+        app:riv_corner_radius="@dimen/_5sdp"
+        android:layout_margin="5dp"
+        android:paddingTop="@dimen/_3sdp"
+        android:src="@drawable/bg_gray"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintBottom_toTopOf="@+id/view_linebar0"/>
+
+    <ImageView
+        android:id="@+id/img_location"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:src="@drawable/ic_location"
+        app:layout_constraintBottom_toBottomOf="@+id/edit_myimg"
+        app:layout_constraintStart_toEndOf="@+id/edit_myimg"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:tint="@color/main_color_plus" />
+
+    <EditText
+        android:id="@+id/edit_location"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:hint="위치 입력"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/img_location"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/img_location"
+        app:layout_constraintTop_toTopOf="@+id/img_location" />
 
 
-    </com.google.android.material.textfield.TextInputLayout>
+    <View
+        android:id="@+id/view_linebar0"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp"
+        android:background="@color/colorTextHint"
+        app:layout_constraintTop_toBottomOf="@id/edit_myimg"/>
+
+
+    <EditText
+        android:id="@+id/edit_text_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="5dp"
+        android:hint="제목을 입력하세요."
+        android:background="@null"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:textColor="@color/colorTextPrimary"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_linebar0" />
+
+    <View
+        android:id="@+id/view_linebar1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp"
+        android:background="@color/colorTextHint"
+        app:layout_constraintTop_toBottomOf="@id/edit_text_title"/>
+
+
+
+    <EditText
+        android:id="@+id/edit_text_content"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="5dp"
+        android:gravity="top"
+        android:hint="내용을 입력하세요."
+        android:background="@null"
+
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:textColor="@color/colorTextPrimary"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_linebar1" />
+
+    <View
+        android:id="@+id/view_linebar2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp"
+        android:background="@color/colorTextHint"
+        app:layout_constraintTop_toBottomOf="@id/edit_text_content"/>
+
+    <TextView
+        android:id="@+id/text_option"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="5dp"
+        android:text="게시물 공개 범위 설정"
+        android:textColor="@color/colorBlack"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_linebar2"
+        />
+
+    <TextView
+        android:id="@+id/text_seeonlyme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:text="나만 보기"
+        android:textColor="@color/colorBlack"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:layout_constraintTop_toBottomOf="@+id/text_option" />
+
+    <Switch
+        android:id="@+id/option_sw"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="15dp"
+        android:thumbTint="@color/main_color_plus"
+        android:trackTint="@color/main_color_20"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_option" />
 
 
 
 
-    </LinearLayout>
 
+</androidx.constraintlayout.widget.ConstraintLayout>

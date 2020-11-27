@@ -27,6 +27,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.leave_a_record.BackPressHandler;
 
+import com.example.leave_a_record.DataBase.Callback;
 import com.example.leave_a_record.DataBase.Database_M;
 import com.example.leave_a_record.DataBase.UserData;
 import com.example.leave_a_record.R;
@@ -85,23 +86,12 @@ public class ProfileActivity extends AppCompatActivity {
 
 
 
-        FirebaseDatabase.getInstance().getReference()
-                .child("users").child(mAuth.getCurrentUser().getUid())
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-//                        for (DataSnapshot data : dataSnapshot.getChildren()) {
-                            UserData userdata;
-                            userdata = dataSnapshot.getValue(UserData.class);
-                        Log.d("postupdate time is : ",userdata.getUser_name());
-                            Textname.setText(userdata.getUser_name());
-//                        }
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
+        m.userName(new Callback<String>() {
+            @Override
+            public void onCallback(String data) {
+                Textname.setText(data);
+            }
+        });
 
         txt_myHistory.setOnClickListener(new menuClickListener());
         txt_tripCourse.setOnClickListener(new menuClickListener());
@@ -191,17 +181,14 @@ public class ProfileActivity extends AppCompatActivity {
             case android.R.id.home: //뒤로가기 버튼
                 onBackPressed();
                 return true;
-            case R.id.tool_add:
+            case R.id.tool_edit:
                 Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
 //                //사진을 여러개 선택할수 있도록 한다
                 intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), 101);
-                break;
-            case R.id.tool_edit:
 
-                break;
             case R.id.tool_logout:
                 m.SignOut();
                 Intent intent_logout=new Intent(ProfileActivity.this,LoginActivity.class);

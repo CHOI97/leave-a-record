@@ -7,16 +7,15 @@
     android:orientation="vertical"
     >
 
+
     <androidx.appcompat.widget.Toolbar
-        app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
 
 
     </androidx.appcompat.widget.Toolbar>
-
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -37,39 +36,14 @@
             android:layout_height="@dimen/_30sdp"
             android:background="@drawable/ic_mylocation"
             android:onClick="onLastLocationButtonClicked"
-            app:layout_constraintBottom_toBottomOf="@id/textView"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="@id/map"
-
             />
 
 
-        <ImageView
-            android:id="@+id/imageAirplane_outline"
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp"
-            android:layout_marginStart="@dimen/_15sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:background="@drawable/round_outline"
-            android:contentDescription="@string/app_name"
-            android:padding="@dimen/_4sdp"
-            android:src="@drawable/ic_pin"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="#000000"></ImageView>
+          </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_8sdp"
-            android:text="leave a record"
-            android:textColor="#000000"
-            android:textSize="@dimen/_16sdp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/imageAirplane_outline"
-            app:layout_constraintStart_toEndOf="@id/imageAirplane_outline"
-            app:layout_constraintTop_toTopOf="@id/imageAirplane_outline" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -77,6 +51,7 @@
         android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
         <ImageView
@@ -119,70 +94,72 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-<!--    <LinearLayout-->
+    <LinearLayout
+        android:layout_width="match_parent"
+
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/_15sdp"
+        android:paddingLeft="@dimen/_15sdp"
+        android:paddingRight="@dimen/_15sdp"
+        android:paddingTop="@dimen/_15sdp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:orientation="vertical"
+        tools:context="com.recipes4dev.examples.fragmentexample1.MainActivity"
+        tools:showIn="@layout/item_cardview">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/my_recycler_view"
+            android:scrollbarFadeDuration="0"
+            android:scrollbarSize="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+
+    </LinearLayout>
+
+
+
+<!--=======-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="13dp"-->
+<!--        android:layout_marginTop="@dimen/_10sdp"-->
+<!--        android:layout_marginEnd="13dp"-->
+<!--        android:elevation="@dimen/_10sdp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent">-->
+
+
+
+<!--    </RelativeLayout>-->
+
+<!--    <RelativeLayout-->
+<!--        android:id="@+id/cardview"-->
 <!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:paddingBottom="@dimen/_15sdp"-->
-<!--        android:paddingLeft="@dimen/_15sdp"-->
-<!--        android:paddingRight="@dimen/_15sdp"-->
-<!--        android:paddingTop="@dimen/_15sdp"-->
-<!--        app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
-<!--        android:orientation="vertical"-->
-<!--        tools:context="com.recipes4dev.examples.fragmentexample1.MainActivity"-->
-<!--        tools:showIn="@layout/item_cardview">-->
-<!--        <androidx.recyclerview.widget.RecyclerView-->
-<!--            android:id="@+id/my_recycler_view"-->
-<!--            android:scrollbarFadeDuration="0"-->
-<!--            android:scrollbarSize="5dp"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="13dp"-->
+<!--        android:layout_marginTop="@dimen/_10sdp"-->
+<!--        android:layout_marginEnd="13dp"-->
+<!--        android:elevation="@dimen/_10sdp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent">-->
+<!--    </RelativeLayout>-->
 
-<!--        </androidx.recyclerview.widget.RecyclerView>-->
-
-
-<!--    </LinearLayout>-->
-
-    <RelativeLayout
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="13dp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginEnd="13dp"
-        android:elevation="@dimen/_10sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/cardview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="13dp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginEnd="13dp"
-        android:elevation="@dimen/_10sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/cardview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="13dp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginEnd="13dp"
-        android:elevation="@dimen/_10sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+<!--    <RelativeLayout-->
+<!--        android:id="@+id/cardview"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="13dp"-->
+<!--        android:layout_marginTop="@dimen/_10sdp"-->
+<!--        android:layout_marginEnd="13dp"-->
+<!--        android:elevation="@dimen/_10sdp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"/>-->
+<!--&gt;>>>>>> 0871f8a00c3e704ce40c49e8a5bae52a9b034135-->
 
 </LinearLayout>
     <!--gg-->

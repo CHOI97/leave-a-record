@@ -93,11 +93,10 @@ public class myHistory extends Fragment {
         });
 
             // 커스텀 아답타 생성
-
-
-
         return view;
     }
+
+
     public void onCallbackPost(final Callback <List<PostData>> callback){
 //        for(int i=0;i< )
         Log.d("메소드실행 onCallbackPost", ":포스트 리스트뷰에 추가하는 메소드 ");

@@ -1,4 +1,4 @@
-package com.example.leave_a_record.InterfaceActivity;
+package com.example.leave_a_record;
 
 import android.Manifest;
 import android.content.Intent;
@@ -6,7 +6,6 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,15 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-//import com.example.leave_a_record.Adapter.PinCourseListAdapter;
-
-
-import com.example.leave_a_record.Adapter.MyAdapter;
-import com.example.leave_a_record.PinCourseListItem;
-import com.example.leave_a_record.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -36,100 +27,38 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CustomCap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.Polyline;
-import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnPolylineClickListener,GoogleMap.OnPolygonClickListener {
+public class RecommendActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnPolylineClickListener, GoogleMap.OnPolygonClickListener {
 
 
 
     // 권한 체크 요청 코드 정의
     public static final int REQUEST_CODE_PERMISSIONS = 1000;
-    ArrayList<PinCourseListItem> PincourseDataArray = new ArrayList<>();
+
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient;
-    RecyclerView rv_pincourse;
+
     // 위치 정보 얻는 객체
     private FusedLocationProviderClient mFusedLocationClient;
-//    private PinCourseListAdapter pclAdapter;
-    private List<PinCourseListItem> pclListItem;
-
-    //recyclerview/////////////////////////////////
-    private RecyclerView recyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager layoutManager;
-
-//    private String[] myDataset = {"1","2","3"};
-
-
-    ArrayList<String> myDataset=new ArrayList<>();
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps);
-        myDataset.add("2020.11.06");
-        myDataset.add("2020.11.06");
-        myDataset.add("2020.11.06");
-        pclListItem=new ArrayList<>();
-        pclListItem.add(new PinCourseListItem("2020"));
-        pclListItem.add(new PinCourseListItem("2020"));
-        pclListItem.add(new PinCourseListItem("2030"));
-        pclListItem.add(new PinCourseListItem("2040"));
+        setContentView(R.layout.page_recommend);
 
 
-
-        Log.d("현재 진행중인 것은", "Recyclerview. ======================================");
-
-        //recyclerview
-        recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
-
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
-        recyclerView.setHasFixedSize(true);
-
-        // use a linear layout manager
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-
-        // specify an adapter (see also next example)
-        mAdapter = new MyAdapter(myDataset);
-        recyclerView.setAdapter(mAdapter);
-
-
-
-       ///////////////////////////////////////////////////////////////////
-
-        Log.d("success", "tripCourse case:success"); //로그찍기
-//        rv_pincourse=findViewById(R.id.rv_pincourse);
-        Log.d("현재 진행중인 것은", "Recyclerview. ======================================find view id");
-//        pclAdapter =  new PinCourseListAdapter(this,pclListItem);
-//        rv_pincourse.setAdapter(pclAdapter);
-
-//        userAdapter =  new USERAdapter(this, imageditdataList);
-//        viewPager2.setAdapter(userAdapter);
-
-
-        //toolbar
         Toolbar toolbar =findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);//뒤로가기
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-//        actionBar = getSupportActionBar();
-//        actionBar.setDisplayShowCustomEnabled(true);
-//        actionBar.setDisplayShowTitleEnabled(false);//기본 제목을 없애줍니다.
-//        actionBar.setDisplayHomeAsUpEnabled(true);
 
 
         // GoogleAPIClient의 인스턴스 생성
@@ -147,48 +76,24 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mapFragment.getMapAsync(this);
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-
-
-
     }
 
-    //toolbar menu_map
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_map, menu);
+        menuInflater.inflate(R.menu.menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
-    //버튼을 눌렀을때
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home: //뒤로가기 버튼
-                onBackPressed();
-                return true;
-
-            case R.id.tool_map: //지도 버튼
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                //select back button
+                finish();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
-
-
-//    @Override
-//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-//        switch (item.getItemId()){
-//            case R.id.logout:
-//                //select logout item
-//                break;
-//            case R.id.account:
-//                //select account item
-//                break;
-//            case android.R.id.home:
-//                //select back button
-//                finish();
-//                break;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
 
     @Override
     protected void onStart() {
@@ -216,14 +121,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap = googleMap;
 
 
-        //좌표 값 배열로 넘겨받음
-        String[] xy = new String[]{"37.221900","127.18800","37.221804","127.186695","37.220000","127.186666"};
 
+        String[] xy = new String[]{"37.221900","127.18800","37.221804","127.186695","37.220000","127.186666"};
 
         ArrayList<LatLng> loc=new ArrayList<LatLng>();
 
         int count = 1;
-        //배열로 받은 좌표값을 arraylist에 저장
         for (int i=0;i<xy.length;i++){
 
             double tmp = Double.parseDouble(xy[i]);
@@ -235,91 +138,38 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             loc.add(latLng);
 
 
-            //핀추가 메소드
             mMap.addMarker(new MarkerOptions().position(latLng).title("Pin"+count).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_pin_purple)));
             count++;
-        }
 
+
+        }
 
 
         mMap.moveCamera(CameraUpdateFactory.newLatLng(loc.get(loc.size()-1)));
 
 
-//        // 서울 위치
-//        LatLng seoul = new LatLng(37.566535, 126.97796919);
-//        mMap.addMarker(new MarkerOptions().position(seoul).title("Marker in Seoul"));
-//
-//        // 명지대 위치 추가
-//        LatLng MJU = new LatLng(37.221804, 127.186695);
-//        mMap.addMarker(new MarkerOptions()
-//                .position(MJU)
-//                .title("명지대"));
-//
-//        //핀 연결 확인용 좌표 추가
-//        LatLng MJU2 = new LatLng(37.220000, 127.186666);
-//        mMap.addMarker(new MarkerOptions()
-//                .position(MJU2)
-//                .title("명지대2"));
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(MJU2));
 
         // 카메라 줌
         mMap.animateCamera(CameraUpdateFactory.zoomTo(17.0f));
 
         // 인포 윈도우 클릭시 전화 걸기 -> 뭔가 게시물 쓸때 쓸수있을거 같아서 남겨둠
-//        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-//            @Override
-//            public void onInfoWindowClick(Marker marker) {
-//                Intent intent = new Intent(Intent.ACTION_DIAL);
-//                intent.setData(Uri.parse("tel:0312365043"));
-//                if (intent.resolveActivity(getPackageManager()) != null) {
-//                    startActivity(intent);
-//                }
-//            }
-//        });
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:0312365043"));
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(intent);
+                }
+            }
 
-        //arraylist 다시 배열에 넣어서 polyline 연결 가능하게 함 -> arraylist는 polyline에서 쓸수 없는거 같아서
-
-        LatLng[] line = new LatLng[loc.size()];
-        for (int i=0;i<loc.size();i++){
-            line[i]=loc.get(i);
-        }
-
-//        LatLng[] line = {
-//                loc.get(0),loc.get(1),loc.get(2)
-//        };
+        });
 
 
 
-        //좌표 두개마다 각각의 polyline을 생성해야 각각 화살표로 나올수 있음
-        //for문 사용해서 polyline 만들어보기
-//        for(int i=0; i<line.length;){
-//            Polyline polyline1 = googleMap.addPolyline(new PolylineOptions()
-//                    .clickable(true)
-//                    .add(   line[i], line[++i]
-//                    ) .width(10)
-//
-//                    .geodesic(true));
-//
-//
-//        }
-
-        //좌표에 들어온 순서로 선이 그어짐
-        //좌표끼리 연결 line 배열에 각각의 좌표값들 저장되어 있음 -> arraylist는 안되는 것 같음
-        Polyline polyline1 = googleMap.addPolyline(new PolylineOptions()
-                .clickable(true)
-                .add(   line
-                ) .width(10)
-
-                .geodesic(true));
-
-        //polyline 디자인
-        polyline1.setEndCap(new CustomCap(BitmapDescriptorFactory.fromResource(R.drawable.ic_arrow), 15));
-        polyline1.setStartCap(new CustomCap(BitmapDescriptorFactory.fromResource(R.drawable.ic_circle), 15));
 
 
 
-        googleMap.setOnPolylineClickListener(this);
-        googleMap.setOnPolygonClickListener(this);
 
 
 
@@ -403,7 +253,4 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onPolylineClick(Polyline polyline) {
 
     }
-//public void onBackPressed() {
-//        backPressHandler.onBackPressed("뒤로가기 버튼 한번 더 누르면 종료", 3000);
-//        }
 }

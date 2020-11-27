@@ -5,16 +5,8 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_white"
     android:orientation="vertical"
+    android:padding="15dp"
     android:scrollbarSize="24sp">
-
-    <androidx.appcompat.widget.Toolbar
-        app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-
-    </androidx.appcompat.widget.Toolbar>
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/edit_myimg"
@@ -23,10 +15,9 @@
         android:scaleType="centerCrop"
         app:riv_corner_radius="@dimen/_5sdp"
         android:layout_margin="5dp"
-        android:paddingTop="@dimen/_3sdp"
         android:src="@drawable/bg_gray"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/view_linebar0"/>
 
     <ImageView
@@ -39,7 +30,7 @@
         android:src="@drawable/ic_location"
         app:layout_constraintBottom_toBottomOf="@+id/edit_myimg"
         app:layout_constraintStart_toEndOf="@+id/edit_myimg"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/main_color_plus" />
 
     <EditText

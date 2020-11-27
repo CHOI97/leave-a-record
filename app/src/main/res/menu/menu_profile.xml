@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/tool_edit"
-        android:title="수정하기"
+        android:title="설정"
         />
 
 

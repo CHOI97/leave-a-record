@@ -51,7 +51,7 @@ public class USERAdapter extends RecyclerView.Adapter<USERAdapter.UserViewHolder
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            edit_iv= itemView.findViewById(R.id.edit_iv);
+//            edit_iv= itemView.findViewById(R.id.);
         }
     }
 }

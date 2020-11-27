@@ -1,4 +1,4 @@
-package com.example.leave_a_record;
+ package com.example.leave_a_record;
 
 import android.app.Activity;
 import android.content.Intent;

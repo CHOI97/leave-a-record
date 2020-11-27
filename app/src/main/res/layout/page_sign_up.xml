@@ -27,7 +27,9 @@
         android:contentDescription="@string/app_name"
         android:scaleType="centerCrop"
         android:src="@drawable/stamp_purple3"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!--   <ImageButton
            android:id="@+id/btn_back"

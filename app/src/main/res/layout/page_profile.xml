@@ -8,7 +8,6 @@
     android:layout_height="match_parent"
     tools:context=".InterfaceActivity.ProfileActivity">
 
-    <!--    menu_profile 사용 -->
     <androidx.appcompat.widget.Toolbar
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/toolbar"
@@ -179,6 +178,16 @@
         app:layout_constraintTop_toBottomOf="@id/linear_menu"
         android:orientation="vertical">
 <!--<<<<<<< HEAD-->
+        <GridView
+            android:id="@+id/gridview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:columnWidth="100dp"
+            android:gravity="center"
+            android:numColumns="3"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="0dp" >
+        </GridView>
 <!--=======-->
 <!--        <GridView-->
 <!--            android:id="@+id/gridview"-->

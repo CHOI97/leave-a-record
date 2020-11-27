@@ -30,7 +30,8 @@
 
 
 
-        <activity android:name=".InterfaceActivity.MapsActivity"/>
+
+        <activity android:name=".InterfaceActivity.MainActivity"/>
         <activity android:name=".InterfaceActivity.ProfileActivity"/>
         <activity android:name=".InterfaceActivity.SignupActivity"/>
         <activity android:name=".InterfaceActivity.LoginActivity">

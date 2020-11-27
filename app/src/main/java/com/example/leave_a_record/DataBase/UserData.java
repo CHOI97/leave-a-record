@@ -11,7 +11,6 @@ public class UserData {
     private String user_pwd;// 사용자 비밀번호
     private String uid;
 
-//    private String signupDate; //오늘 날짜 (향후)
 
 
     public UserData(){}

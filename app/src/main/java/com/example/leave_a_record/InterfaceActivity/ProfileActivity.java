@@ -27,6 +27,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.leave_a_record.BackPressHandler;
 
+import com.example.leave_a_record.DataBase.Callback;
 import com.example.leave_a_record.DataBase.Database_M;
 import com.example.leave_a_record.DataBase.UserData;
 import com.example.leave_a_record.R;
@@ -53,6 +54,7 @@ public class ProfileActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     public ArrayList<post_data_image> pd_datas;
     private BackPressHandler backPressHandler = new BackPressHandler(this);
+    private Database_M m;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +70,7 @@ public class ProfileActivity extends AppCompatActivity {
 //        img_more = findViewById(R.id.img_more);
         mAuth = FirebaseAuth.getInstance();
         Textname= findViewById(R.id.profile_name);
+        m=new Database_M();
 
 
 
@@ -83,23 +86,12 @@ public class ProfileActivity extends AppCompatActivity {
 
 
 
-        FirebaseDatabase.getInstance().getReference()
-                .child("users").child(mAuth.getCurrentUser().getUid())
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-//                        for (DataSnapshot data : dataSnapshot.getChildren()) {
-                            UserData userdata;
-                            userdata = dataSnapshot.getValue(UserData.class);
-                        Log.d("postupdate time is : ",userdata.getUser_name());
-                            Textname.setText(userdata.getUser_name());
-//                        }
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
+        m.userName(new Callback<String>() {
+            @Override
+            public void onCallback(String data) {
+                Textname.setText(data);
+            }
+        });
 
         txt_myHistory.setOnClickListener(new menuClickListener());
         txt_tripCourse.setOnClickListener(new menuClickListener());
@@ -171,7 +163,7 @@ public class ProfileActivity extends AppCompatActivity {
         fragmentTransaction = fragmentManager.beginTransaction();
 
         // "내 기록" Fragment 먼저 보여줌
-        tripCourse fragment1 = new tripCourse();
+        myHistory fragment1 = new myHistory();
         fragmentTransaction.replace(R.id.fragment_layout, fragment1).commitAllowingStateLoss();
 
     }
@@ -198,16 +190,23 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), 101);
 
             case R.id.tool_logout:
+                m.SignOut();
+                Intent intent_logout=new Intent(ProfileActivity.this,LoginActivity.class);
+                finish();
+                startActivity(intent_logout);
+                goToast("로그아웃 되었습니다.");
+                break;
+
         }
         return super.onOptionsItemSelected(item);
     }
 
 
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-    }
+//    public void onStart() {
+//        super.onStart();
+//        // Check if user is signed in (non-null) and update UI accordingly.
+//        FirebaseUser currentUser = mAuth.getCurrentUser();
+//    }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

@@ -1,6 +1,7 @@
 package com.example.leave_a_record.Adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,12 +11,17 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatImageView;
 
+import com.bumptech.glide.Glide;
 import com.example.leave_a_record.CourseListItem;
 import com.example.leave_a_record.DataBase.Callback;
 import com.example.leave_a_record.DataBase.Database_M;
 import com.example.leave_a_record.DataBase.PostData;
 import com.example.leave_a_record.R;
 
+import java.net.URI;
+import java.net.URL;
+import java.net.URLStreamHandler;
+import java.net.URLStreamHandlerFactory;
 import java.util.ArrayList;
 
 /**
@@ -26,7 +32,6 @@ public class CourseListAdapter extends BaseAdapter {
 
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
     private ArrayList<CourseListItem> listViewItemList = new ArrayList<>() ;
-
     // Adapter에 사용되는 데이터의 개수를 리턴. : 필수 구현
     @Override
     public int getCount() {
@@ -50,14 +55,13 @@ public class CourseListAdapter extends BaseAdapter {
         TextView courseDate = (TextView) convertView.findViewById(R.id.course_txt_date) ;
         AppCompatImageView courseIcon = (AppCompatImageView) convertView.findViewById(R.id.course_img_icon
         ) ;
-        // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
+
         CourseListItem listViewItem = listViewItemList.get(position);
 
         // 아이템 내 각 위젯에 데이터 반영
         courseTitle.setText(listViewItem.getTitle());
         courseDate.setText(listViewItem.getDate());
-        courseIcon.setImageResource(listViewItem.getIcon());
-//        horizontal_graph.setLayoutParams(params);
+        Glide.with(convertView).load(listViewItem.getUri()).override(100,100).centerCrop().into(courseIcon);
 
         Log.d("getView끝","CourseList get View----------------끝남");
         return convertView;
@@ -80,13 +84,12 @@ public class CourseListAdapter extends BaseAdapter {
     }
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
-    public void addItem(String title, String date, int img) {
+    public void addItem(String title, String date, Uri img) {
         CourseListItem item = new CourseListItem();
         item.setTitle(title);
         item.setDate(date);
-        item.setIcon(img);
+        item.setUri(img);
 
         listViewItemList.add(item);
     }
-
 }

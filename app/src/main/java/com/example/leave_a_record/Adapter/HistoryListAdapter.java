@@ -15,14 +15,15 @@ import androidx.appcompat.widget.AppCompatImageView;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class HistoryListAdapter extends BaseAdapter {
     Context context;
     int layout;
-    ArrayList<String> img;
+    List<Uri> img;
     LayoutInflater inf;
 
-    public HistoryListAdapter(Context context, int layout, ArrayList<String> img) {
+    public HistoryListAdapter(Context context, int layout, List<Uri> img) {
         this.context = context;
         this.layout = layout;
         this.img = img;
@@ -45,38 +46,25 @@ public class HistoryListAdapter extends BaseAdapter {
         return position;
     }
 
-    @Override
-//    public View getView(int position, View convertView, ViewGroup parent) {
-//        if (convertView == null)
-//            convertView = inf.inflate(layout, null);
-//        AppCompatImageView iv = (AppCompatImageView) convertView.findViewById(R.id.imageView1);
-//        iv.setImageResource(img[position]);dk
-//
-//        return convertView;
-//    }
-//}
 
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageView imageView;
         if(convertView == null){
             Log.d("success", "myHistory"); //로그찍기
             imageView = new ImageView(context);
-            imageView.setLayoutParams(new GridView.LayoutParams(300,300));
-//            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            imageView.setLayoutParams(new GridView.LayoutParams(400,400));
+
+            Log.d("현재의 이미지 업데이트 포지션은 ",Integer.toString(position));
+            Log.d("현재의 이미지 업로드 uri는 :",(img.get(position)).toString());
             Glide.with(context).load(img.get(position)).into(imageView);
-            Log.d("what the Fuck sibal",img.get(position));
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-//            imageView.set
-//            imageView.setPadding(1, 1, 1, 1);
-//            Log.d("success", "good"); //로그찍기
-////            Log.d("success", img.get(position)); //로그찍기
+
+            imageView.setPadding(1, 1, 1, 1);
 
         }else{
             imageView = (ImageView)convertView;
         }
-
-//        imageView.setImageURI(Uri.parse(img.get(position)));
-
+        Log.d("getView 탈출","History");
         return imageView;
     }
 

@@ -2,13 +2,16 @@ package com.example.leave_a_record.InterfaceActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,7 +68,8 @@ public class editActivity extends AppCompatActivity  {
     String content_data;
     EditText title;
     String title_data;
-
+    Switch switchbutton;
+    TextView control_text;
 
     PostData postData;
 //    PostData_image postData_image;
@@ -79,15 +83,35 @@ public class editActivity extends AppCompatActivity  {
         final UserData userData;
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.item_viewpager_editpage);
+        setContentView(R.layout.page_edit);
         title=findViewById(R.id.edit_title);
         content=findViewById(R.id.edit_content);
-        save_content=findViewById(R.id.save);
-        current_time=findViewById(R.id.edit_date_time);
+//        save_content=findViewById(R.id.save);
         pd_datas_receive = (ArrayList<post_data_image>)getIntent().getSerializableExtra("pd_datas");
         viewPager2 = findViewById(R.id.viewpager2);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN); /////////키보드 가림방지
 
+        switchbutton=findViewById(R.id.option_sw);
+        control_text=findViewById(R.id.text_control);
+        control_text.setText("비활성화");
+
+
+        switchbutton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    control_text.setText("활성화");
+                    control_text.setTextColor(Color.rgb(122,87,209));
+                }
+                else{
+                    control_text.setText("비활성화");
+
+                    control_text.setTextColor(Color.GRAY);
+                }
+            }
+        });
+
+        switchbutton.setChecked(false);
        //시간측정용
         SimpleDateFormat simpleDate = new SimpleDateFormat("yyyyMMddHHmmss");
         SimpleDateFormat post_upload_time_simple =new SimpleDateFormat("yyyy년 MM월 dd일의 기록");
@@ -97,7 +121,7 @@ public class editActivity extends AppCompatActivity  {
         final String post_upload_time = post_upload_time_simple.format(mDate); // 게시물등록 고유 시간
 
         post_update_time=new ArrayList<>();
-        current_time.setText(post_upload_time);
+        title.setHint(post_upload_time);
         post_update_time.add(current_post_Time);
         imageditdataList = new ArrayList<>(); //이미지를 위한 리스트
         post_images_URI = new ArrayList<>();
@@ -125,52 +149,52 @@ public class editActivity extends AppCompatActivity  {
         userAdapter =  new USERAdapter(this, imageditdataList);
         viewPager2.setAdapter(userAdapter);
 
-        save_content.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "업로드중", Toast.LENGTH_SHORT).show();
-                Log.d("현재 진행중인것은 ", "게시글작성중");
-                if (title.getText().toString().equals("")) {
-                    title_data = "기록일지";
-                } else {
-                    title_data = title.getText().toString();
-                }
-                if (content.getText().toString() != null) {
-                    content_data = content.getText().toString();
-                } else {
-                    content_data = " ";
-                }
-                for (int i = 0; i < imageditdataList.size(); i++) {
-                    uploadFile(current_post_Time,i);
-                }
-
-                for (int i = 0; i < pd_datas_receive.size(); i++) {  //post_data에 넣기전 처리과정
-                    if (pd_datas_receive.get(i).getData_gps_Latitude() != null) {
-                        post_meta_gps_Latitue.add(pd_datas_receive.get(i).getData_gps_Latitude());
-                    } else {
-                        post_meta_gps_Latitue.add(" ");
-                    }
-                    if (pd_datas_receive.get(i).getData_gps_Longitude() != null) {
-                        post_meta_gps_Longitude.add(pd_datas_receive.get(i).getData_gps_Longitude());
-                    } else {
-                        post_meta_gps_Latitue.add(" ");
-                    }
-                    if(pd_datas_receive.get(i).getDate_time()!=null){
-                        post_meta_datetime.add(pd_datas_receive.get(i).getDate_time());
-                    }
-                    else{
-                        post_meta_gps_Longitude.add(" ");
-                    }
-                }
-                autopin(post_meta_gps_Latitue, post_meta_gps_Longitude, post_pin);
-                postData = new PostData(title_data,post_images_URI, content_data, post_meta_gps_Latitue, post_meta_gps_Longitude, post_meta_datetime, post_pin,post_upload_time);
-//                postData_image = new PostData_image(post_images_URI, content_data, post_meta_gps_Latitue, post_meta_gps_Longitude, post_meta_datetime, post_pin);
-                mDatabase.child("postData").child(current_post_Time).setValue(postData);
-//                mDatabase.child("postData_image").setValue(postData_image);
-                goProfile();
-
-            }
-        });
+//        save_content.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(getApplicationContext(), "업로드중", Toast.LENGTH_SHORT).show();
+//                Log.d("현재 진행중인것은 ", "게시글작성중");
+//                if (title.getText().toString().equals("")) {
+//                    title_data = "기록일지";
+//                } else {
+//                    title_data = title.getText().toString();
+//                }
+//                if (content.getText().toString() != null) {
+//                    content_data = content.getText().toString();
+//                } else {
+//                    content_data = " ";
+//                }
+//                for (int i = 0; i < imageditdataList.size(); i++) {
+//                    uploadFile(current_post_Time,i);
+//                }
+//
+//                for (int i = 0; i < pd_datas_receive.size(); i++) {  //post_data에 넣기전 처리과정
+//                    if (pd_datas_receive.get(i).getData_gps_Latitude() != null) {
+//                        post_meta_gps_Latitue.add(pd_datas_receive.get(i).getData_gps_Latitude());
+//                    } else {
+//                        post_meta_gps_Latitue.add(" ");
+//                    }
+//                    if (pd_datas_receive.get(i).getData_gps_Longitude() != null) {
+//                        post_meta_gps_Longitude.add(pd_datas_receive.get(i).getData_gps_Longitude());
+//                    } else {
+//                        post_meta_gps_Latitue.add(" ");
+//                    }
+//                    if(pd_datas_receive.get(i).getDate_time()!=null){
+//                        post_meta_datetime.add(pd_datas_receive.get(i).getDate_time());
+//                    }
+//                    else{
+//                        post_meta_gps_Longitude.add(" ");
+//                    }
+//                }
+//                autopin(post_meta_gps_Latitue, post_meta_gps_Longitude, post_pin);
+//                postData = new PostData(title_data,post_images_URI, content_data, post_meta_gps_Latitue, post_meta_gps_Longitude, post_meta_datetime, post_pin,post_upload_time);
+////                postData_image = new PostData_image(post_images_URI, content_data, post_meta_gps_Latitue, post_meta_gps_Longitude, post_meta_datetime, post_pin);
+//                mDatabase.child("postData").child(current_post_Time).setValue(postData);
+////                mDatabase.child("postData_image").setValue(postData_image);
+//                goProfile();
+//
+//            }
+//        });
     }
 
 

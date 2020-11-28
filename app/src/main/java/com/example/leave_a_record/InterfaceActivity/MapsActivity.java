@@ -3,6 +3,7 @@ package com.example.leave_a_record.InterfaceActivity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
@@ -217,7 +218,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
         //좌표 값 배열로 넘겨받음
-        String[] xy = new String[]{"37.221900","127.18800","37.221804","127.186695","37.220000","127.186666"};
+        String[] xy = new String[]{"37.221900","127.18800","37.221800","127.186695","37.220000","127.186555"};
 
 
         ArrayList<LatLng> loc=new ArrayList<LatLng>();
@@ -236,7 +237,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
             //핀추가 메소드
-            mMap.addMarker(new MarkerOptions().position(latLng).title("Pin"+count).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_pin_purple)));
+            mMap.addMarker(new MarkerOptions()
+                    .position(latLng)
+                    .title("Pin"+count)
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_pin3))
+                    );
             count++;
         }
 
@@ -310,6 +315,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .add(   line
                 ) .width(10)
 
+                .color(Color.rgb(94,29,102))
                 .geodesic(true));
 
         //polyline 디자인
@@ -370,6 +376,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void onLastLocationButtonClicked(View view) {
+
+
         // 권한 체크
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_CODE_PERMISSIONS);
@@ -385,10 +393,16 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             .position(myLocation)
                             .title("현재 위치"));
 
+
+                    String latitudeString = String.valueOf(myLocation.latitude);
+                    String longitudeString = String.valueOf(myLocation.longitude);
+
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(myLocation));
 
                     // 카메라 줌
                     mMap.animateCamera(CameraUpdateFactory.zoomTo(17.0f));
+
+
                 }
             }
         });

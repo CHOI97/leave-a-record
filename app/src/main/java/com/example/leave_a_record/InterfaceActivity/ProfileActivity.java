@@ -25,6 +25,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.bumptech.glide.Glide;
 import com.example.leave_a_record.BackPressHandler;
 
 import com.example.leave_a_record.DataBase.Callback;
@@ -43,11 +44,12 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class ProfileActivity extends AppCompatActivity {
     private TextView txt_myHistory, txt_tripCourse; // 내 기록, 여행코스 메뉴버튼을 제어하기 위한 변수
     private LinearLayout fragment_layout;        // 바뀌는 화면을 담당할 변수
-    private Button img_add;
-    private Button img_more;
+
     private FragmentManager fragmentManager;            // Framgent 매니저 클래스 변수
     private FragmentTransaction fragmentTransaction;    // Fragment 트랜잭션클래스 변수\
     private TextView Textname;
@@ -55,7 +57,7 @@ public class ProfileActivity extends AppCompatActivity {
     public ArrayList<post_data_image> pd_datas;
     private BackPressHandler backPressHandler = new BackPressHandler(this);
     private Database_M m;
-
+    private CircleImageView profile_image;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("현재 진행중인 것은", "------------프로필페이지.");
@@ -66,8 +68,7 @@ public class ProfileActivity extends AppCompatActivity {
         txt_myHistory = findViewById(R.id.txt_myHistory);
         txt_tripCourse = findViewById(R.id.txt_tripCourse);
         fragment_layout = findViewById(R.id.fragment_layout);
-//        img_add = findViewById(R.id.img_add);
-//        img_more = findViewById(R.id.img_more);
+        profile_image=findViewById(R.id.img_profile);
         mAuth = FirebaseAuth.getInstance();
         Textname= findViewById(R.id.profile_name);
         m=new Database_M();
@@ -85,7 +86,18 @@ public class ProfileActivity extends AppCompatActivity {
 
 
 
+        m.SingleImageUri(m.getmAuth().getUid(), new Callback<Uri>() {
+            @Override
+            public void onCallback(Uri data) {
+                if(!data.equals(null)){
+                    Glide.with(ProfileActivity.this).load(data).override(200,200).centerCrop().into(profile_image);
+                }
+                else{
+                    Log.d("현재 이 아이디의 프로필사진은"," 없습니다");
+                }
 
+            }
+        });
         m.userName(new Callback<String>() {
             @Override
             public void onCallback(String data) {
@@ -93,8 +105,6 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        txt_myHistory.setOnClickListener(new menuClickListener());
-        txt_tripCourse.setOnClickListener(new menuClickListener());
 //        img_add.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -181,14 +191,20 @@ public class ProfileActivity extends AppCompatActivity {
             case android.R.id.home: //뒤로가기 버튼
                 onBackPressed();
                 return true;
-            case R.id.tool_edit:
+            case R.id.tool_image:
                 Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
 //                //사진을 여러개 선택할수 있도록 한다
                 intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), 101);
-
+                break;
+            case R.id.tool_edit:
+                Intent intent_edit;
+                intent_edit=new Intent(ProfileActivity.this,Edit_ProfileActivity.class);
+                finish();
+                startActivity(intent_edit);
+                break;
             case R.id.tool_logout:
                 m.SignOut();
                 Intent intent_logout=new Intent(ProfileActivity.this,LoginActivity.class);

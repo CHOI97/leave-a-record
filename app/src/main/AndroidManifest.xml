@@ -30,6 +30,7 @@
 
 
 
+        <activity android:name=".InterfaceActivity.Edit_ProfileActivity"/>
 
         <activity android:name=".InterfaceActivity.MainActivity"/>
         <activity android:name=".InterfaceActivity.ProfileActivity"/>

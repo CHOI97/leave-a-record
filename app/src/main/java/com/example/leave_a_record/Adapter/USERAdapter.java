@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.leave_a_record.R;
 import com.example.leave_a_record.image_edit_data;
 import com.google.android.material.textfield.TextInputEditText;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,13 +32,13 @@ public class USERAdapter extends RecyclerView.Adapter<USERAdapter.UserViewHolder
     @NonNull
     @Override
     public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(mContext).inflate(R.layout.page_edit,parent,false);
+        View view= LayoutInflater.from(mContext).inflate(R.layout.item_viewpager_editpage,parent,false);
         return new UserViewHolder(view);
     }
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
         image_edit_data imageditdata = imageditdataList.get(position);
-        holder.edit_iv.setImageURI(imageditdata.getUri());
+        holder.edit_myimg.setImageURI(imageditdata.getUri());
     }
 
     @Override
@@ -46,12 +47,12 @@ public class USERAdapter extends RecyclerView.Adapter<USERAdapter.UserViewHolder
     }
 
     public class UserViewHolder extends RecyclerView.ViewHolder {
-        ImageView edit_iv;
+        RoundedImageView edit_myimg;
 
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
 
-//            edit_iv= itemView.findViewById(R.id.);
+            edit_myimg= itemView.findViewById(R.id.edit_myimg);
         }
     }
 }

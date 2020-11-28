@@ -5,66 +5,34 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_white"
     android:orientation="vertical"
-    android:padding="15dp"
     android:scrollbarSize="24sp">
 
-    <com.makeramen.roundedimageview.RoundedImageView
-        android:id="@+id/edit_myimg"
-        android:layout_width="@dimen/_120sdp"
-        android:layout_height="@dimen/_120sdp"
-        android:scaleType="centerCrop"
-        app:riv_corner_radius="@dimen/_5sdp"
-        android:layout_margin="5dp"
-        android:src="@drawable/bg_gray"
-        app:layout_constraintStart_toStartOf="parent"
+    <androidx.appcompat.widget.Toolbar
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/view_linebar0"/>
-
-    <ImageView
-        android:id="@+id/img_location"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
-        android:src="@drawable/ic_location"
-        app:layout_constraintBottom_toBottomOf="@+id/edit_myimg"
-        app:layout_constraintStart_toEndOf="@+id/edit_myimg"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/main_color_plus" />
-
-    <EditText
-        android:id="@+id/edit_location"
-        android:layout_width="150dp"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:hint="위치 입력"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/img_location"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/img_location"
-        app:layout_constraintTop_toTopOf="@+id/img_location" />
+        >
+
+    </androidx.appcompat.widget.Toolbar>
 
 
     <View
         android:id="@+id/view_linebar0"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="5dp"
         android:background="@color/colorTextHint"
-        app:layout_constraintTop_toBottomOf="@id/edit_myimg"/>
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        tools:layout_editor_absoluteX="5dp" />
 
 
     <EditText
-        android:id="@+id/edit_text_title"
+        android:id="@+id/edit_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="5dp"
-        android:hint="제목을 입력하세요."
         android:background="@null"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
@@ -75,6 +43,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view_linebar0" />
 
+
     <View
         android:id="@+id/view_linebar1"
         android:layout_width="match_parent"
@@ -83,21 +52,31 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="5dp"
         android:background="@color/colorTextHint"
-        app:layout_constraintTop_toBottomOf="@id/edit_text_title"/>
+        app:layout_constraintTop_toBottomOf="@id/edit_title"/>
+    <LinearLayout
+        android:id="@+id/viewpagerlayout"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_linebar1">
 
-
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewpager2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
 
     <EditText
-        android:id="@+id/edit_text_content"
+        android:id="@+id/edit_content"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="5dp"
         android:gravity="top"
         android:hint="내용을 입력하세요."
         android:background="@null"
-
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:textColor="@color/colorTextPrimary"
@@ -105,7 +84,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view_linebar1" />
+        app:layout_constraintTop_toBottomOf="@+id/viewpagerlayout" />
 
     <View
         android:id="@+id/view_linebar2"
@@ -115,7 +94,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="5dp"
         android:background="@color/colorTextHint"
-        app:layout_constraintTop_toBottomOf="@id/edit_text_content"/>
+        app:layout_constraintTop_toBottomOf="@id/edit_content"/>
 
     <TextView
         android:id="@+id/text_option"
@@ -145,6 +124,18 @@
         app:layout_constraintStart_toStartOf="parent"
 
         app:layout_constraintTop_toBottomOf="@+id/text_option" />
+
+    <TextView
+        android:id="@+id/text_control"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:textColor="@color/colorBlack"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/option_sw"
+        app:layout_constraintTop_toBottomOf="@+id/text_option"
+        app:layout_constraintVertical_bias="0.07" />
 
     <Switch
         android:id="@+id/option_sw"

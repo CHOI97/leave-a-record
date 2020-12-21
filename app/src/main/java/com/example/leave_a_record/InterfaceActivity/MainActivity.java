@@ -23,6 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
+
     private TextView Textname;
     private Database_M m;
     private Intent intent;
@@ -43,14 +44,18 @@ public class MainActivity extends AppCompatActivity {
                        }
                    });
     }
+
     View.OnClickListener onClickListener=new View.OnClickListener(){
         public void onClick(View v){
             switch (v.getId()){
                 case R.id.imgbtn_newphoto:
+                    intent =new Intent(MainActivity.this,ProfileActivity.class);
+                    startActivity(intent);
                     break;
                 case R.id.imgbtn_profile:
                     intent =new Intent(MainActivity.this,ProfileActivity.class);
                     startActivity(intent);
+                    break;
             }
         }
     };

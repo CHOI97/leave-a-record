@@ -19,56 +19,131 @@
     </androidx.appcompat.widget.Toolbar>
 
 
-    <ImageView
-        android:id="@+id/image_header"
+    <View
+        android:id="@+id/view_header"
         android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:layout_marginTop="325dp"
-        android:layout_marginBottom="325dp"
-        android:contentDescription="@string/app_name"
-        android:scaleType="centerCrop"
-        android:src="@drawable/bg_gradation"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.692" />
+        android:layout_height="200dp"
+        android:background="@drawable/img_profile2"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        />
 
-    <TextView
-        android:id="@+id/textView"
+    <FrameLayout
+        android:id="@+id/layout_profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:gravity="center"
-        android:text="프로필 수정"
-        android:textColor="@color/colorBlack"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/image_header"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintBottom_toBottomOf="@id/view_header"
+        app:layout_constraintTop_toBottomOf="@id/view_header"
+        >
+
+    </FrameLayout>
+
+
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/edit_profile_image"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/ic_user"
+        android:src="@drawable/img_user"
+        app:civ_border_color="@color/colorBlack"
+        app:civ_border_width="2dp"
+        app:layout_constraintBottom_toTopOf="@id/layout_profile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/layout_profile" />
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/img_addphoto"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/img_add_circle"
         app:civ_border_color="@color/colorWhite"
         app:civ_border_width="2dp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintBottom_toBottomOf="@id/edit_profile_image"
+        app:layout_constraintEnd_toEndOf="@id/edit_profile_image"
+        />
+
+
+
+    <!--    <ImageView-->
+    <!--        android:id="@+id/img_addphoto"-->
+    <!--        android:layout_width="30dp"-->
+    <!--        android:layout_height="30dp"-->
+    <!--        android:contentDescription="@string/app_name"-->
+    <!--        android:background="@color/colorSemiOrange"-->
+    <!--        android:src="@drawable/ic_add"-->
+    <!--        app:layout_constraintBottom_toBottomOf="@id/edit_profile_image"-->
+    <!--        app:layout_constraintEnd_toEndOf="@id/edit_profile_image"-->
+    <!--        app:tint="@color/colorWhite" />-->
+
+
 
     <EditText
         android:id="@+id/edit_name"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
+        android:background="@null"
+        android:textSize="20sp"
+        android:textColor="@color/colorTextPrimary"
+        android:textStyle="bold"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_profile_image" />
+
+    <View
+        android:id="@+id/view_name"
+        android:layout_width="150dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorTextHint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edit_name" />
+
+    <ImageView
+        android:id="@+id/img_name_retouch"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_create"
+        app:layout_constraintBottom_toBottomOf="@id/edit_name"
+        app:layout_constraintEnd_toEndOf="@+id/edit_name"
+        app:tint="@color/colorTextHint" />
+
+    <EditText
+        android:id="@+id/edit_about"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:textSize="20sp"
+        android:textColor="@color/colorTextPrimary"
+        android:layout_margin="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_name" />
+
+    <View
+        android:id="@+id/view_about"
+        android:layout_width="250dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorTextHint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edit_about" />
+
+    <ImageView
+        android:id="@+id/img_about_retouch"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_create"
+        app:layout_constraintBottom_toBottomOf="@id/edit_about"
+        app:layout_constraintEnd_toEndOf="@+id/edit_about"
+        app:tint="@color/colorTextHint" />
 
     <Button
         android:id="@+id/edit_bt"
@@ -80,17 +155,11 @@
         android:textColor="@color/colorWhite"
         android:textSize="13sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/viewSuppoter"
-        app:layout_constraintTop_toBottomOf="@+id/edit_name" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_about" />
 
-    <View
-        android:id="@+id/viewSuppoter"
-        android:layout_width="1dp"
-        android:layout_height="1dp"
-        android:layout_marginBottom="30dp"
-        app:layout_constraintBottom_toBottomOf="@+id/image_header"
-        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

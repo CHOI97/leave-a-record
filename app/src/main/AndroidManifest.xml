@@ -9,9 +9,10 @@
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
 
 
     <application
@@ -21,17 +22,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        android:networkSecurityConfig="@xml/network_security_config"
         >
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCTtEC39s9JafYXxKz2pxjH5N0LsPZHRRY" />
 
-
-
-
+        <activity android:name=".InterfaceActivity.RecommendActivity"/>
+        <activity android:name=".InterfaceActivity.MapsActivity"/>
         <activity android:name=".InterfaceActivity.Edit_ProfileActivity"/>
-
+        <activity android:name=".InterfaceActivity.PostActivity"/>
         <activity android:name=".InterfaceActivity.MainActivity"/>
         <activity android:name=".InterfaceActivity.ProfileActivity"/>
         <activity android:name=".InterfaceActivity.SignupActivity"/>
@@ -44,7 +45,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".InterfaceActivity.editActivity"/>
+        <activity android:name=".InterfaceActivity.EditActivity"/>
 
     </application>
 <!--지금 상태는 음 -->

@@ -1,19 +1,27 @@
 package com.example.leave_a_record.InterfaceActivity;
 
+import android.Manifest;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ClipData;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.Settings;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +29,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -30,47 +39,45 @@ import com.example.leave_a_record.BackPressHandler;
 
 import com.example.leave_a_record.DataBase.Callback;
 import com.example.leave_a_record.DataBase.Database_M;
-import com.example.leave_a_record.DataBase.UserData;
 import com.example.leave_a_record.R;
 import com.example.leave_a_record.fragment.myHistory;
 import com.example.leave_a_record.fragment.tripCourse;
 import com.example.leave_a_record.post_data_image;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileActivity extends AppCompatActivity {
-    private TextView txt_myHistory, txt_tripCourse; // 내 기록, 여행코스 메뉴버튼을 제어하기 위한 변수
+    private LinearLayout txt_myHistory, txt_tripCourse; // 내 기록, 여행코스 메뉴버튼을 제어하기 위한 변수
     private LinearLayout fragment_layout;        // 바뀌는 화면을 담당할 변수
 
     private FragmentManager fragmentManager;            // Framgent 매니저 클래스 변수
     private FragmentTransaction fragmentTransaction;    // Fragment 트랜잭션클래스 변수\
-    private TextView Textname;
+    private TextView Textname,Textabout;
     private FirebaseAuth mAuth;
     public ArrayList<post_data_image> pd_datas;
     private BackPressHandler backPressHandler = new BackPressHandler(this);
     private Database_M m;
-    private CircleImageView profile_image;
+    private RoundedImageView profile_image;
+
+    public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 123;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("현재 진행중인 것은", "------------프로필페이지.");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_profile);
 
-
+//        checkSystemPermission();
         txt_myHistory = findViewById(R.id.txt_myHistory);
         txt_tripCourse = findViewById(R.id.txt_tripCourse);
         fragment_layout = findViewById(R.id.fragment_layout);
         profile_image=findViewById(R.id.img_profile);
         mAuth = FirebaseAuth.getInstance();
-        Textname= findViewById(R.id.profile_name);
+        Textname= findViewById(R.id.text_username);
+        Textabout=findViewById(R.id.text_about1);
         m=new Database_M();
 
 
@@ -85,7 +92,7 @@ public class ProfileActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
 
-
+        //유저 프로필 이미지 동기화
         m.SingleImageUri(m.getmAuth().getUid(), new Callback<Uri>() {
             @Override
             public void onCallback(Uri data) {
@@ -98,10 +105,18 @@ public class ProfileActivity extends AppCompatActivity {
 
             }
         });
+        //이름 동기화
         m.userName(new Callback<String>() {
             @Override
             public void onCallback(String data) {
                 Textname.setText(data);
+            }
+        });
+        //상태메세지 동기화
+        m.userAbout(new Callback<String>() {
+            @Override
+            public void onCallback(String data) {
+                Textabout.setText(data);
             }
         });
 
@@ -173,7 +188,7 @@ public class ProfileActivity extends AppCompatActivity {
         fragmentTransaction = fragmentManager.beginTransaction();
 
         // "내 기록" Fragment 먼저 보여줌
-        myHistory fragment1 = new myHistory();
+        tripCourse fragment1 = new tripCourse();
         fragmentTransaction.replace(R.id.fragment_layout, fragment1).commitAllowingStateLoss();
 
     }
@@ -184,6 +199,18 @@ public class ProfileActivity extends AppCompatActivity {
 
         return true;
     }
+//    @Override public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        if(requestCode == 1){
+//            int length = permissions.length;
+//            for (int i = 0; i < length; i++) {
+//                if (grantResults[i] == PackageManager.PERMISSION_GRANTED)
+//                { // 동의
+//                    Log.d("MainActivity","권한 허용 : " + permissions[i]);
+//                }
+//            }
+//        }
+//    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -192,17 +219,19 @@ public class ProfileActivity extends AppCompatActivity {
                 onBackPressed();
                 return true;
             case R.id.tool_image:
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
+                if (checkPermissionREAD_EXTERNAL_STORAGE(this)) {
+                    Intent intent = new Intent(Intent. ACTION_GET_CONTENT , android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 //                //사진을 여러개 선택할수 있도록 한다
-                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), 101);
-                break;
+                    intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                    intent.setType("image/*");
+                    intent.setAction(Intent.ACTION_GET_CONTENT);
+                    startActivityForResult(Intent.createChooser(intent, "Select Picture"), 101);
+                    break;
+                }
+
             case R.id.tool_edit:
                 Intent intent_edit;
                 intent_edit=new Intent(ProfileActivity.this,Edit_ProfileActivity.class);
-                finish();
                 startActivity(intent_edit);
                 break;
             case R.id.tool_logout:
@@ -212,7 +241,6 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivity(intent_logout);
                 goToast("로그아웃 되었습니다.");
                 break;
-
         }
         return super.onOptionsItemSelected(item);
     }
@@ -263,7 +291,7 @@ public class ProfileActivity extends AppCompatActivity {
                         }
                     }
                     Log.d("현재 진행중인 것은", "인텐트로 넘기기전입니다.");
-                    intent = new Intent(this, editActivity.class);
+                    intent = new Intent(this, EditActivity.class);
 //                    intent.putExtra("image-data",pd_datas);
 //                    for(int j=0;j<pd_data.length;j++) {
 //                        to_edit.putExtra("image data - Uri", arr_uri);
@@ -271,6 +299,7 @@ public class ProfileActivity extends AppCompatActivity {
 //                    }
                     intent.putExtra("pd_datas", pd_datas);
                     Log.d("현재 진행중인 것은", "인텐트로 넘기기전입니다.");
+
                     startActivity(intent);
                 } else if (uri != null) {
                     try {
@@ -286,7 +315,68 @@ public class ProfileActivity extends AppCompatActivity {
 
         }
     }
+    public boolean checkPermissionREAD_EXTERNAL_STORAGE(
+            final Context context) {
+        int currentAPIVersion = Build.VERSION.SDK_INT;
+        if (currentAPIVersion >= android.os.Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(context,
+                    Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(
+                        (Activity) context,
+                        Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                    showDialog("External storage", context,
+                            Manifest.permission.READ_EXTERNAL_STORAGE);
 
+                } else {
+                    ActivityCompat
+                            .requestPermissions(
+                                    (Activity) context,
+                                    new String[] { Manifest.permission.READ_EXTERNAL_STORAGE },
+                                    MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+                }
+                return false;
+            } else {
+                return true;
+            }
+
+        } else {
+            return true;
+        }
+    }
+    public void showDialog(final String msg, final Context context,
+                           final String permission) {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
+        alertBuilder.setCancelable(true);
+        alertBuilder.setTitle("Permission necessary");
+        alertBuilder.setMessage(msg + " permission is necessary");
+        alertBuilder.setPositiveButton(android.R.string.yes,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        ActivityCompat.requestPermissions((Activity) context,
+                                new String[] { permission },
+                                MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+                    }
+                });
+        AlertDialog alert = alertBuilder.create();
+        alert.show();
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // do your stuff
+                } else {
+                    Toast.makeText(ProfileActivity.this, "GET_ACCOUNTS Denied",
+                            Toast.LENGTH_SHORT).show();
+                }
+                break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions,
+                        grantResults);
+        }
+    }
     private String getDateTime(ExifInterface exif) {
         String Datetime = getTagString(ExifInterface.TAG_DATETIME_ORIGINAL, exif);
         return Datetime;
@@ -348,7 +438,24 @@ public class ProfileActivity extends AppCompatActivity {
             }
         }
     }
+    public void checkSelfPermission(){
+        String temp=" ";
+        if(ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+            temp += Manifest.permission.READ_EXTERNAL_STORAGE + " ";
+        }
 
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            temp += Manifest.permission.WRITE_EXTERNAL_STORAGE + " ";
+        }
+        if (TextUtils.isEmpty(temp) == false) {
+            ActivityCompat.requestPermissions(this, temp.trim().split(" "),1);
+        }
+        else {
+            Toast.makeText(this, "권한을 모두 허용", Toast.LENGTH_SHORT).show();
+        }
+    }
 //    @Override
 //    public boolean onOptionsItemSelected(MenuItem item) {
 //        switch (item.getItemId()) {
@@ -370,6 +477,29 @@ public class ProfileActivity extends AppCompatActivity {
 //        menuInflater.inflate(R.menu.menu_profile, menu);
 //        return super.onCreateOptionsMenu(menu);
 //    }
+
+    public boolean checkSystemPermission() {
+
+        boolean permission = true;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {   //23버전 이상
+            permission = Settings.System.canWrite(this);
+            Log.d("test", "Can Write Settings: " + permission);
+            if(permission){
+                Log.e("test", "허용");
+            }else{
+                Log.e("test", "불허용");
+                Intent intent = new Intent(android.provider.Settings.ACTION_MANAGE_WRITE_SETTINGS);
+                intent.setData(Uri.parse("package:" + getPackageName()));
+                startActivityForResult(intent, 2127);
+                permission = false;
+            }
+        } else {
+
+        }
+
+        return permission;
+    }
+
 
 
 
@@ -421,3 +551,4 @@ public class ProfileActivity extends AppCompatActivity {
 //        return tag;
 //    }
 }
+

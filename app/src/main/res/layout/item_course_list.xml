@@ -4,7 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="100dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/List_item"
+        android:gravity="center_vertical">
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/course_img_icon"
         android:layout_width="60dp"
@@ -41,6 +45,7 @@
             android:textSize="15dp"
             android:text="날짜"/>
 
+    </LinearLayout>
     </LinearLayout>
 
 

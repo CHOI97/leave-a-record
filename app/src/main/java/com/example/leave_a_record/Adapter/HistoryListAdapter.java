@@ -27,8 +27,10 @@ public class HistoryListAdapter extends BaseAdapter {
         this.context = context;
         this.layout = layout;
         this.img = img;
-        inf = (LayoutInflater) context.getSystemService
-                (Context.LAYOUT_INFLATER_SERVICE);
+        if(inf==null) {
+            inf = (LayoutInflater) context.getSystemService
+                    (Context.LAYOUT_INFLATER_SERVICE);
+        }
     }
 
     @Override

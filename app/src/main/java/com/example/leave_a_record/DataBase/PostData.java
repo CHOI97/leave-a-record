@@ -1,11 +1,12 @@
 package com.example.leave_a_record.DataBase;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PostData{ //게시물에 대한 데이터를 임시저장하는 객체
+public class PostData { //게시물에 대한 데이터를 임시저장하는 객체
     private String post_title; // 포스트 제목
     private List<String> post_images_URI; // 포스트 이미지 uri (리스트로 구현)
     private String post_content; // 포스트에 대한 게시글
@@ -16,9 +17,9 @@ public class PostData{ //게시물에 대한 데이터를 임시저장하는 객
     private String post_date;
 
 
+
     //2차 내용
     private int secret;
-    private List<String> scrap;
 
 
     public PostData(){}
@@ -36,6 +37,15 @@ public class PostData{ //게시물에 대한 데이터를 임시저장하는 객
 
 
     }
+
+    public int getSecret() {
+        return secret;
+    }
+
+    public void setSecret(int secret) {
+        this.secret = secret;
+    }
+
     public String getPost_title() {
         return post_title;
     }

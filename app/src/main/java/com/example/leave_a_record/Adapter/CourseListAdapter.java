@@ -1,21 +1,26 @@
 package com.example.leave_a_record.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.bumptech.glide.Glide;
 import com.example.leave_a_record.CourseListItem;
 import com.example.leave_a_record.DataBase.Callback;
 import com.example.leave_a_record.DataBase.Database_M;
 import com.example.leave_a_record.DataBase.PostData;
+import com.example.leave_a_record.InterfaceActivity.PostActivity;
+import com.example.leave_a_record.KnowIndexOnClickListener;
 import com.example.leave_a_record.R;
 
 import java.net.URI;
@@ -39,11 +44,10 @@ public class CourseListAdapter extends BaseAdapter {
     }
     // position에 위치한 데이터를 화면에 출력하는데 사용될 View를 리턴. : 필수 구현
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         Log.d("getView시작","CourseList get View----------------시작됌");
         final int pos = position;
         final Context context = parent.getContext();
-
         // "listview_item" Layout을 inflate하여 convertView 참조 획득.
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -57,6 +61,7 @@ public class CourseListAdapter extends BaseAdapter {
         ) ;
 
         CourseListItem listViewItem = listViewItemList.get(position);
+
 
         // 아이템 내 각 위젯에 데이터 반영
         courseTitle.setText(listViewItem.getTitle());

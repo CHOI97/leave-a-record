@@ -26,8 +26,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.leave_a_record.Adapter.MyAdapter;
+import com.example.leave_a_record.DataBase.Callback;
+import com.example.leave_a_record.DataBase.Database_M;
+import com.example.leave_a_record.DataBase.PostData;
 import com.example.leave_a_record.PinCourseListItem;
 import com.example.leave_a_record.R;
+import com.example.leave_a_record.post_data_image;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -46,7 +50,11 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import java.lang.reflect.Array;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnPolylineClickListener,GoogleMap.OnPolygonClickListener {
@@ -58,7 +66,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     ArrayList<PinCourseListItem> PincourseDataArray = new ArrayList<>();
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient;
-    RecyclerView rv_pincourse;
+//    PostData postdata;
     // 위치 정보 얻는 객체
     private FusedLocationProviderClient mFusedLocationClient;
 //    private PinCourseListAdapter pclAdapter;
@@ -69,57 +77,84 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
-//    private String[] myDataset = {"1","2","3"};
-
-
+    Database_M m=new Database_M();
     ArrayList<String> myDataset=new ArrayList<>();
+    ArrayList<String> timer=new ArrayList<>();
+    String data_index;
+    int index;
+    List<Integer> pin_gps=new ArrayList<>();
+    List<Integer> pin_index=new ArrayList<>();
+    ArrayList<String> gps_la=new ArrayList<>();
+    ArrayList<String> gps_lo=new ArrayList<>();
 
-
+    //    Log.d("받은데이터 확인하기")
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        myDataset.add("2020.11.06");
-        myDataset.add("2020.11.06");
-        myDataset.add("2020.11.06");
+        Intent intent=getIntent();
+        data_index=intent.getStringExtra("index");
+        index=Integer.parseInt(data_index);
+
+        m.getPosts_i(index, m.getmAuth().getUid(), new Callback<String>() {
+                    @Override
+                    public void onCallback(String data) {
+                        Log.d("getposts_i실행", "실행중");
+                        m.getPostdata(data, m.getmAuth().getUid(), new Callback<PostData>() {
+                            @Override
+                            public void onCallback(PostData data) {
+                                pin_count(data.getPost_pin());
+                                Log.d("pin_index 값은 ",Integer.toString(pin_index.size()));
+                                if (pin_index.size() == 1) {
+                                    myDataset.add(Time_convert(data.getPost_meta_datetime().get(0)));
+                                    timer.add("One Course");
+                                }
+                                if (pin_index.size() == 2) {
+                                    myDataset.add(Time_convert(data.getPost_meta_datetime().get(0)));
+                                    timer.add(Time_counter(data.getPost_meta_datetime().get(pin_index.get(0)), data.getPost_meta_datetime().get(pin_index.get(1))));
+                                }
+                                if (pin_index.size() >= 3) {
+                                    for (int i = 0; i < pin_index.size()-1; i++) {
+                                        myDataset.add(Time_convert(data.getPost_meta_datetime().get(pin_index.get(i))));
+                                        timer.add(Time_counter(data.getPost_meta_datetime().get(pin_index.get(i)), data.getPost_meta_datetime().get(pin_index.get(i+1))));
+                                    }
+                                }
+                                Log.d("myDataset",Integer.toString(myDataset.size()));
+                                Log.d("timer",Integer.toString(timer.size()));
+                                Log.d("coures timer", "코스시간업데이트전");
+                                mAdapter = new MyAdapter(myDataset,timer);
+                                recyclerView.setAdapter(mAdapter);
+                            }
+                        });
+                    }
+                });
+
         pclListItem=new ArrayList<>();
-        pclListItem.add(new PinCourseListItem("2020"));
-        pclListItem.add(new PinCourseListItem("2020"));
-        pclListItem.add(new PinCourseListItem("2030"));
-        pclListItem.add(new PinCourseListItem("2040"));
+//        pclListItem.add(new PinCourseListItem("2020"));
+//        pclListItem.add(new PinCourseListItem("2020"));
+//        pclListItem.add(new PinCourseListItem("2030"));
+//        pclListItem.add(new PinCourseListItem("2040"));
 
 
 
         Log.d("현재 진행중인 것은", "Recyclerview. ======================================");
-
-        //recyclerview
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
-
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
         recyclerView.setHasFixedSize(true);
 
-        // use a linear layout manager
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
         // specify an adapter (see also next example)
-        mAdapter = new MyAdapter(myDataset);
-        recyclerView.setAdapter(mAdapter);
+
 
 
 
        ///////////////////////////////////////////////////////////////////
 
         Log.d("success", "tripCourse case:success"); //로그찍기
-//        rv_pincourse=findViewById(R.id.rv_pincourse);
-        Log.d("현재 진행중인 것은", "Recyclerview. ======================================find view id");
-//        pclAdapter =  new PinCourseListAdapter(this,pclListItem);
-//        rv_pincourse.setAdapter(pclAdapter);
 
-//        userAdapter =  new USERAdapter(this, imageditdataList);
-//        viewPager2.setAdapter(userAdapter);
+        Log.d("현재 진행중인 것은", "Recyclerview. ======================================find view id");
 
 
         //toolbar
@@ -127,11 +162,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);//뒤로가기
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-//        actionBar = getSupportActionBar();
-//        actionBar.setDisplayShowCustomEnabled(true);
-//        actionBar.setDisplayShowTitleEnabled(false);//기본 제목을 없애줍니다.
-//        actionBar.setDisplayHomeAsUpEnabled(true);
-
 
         // GoogleAPIClient의 인스턴스 생성
         if (mGoogleApiClient == null) {
@@ -142,54 +172,25 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     .build();
         }
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-
-
-
     }
 
     //toolbar menu_map
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_map, menu);
+        menuInflater.inflate(R.menu.menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     //버튼을 눌렀을때
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home: //뒤로가기 버튼
-                onBackPressed();
-                return true;
-
-            case R.id.tool_map: //지도 버튼
-        }
         return super.onOptionsItemSelected(item);
     }
-
-
-//    @Override
-//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-//        switch (item.getItemId()){
-//            case R.id.logout:
-//                //select logout item
-//                break;
-//            case R.id.account:
-//                //select account item
-//                break;
-//            case android.R.id.home:
-//                //select back button
-//                finish();
-//                break;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
 
     @Override
     protected void onStart() {
@@ -203,51 +204,77 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onStop();
     }
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady(final GoogleMap googleMap) {
         mMap = googleMap;
 
+        m.getPosts_i(index, m.getmAuth().getUid(), new Callback<String>() {
+            @Override
+            public void onCallback(String data) {
+                Log.d("getposts_i실행", "실행중");
+                m.getPostdata(data, m.getmAuth().getUid(), new Callback<PostData>() {
+                    @Override
+                    public void onCallback(PostData data) {
+                        gps_count(data.getPost_pin());
+                        Log.d("pin_index 값은 ",Integer.toString(pin_gps.size()));
+                        if (pin_gps.size() == 1) {
+                            gps_la.add(data.getPost_meta_gps_Latitue().get(0));
+                            gps_lo.add(data.getPost_meta_gps_Longitude().get(0));
+                            Log.d("gps_1a",data.getPost_meta_gps_Latitue().get(0));
+                            Log.d("gps_1o",data.getPost_meta_gps_Longitude().get(0));
+                        }
+                        if (pin_gps.size() == 2) {
+                            gps_la.add(data.getPost_meta_gps_Latitue().get(0));
+                            gps_lo.add(data.getPost_meta_gps_Longitude().get(0));
+                            Log.d("gps_1a",data.getPost_meta_gps_Latitue().get(0));
+                            Log.d("gps_1o",data.getPost_meta_gps_Longitude().get(0));
 
-        //좌표 값 배열로 넘겨받음
-        String[] xy = new String[]{"37.221900","127.18800","37.221800","127.186695","37.220000","127.186555"};
+                            gps_la.add(data.getPost_meta_gps_Latitue().get(data.getPost_meta_gps_Latitue().size()-1));
+                            gps_lo.add(data.getPost_meta_gps_Longitude().get(data.getPost_meta_gps_Longitude().size()-1));
+                        }
+                        if (pin_gps.size() >= 3) {
+                            for (int i = 0; i < pin_gps.size()-1; i++) {
+                                gps_la.add(data.getPost_meta_gps_Latitue().get(i));
+                                gps_lo.add(data.getPost_meta_gps_Longitude().get(i));
+                                Log.d("gps_1a",data.getPost_meta_gps_Latitue().get(i));
+                                Log.d("gps_1o",data.getPost_meta_gps_Longitude().get(i));
+                            }
+                            gps_la.add(data.getPost_meta_gps_Latitue().get(data.getPost_meta_gps_Latitue().size()-1));
+                            gps_lo.add(data.getPost_meta_gps_Longitude().get(data.getPost_meta_gps_Longitude().size()-1));
+
+                        } //좌표 값 배열로 넘겨받음
+
+//                        String[] xy = new String[]{"37.221900","127.18800","37.221800","127.186695","37.220000","127.186555"};
 
 
-        ArrayList<LatLng> loc=new ArrayList<LatLng>();
+                        ArrayList<LatLng> loc=new ArrayList<LatLng>();
 
-        int count = 1;
-        //배열로 받은 좌표값을 arraylist에 저장
-        for (int i=0;i<xy.length;i++){
+                        int count = 1;
+                        //배열로 받은 좌표값을 arraylist에 저장
+                        for (int i=0;i<gps_lo.size();i++){
 
-            double tmp = Double.parseDouble(xy[i]);
-            double tmp2 = Double.parseDouble(xy[++i]);
-
-
-            LatLng latLng = new LatLng(tmp, tmp2);
-
-            loc.add(latLng);
+                            double tmp = Double.parseDouble(gps_la.get(i));
+                            double tmp2 = Double.parseDouble(gps_lo.get(i));
 
 
-            //핀추가 메소드
-            mMap.addMarker(new MarkerOptions()
-                    .position(latLng)
-                    .title("Pin"+count)
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_pin3))
-                    );
-            count++;
-        }
+                            LatLng latLng = new LatLng(tmp, tmp2);
+
+                            loc.add(latLng);
+
+
+                            //핀추가 메소드
+                            mMap.addMarker(new MarkerOptions()
+                                    .position(latLng)
+                                    .title("Pin"+count)
+                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_pin3))
+                            );
+                            count++;
+
+                        }
 
 
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(loc.get(loc.size()-1)));
+                        mMap.moveCamera(CameraUpdateFactory.newLatLng(loc.get(loc.size()-1)));
 
 
 //        // 서울 위치
@@ -267,10 +294,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 //                .title("명지대2"));
 //        mMap.moveCamera(CameraUpdateFactory.newLatLng(MJU2));
 
-        // 카메라 줌
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(17.0f));
+                        // 카메라 줌
+                        mMap.animateCamera(CameraUpdateFactory.zoomTo(17.0f));
 
-        // 인포 윈도우 클릭시 전화 걸기 -> 뭔가 게시물 쓸때 쓸수있을거 같아서 남겨둠
+                        // 인포 윈도우 클릭시 전화 걸기 -> 뭔가 게시물 쓸때 쓸수있을거 같아서 남겨둠
 //        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
 //            @Override
 //            public void onInfoWindowClick(Marker marker) {
@@ -282,12 +309,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 //            }
 //        });
 
-        //arraylist 다시 배열에 넣어서 polyline 연결 가능하게 함 -> arraylist는 polyline에서 쓸수 없는거 같아서
+                        //arraylist 다시 배열에 넣어서 polyline 연결 가능하게 함 -> arraylist는 polyline에서 쓸수 없는거 같아서
 
-        LatLng[] line = new LatLng[loc.size()];
-        for (int i=0;i<loc.size();i++){
-            line[i]=loc.get(i);
-        }
+                        LatLng[] line = new LatLng[loc.size()];
+                        for (int i=0;i<loc.size();i++){
+                            line[i]=loc.get(i);
+                        }
 
 //        LatLng[] line = {
 //                loc.get(0),loc.get(1),loc.get(2)
@@ -295,8 +322,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
 
-        //좌표 두개마다 각각의 polyline을 생성해야 각각 화살표로 나올수 있음
-        //for문 사용해서 polyline 만들어보기
+                        //좌표 두개마다 각각의 polyline을 생성해야 각각 화살표로 나올수 있음
+                        //for문 사용해서 polyline 만들어보기
 //        for(int i=0; i<line.length;){
 //            Polyline polyline1 = googleMap.addPolyline(new PolylineOptions()
 //                    .clickable(true)
@@ -308,24 +335,48 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 //
 //        }
 
-        //좌표에 들어온 순서로 선이 그어짐
-        //좌표끼리 연결 line 배열에 각각의 좌표값들 저장되어 있음 -> arraylist는 안되는 것 같음
-        Polyline polyline1 = googleMap.addPolyline(new PolylineOptions()
-                .clickable(true)
-                .add(   line
-                ) .width(10)
+                        //좌표에 들어온 순서로 선이 그어짐
+                        //좌표끼리 연결 line 배열에 각각의 좌표값들 저장되어 있음 -> arraylist는 안되는 것 같음
+                        Polyline polyline1 = googleMap.addPolyline(new PolylineOptions()
+                                .clickable(true)
+                                .add(   line
+                                ) .width(10)
 
-                .color(Color.rgb(94,29,102))
-                .geodesic(true));
+                                .color(Color.rgb(94,29,102))
+                                .geodesic(true));
 
-        //polyline 디자인
-        polyline1.setEndCap(new CustomCap(BitmapDescriptorFactory.fromResource(R.drawable.ic_arrow), 15));
-        polyline1.setStartCap(new CustomCap(BitmapDescriptorFactory.fromResource(R.drawable.ic_circle), 15));
+                        //polyline 디자인
+                        polyline1.setEndCap(new CustomCap(BitmapDescriptorFactory.fromResource(R.drawable.ic_arrow), 15));
+                        polyline1.setStartCap(new CustomCap(BitmapDescriptorFactory.fromResource(R.drawable.ic_circle), 15));
 
 
+                        //추가 메소드
+//                        ArrayList<LatLng> loc=new ArrayList<LatLng>();
+//                        int count = 1;
+//                        for(int i=0;i<gps_la.size();i++){
+//                            double tmp = Double.parseDouble(gps_la.get(i));
+//                            double tmp2=Double.parseDouble(gps_lo.get(i));
+//                            LatLng latLng = new LatLng(tmp, tmp2);
+//
+//                            loc.add(latLng);
+//
+//
+//                            //핀추가 메소드
+//                            mMap.addMarker(new MarkerOptions()
+//                                    .position(latLng)
+//                                    .title("Pin"+count)
+//                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_pin3))
+//                            );
+//                            count++;
+//                        }
+                    }
+                });
+            }
+        });
 
-        googleMap.setOnPolylineClickListener(this);
-        googleMap.setOnPolygonClickListener(this);
+
+//        googleMap.setOnPolylineClickListener(this);
+//        googleMap.setOnPolygonClickListener(this);
 
 
 
@@ -396,7 +447,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                     String latitudeString = String.valueOf(myLocation.latitude);
                     String longitudeString = String.valueOf(myLocation.longitude);
-
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(myLocation));
 
                     // 카메라 줌
@@ -417,7 +467,114 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onPolylineClick(Polyline polyline) {
 
     }
+    public String Time_convert(String time){
+        String result = time.replaceAll("[^0-9]","");
+
+        String year;
+        String month;
+        String day;
+        String date;
+
+        result=result.substring(0, 8);
+        year=result.substring(0,4);
+        month=result.substring(4,6);
+        day=result.substring(6,8);
+        date=year+"."+month+"."+day;
+        return date;
+    }
+    // yyyymmddhhmmss
+    public String tag_convert(String time){
+        String date;
+        String temp;
+        temp = time.replaceAll("[^0-9]","");
+        String yyyy;
+        String MM;
+        String dd;
+        String HH;
+        String mm;
+        String ss;
+        yyyy=temp.substring(0,4);
+        MM=temp.substring(4,6);
+        dd=temp.substring(6,8);
+        HH=temp.substring(8,10);
+        mm=temp.substring(10,12);
+        ss=temp.substring(12,14);
+        date=yyyy+"."+MM+"."+dd+"."+HH+"."+mm+"."+ss;
+
+        return date;
+    }
+    public String Time_counter(String tag1,String tag2){
+        SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss");
+
+        String tag_start=tag_convert(tag1);
+        String tag_end=tag_convert(tag2);
+        Log.d("tag1",tag_start);
+        Log.d("tag2",tag_end);
+        Date d1;
+        Date d2;
+        try{
+            d1=dateFormat.parse(tag_start);
+            d2=dateFormat.parse(tag_end);
+            Log.d("변경된 시간값",Long.toString(d1.getTime()));
+            Log.d("변경된 시간값",Long.toString(d2.getTime()));
+        }catch(ParseException e){
+            return null;
+        }
+        long diff=d2.getTime()-d1.getTime();
+        long sec=(diff/1000)%60;
+        long min=diff/(60 * 1000);
+        long hour=diff/(60 * 60 * 1000);
+        long day=diff/(24*60 * 60 * 1000);
+
+        String result=" ";
+        if(day!=0){
+            result=result+day +"일";
+        }
+        if(hour!=0){
+            result=result+hour+"시간";
+        }
+        if(min!=0){
+            result=result+min+"분";
+        }
+        if(sec!=0){
+            result=result+sec+"초";
+        }
+        Log.d("계산한 코스시간은",result);
+        return result;
+    }
+    public void pin_count(List<String> pin){
+        int i=0;
+        int j=1;
+        pin_index.add(0);
+        while(j<pin.size()){
+            if(pin.get(i).equals(pin.get(j))){
+                j++;
+            }
+            else if(!pin.get(i).equals(pin.get(j))){
+                i=j;
+                pin_index.add(j);
+                j++;
+            }
+        }
+    }
+    public void gps_count(List<String> pin){
+        int i=0;
+        int j=1;
+        pin_gps.add(0);
+        while(j<pin.size()){
+            if(pin.get(i).equals(pin.get(j))){
+                j++;
+            }
+            else if(!pin.get(i).equals(pin.get(j))){
+                i=j;
+                pin_gps.add(j);
+                Log.d("pin_gps",Integer.toString(pin_gps.size()));
+                j++;
+            }
+        }
+    }
 //public void onBackPressed() {
 //        backPressHandler.onBackPressed("뒤로가기 버튼 한번 더 누르면 종료", 3000);
 //        }
 }
+

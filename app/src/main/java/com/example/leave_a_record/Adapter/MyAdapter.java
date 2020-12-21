@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     private ArrayList<String> mDataset;
+    private ArrayList<String> mtimer;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -52,9 +53,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MyAdapter(ArrayList<String> myDataset) {
+    public MyAdapter(ArrayList<String> myDataset,ArrayList<String> timer) {
         //{"1","2"}
         mDataset = myDataset;
+        if(timer.size()!=0){
+            mtimer=timer;
+        }
+
     }
 
     // Create new views (invoked by the layout manager)
@@ -74,6 +79,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         holder.date_time.setText(mDataset.get(position));
+        if(mtimer.size()!=0){
+            holder.course_time.setText(mtimer.get(position));
+        }
 
     }
 

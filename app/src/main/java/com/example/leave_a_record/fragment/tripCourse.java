@@ -1,5 +1,6 @@
 package com.example.leave_a_record.fragment;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,6 +23,8 @@ import com.example.leave_a_record.Adapter.CourseListAdapter;
 import com.example.leave_a_record.DataBase.Callback;
 import com.example.leave_a_record.DataBase.Database_M;
 import com.example.leave_a_record.DataBase.PostData;
+import com.example.leave_a_record.InterfaceActivity.PostActivity;
+import com.example.leave_a_record.KnowIndexOnClickListener;
 import com.example.leave_a_record.R;
 
 import java.util.ArrayList;
@@ -49,9 +53,9 @@ public class tripCourse extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.item_tripcourse, container, false);
+        View view = inflater.inflate(R.layout.item_tripcourse, container, false);
         Log.d("success", "tripCourse:success"); //로그찍기
-
+        listView = view.findViewById(R.id.listview);
         Log.d("포스트  액티비로 가져오는데", "등록전");
         Log.d("비동기  --- 전 ---", Integer.toString(listViewAdapter.getCount()));
 
@@ -62,7 +66,7 @@ public class tripCourse extends Fragment {
             public void onCallback(final List<PostData> data) {
                 if (data != null) {
                     Log.d("데이터베이스가 listview의 진입", "추가하겠습니다.");
-                    listView = view.findViewById(R.id.listview);
+
                     listViewAdapter = new CourseListAdapter();
 
                     for (int i = 0; i < data.size(); i++) {
@@ -98,6 +102,20 @@ public class tripCourse extends Fragment {
                             if (listViewAdapter.getCount() == posturis.size()) {
                                 Log.d("드디어", "성공");
                                 listView.setAdapter(listViewAdapter);
+                                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                        Toast.makeText(getContext(), Integer.toString(position), Toast.LENGTH_SHORT).show();
+                                                Intent intent;
+                                                intent =new Intent(getContext(), PostActivity.class);
+                                                Log.d("보내는값은: ",Integer.toString(position));
+                                                intent.putExtra("item",Integer.toString(posturis.size()-1-position));
+
+                                                startActivity(intent);
+
+
+                                    }
+                                });
                             }
                         }
 

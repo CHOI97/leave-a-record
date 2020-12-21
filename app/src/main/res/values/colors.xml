@@ -17,4 +17,5 @@
     <color name="colorTextHint">#808080</color>
     <color name="colorSemiPurple">#9618F7</color>
     <color name="colorSemiBlue">#A3C9E2</color>
+    <color name="colorGray">#7B7B7B</color>
 </resources>

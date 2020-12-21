@@ -25,25 +25,28 @@
 
     <ImageView
         android:id="@+id/img_location"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="40dp"
-        android:src="@drawable/ic_location"
+        android:src="@drawable/ic_edit"
         app:layout_constraintBottom_toBottomOf="@+id/edit_myimg"
         app:layout_constraintStart_toEndOf="@+id/edit_myimg"
         app:tint="@color/main_color_plus" />
 
-    <EditText
+    <TextView
         android:id="@+id/edit_location"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:hint="위치 입력"
+        android:text="기록을 남기자!"
+        android:textSize="@dimen/_15sdp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/img_location"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/img_location"
-        app:layout_constraintTop_toTopOf="@+id/img_location" />
+        app:layout_constraintTop_toTopOf="@+id/img_location"
+        app:layout_constraintVertical_bias="1.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

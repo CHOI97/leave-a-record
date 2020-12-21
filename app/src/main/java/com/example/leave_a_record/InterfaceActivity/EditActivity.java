@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -22,6 +23,7 @@ import androidx.viewpager2.widget.ViewPager2;
 //import java.io.Serializable;
 import com.example.leave_a_record.Adapter.USERAdapter;
 import com.example.leave_a_record.BackPressHandler;
+import com.example.leave_a_record.DataBase.Callback;
 import com.example.leave_a_record.DataBase.PostData;
 
 
@@ -36,7 +38,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -45,7 +46,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class editActivity extends AppCompatActivity  {
+public class EditActivity extends AppCompatActivity  {
     ViewPager2 viewPager2;
     USERAdapter userAdapter;
     Button save_content;
@@ -55,6 +56,7 @@ public class editActivity extends AppCompatActivity  {
     FirebaseAuth mAuth;
     DatabaseReference mDatabase;
     DatabaseReference mdatabase;
+    DatabaseReference oDatabase;
 
     List<image_edit_data> imageditdataList;
     List<String> post_images_URI;
@@ -70,6 +72,15 @@ public class editActivity extends AppCompatActivity  {
     String title_data;
     Switch switchbutton;
     TextView control_text;
+    int secret;
+    SimpleDateFormat simpleDate = new SimpleDateFormat("yyyyMMddHHmmss");
+    SimpleDateFormat post_upload_time_simple =new SimpleDateFormat("yyyy년 MM월 dd일의 기록");
+    long now = System.currentTimeMillis();
+    Date mDate = new Date(now);
+    final String current_post_Time = simpleDate.format(mDate); //포스트용  시간
+    final String post_upload_time = post_upload_time_simple.format(mDate); // 게시물등록 고유 시간
+    final Handler mHandler = new Handler();
+
 
     PostData postData;
 //    PostData_image postData_image;
@@ -90,11 +101,10 @@ public class editActivity extends AppCompatActivity  {
         pd_datas_receive = (ArrayList<post_data_image>)getIntent().getSerializableExtra("pd_datas");
         viewPager2 = findViewById(R.id.viewpager2);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN); /////////키보드 가림방지
-
+        save_content=findViewById(R.id.save_content);
         switchbutton=findViewById(R.id.option_sw);
         control_text=findViewById(R.id.text_control);
         control_text.setText("비활성화");
-
 
         switchbutton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -113,12 +123,6 @@ public class editActivity extends AppCompatActivity  {
 
         switchbutton.setChecked(false);
        //시간측정용
-        SimpleDateFormat simpleDate = new SimpleDateFormat("yyyyMMddHHmmss");
-        SimpleDateFormat post_upload_time_simple =new SimpleDateFormat("yyyy년 MM월 dd일의 기록");
-        long now = System.currentTimeMillis();
-        Date mDate = new Date(now);
-        final String current_post_Time = simpleDate.format(mDate); //포스트용  시간
-        final String post_upload_time = post_upload_time_simple.format(mDate); // 게시물등록 고유 시간
 
         post_update_time=new ArrayList<>();
         title.setHint(post_upload_time);
@@ -136,10 +140,12 @@ public class editActivity extends AppCompatActivity  {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         mdatabase=database.getReference();
         mDatabase=database.getReference().child("posts").child(mAuth.getCurrentUser().getUid());
+        oDatabase=database.getReference().child("open");
 //        mdatabase.child("posts").child(mAuth.getCurrentUser().getUid()).child("post_upload_time").setValue(current_post_Time);
 
         //데이터 필드 posts -> uid -> current time(게시물들) -> (게시물내용)child(uri,content,pin), title,datetime
 ////////////////////////////////////////////////////////////////////////////////////
+        Handler handler = new Handler();
 
         for(int i=0;i<pd_datas_receive.size();i++){
             imageditdataList.add(new image_edit_data(Uri.parse(pd_datas_receive.get(i).getUri())));
@@ -149,56 +155,110 @@ public class editActivity extends AppCompatActivity  {
         userAdapter =  new USERAdapter(this, imageditdataList);
         viewPager2.setAdapter(userAdapter);
 
-//        save_content.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(getApplicationContext(), "업로드중", Toast.LENGTH_SHORT).show();
-//                Log.d("현재 진행중인것은 ", "게시글작성중");
-//                if (title.getText().toString().equals("")) {
-//                    title_data = "기록일지";
-//                } else {
-//                    title_data = title.getText().toString();
-//                }
-//                if (content.getText().toString() != null) {
-//                    content_data = content.getText().toString();
-//                } else {
-//                    content_data = " ";
-//                }
+        save_content.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "업로드중", Toast.LENGTH_SHORT).show();
+                Log.d("현재 진행중인것은 ", "게시글작성중");
+
+                if (title.getText().toString().equals("")) {
+                    title_data = "기록일지";
+                } else {
+                    title_data = title.getText().toString();
+                }
+                if (content.getText().toString() != null) {
+                    content_data = content.getText().toString();
+                } else {
+                    content_data = " ";
+                }
+
+
+                for (int i = 0; i < pd_datas_receive.size(); i++) {  //post_data에 넣기전 처리과정
+                    if (pd_datas_receive.get(i).getData_gps_Latitude() != null) {
+                        post_meta_gps_Latitue.add(pd_datas_receive.get(i).getData_gps_Latitude());
+                    } else {
+                        post_meta_gps_Latitue.add(" ");
+                    }
+                    if (pd_datas_receive.get(i).getData_gps_Longitude() != null) {
+                        post_meta_gps_Longitude.add(pd_datas_receive.get(i).getData_gps_Longitude());
+                    } else {
+                        post_meta_gps_Latitue.add(" ");
+                    }
+                    if(pd_datas_receive.get(i).getDate_time()!=null){
+                        post_meta_datetime.add(pd_datas_receive.get(i).getDate_time());
+                    }
+                    else{
+                        post_meta_gps_Longitude.add(" ");
+                    }
+                }
+                if(control_text.getText().equals("비활성화")){
+                    secret=0;
+                }
+                else{
+                    secret=1;
+                }
+                autopin(post_meta_gps_Latitue, post_meta_gps_Longitude, post_pin);
+                for (int i = 0; i < imageditdataList.size(); i++) {
+                    uploadFile(current_post_Time, i, new Callback<Integer>() {
+                        @Override
+                        public void onCallback(Integer data) {
+                            if(data==imageditdataList.size()-1)
+                            {
+                                postData = new PostData(title_data,post_images_URI, content_data, post_meta_gps_Latitue, post_meta_gps_Longitude, post_meta_datetime, post_pin,post_upload_time);
+                                mHandler.postDelayed(new Runnable()  {
+                                    public void run() {
+                                        mDatabase.child("postData").child(current_post_Time).setValue(postData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                if(secret==0){
+                                                    oDatabase.child(current_post_Time).setValue(postData);
+                                                }
+                                                goProfile();
+                                            }
+                                            });
+                                    }
+                                }, 5000); // 5초후
+                            }
+                        }
+                    });
+                }
+
 //                for (int i = 0; i < imageditdataList.size(); i++) {
 //                    uploadFile(current_post_Time,i);
 //                }
+
+
+//                postData_image = new PostData_image(post_images_URI, content_data, post_meta_gps_Latitue, post_meta_gps_Longitude, post_meta_datetime, post_pin);
+//                mDatabase.child("postData").child(current_post_Time).setValue(postData).addOnSuccessListener(new OnSuccessListener<Void>() {
+//                    @Override
+//                    public void onSuccess(Void aVoid) {
+//                        for (int i = 0; i < imageditdataList.size(); i++) {
+//                           uploadFile(current_post_Time, i, new Callback<Integer>() {
+//                               @Override
+//                               public void onCallback(Integer data) {
+//                                   if(data==imageditdataList.size()-1)
+//                                   {
+//                                       mHandler.postDelayed(new Runnable()  {
+//                                           public void run() {
+////                                               goProfile();
+//                                           }
+//                                       }, 5000); // 5초후
+//                                   }
+//                               }
+//                           });
+//                        }
 //
-//                for (int i = 0; i < pd_datas_receive.size(); i++) {  //post_data에 넣기전 처리과정
-//                    if (pd_datas_receive.get(i).getData_gps_Latitude() != null) {
-//                        post_meta_gps_Latitue.add(pd_datas_receive.get(i).getData_gps_Latitude());
-//                    } else {
-//                        post_meta_gps_Latitue.add(" ");
 //                    }
-//                    if (pd_datas_receive.get(i).getData_gps_Longitude() != null) {
-//                        post_meta_gps_Longitude.add(pd_datas_receive.get(i).getData_gps_Longitude());
-//                    } else {
-//                        post_meta_gps_Latitue.add(" ");
-//                    }
-//                    if(pd_datas_receive.get(i).getDate_time()!=null){
-//                        post_meta_datetime.add(pd_datas_receive.get(i).getDate_time());
-//                    }
-//                    else{
-//                        post_meta_gps_Longitude.add(" ");
-//                    }
-//                }
-//                autopin(post_meta_gps_Latitue, post_meta_gps_Longitude, post_pin);
-//                postData = new PostData(title_data,post_images_URI, content_data, post_meta_gps_Latitue, post_meta_gps_Longitude, post_meta_datetime, post_pin,post_upload_time);
-////                postData_image = new PostData_image(post_images_URI, content_data, post_meta_gps_Latitue, post_meta_gps_Longitude, post_meta_datetime, post_pin);
-//                mDatabase.child("postData").child(current_post_Time).setValue(postData);
-////                mDatabase.child("postData_image").setValue(postData_image);
-//                goProfile();
-//
-//            }
-//        });
+//                });
+//                mDatabase.child("postData_image").setValue(postData_image);
+
+
+            }
+        });
     }
 
 
-    private void uploadFile(String current_post_Time,int i) {
+    private void uploadFile(String current_post_Time, final int i, final Callback<Integer> callback) {
 
         Uri FilePath=Uri.parse(pd_datas_receive.get(i).getUri());
         String user_name= mAuth.getCurrentUser().getUid();
@@ -210,6 +270,12 @@ public class editActivity extends AppCompatActivity  {
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("기록을 남기는중입니다...");
             progressDialog.show();
+            mHandler.postDelayed(new Runnable()  {
+                public void run() {
+                   progressDialog.dismiss();
+                }
+            }, 5000);
+
 //////////////// storage 와 cloud의 동시에 저장하자 . /////////////////////////////////
             //storage
             FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -227,7 +293,8 @@ public class editActivity extends AppCompatActivity  {
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                           // 스토리지 url -> post로 넘기기
+                            Toast.makeText(getApplicationContext(), "이미지 저장 성공!", Toast.LENGTH_SHORT).show();
+                            callback.onCallback(i);
                         }
                     })
                     //실패시
@@ -236,17 +303,20 @@ public class editActivity extends AppCompatActivity  {
                         public void onFailure(@NonNull Exception e) {
                             Toast.makeText(getApplicationContext(), "기록 실패!", Toast.LENGTH_SHORT).show();
                         }
-                    })
-//                    진행중
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            @SuppressWarnings("VisibleForTests") //이걸 넣어 줘야 아랫줄에 에러가 사라진다. 넌 누구냐?
-                                    double progress = (100 * taskSnapshot.getBytesTransferred()) /  taskSnapshot.getTotalByteCount();
-                            //dialog에 진행률을 퍼센트로 출력해 준다
-                            progressDialog.setMessage("기록 작성중.. " + ((int) progress) + "% ...");
-                        }
                     });
+//                    진행중
+//                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+//                        @Override
+//                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+//                            @SuppressWarnings("VisibleForTests") //이걸 넣어 줘야 아랫줄에 에러가 사라진다. 넌 누구냐?
+//                                    double progress = (100 * taskSnapshot.getBytesTransferred()) /  taskSnapshot.getTotalByteCount();
+//                            //dialog에 진행률을 퍼센트로 출력해 준다
+//                            progressDialog.setMessage("기록 작성중.. " + ((int) progress) + "% ...");
+//                            if((int)progress==100){
+//                                Log.d("왜팅기냐","왜");
+//                            }
+//                        }
+//                    });
         } else {
             Toast.makeText(getApplicationContext(), "파일을 먼저 선택하세요.", Toast.LENGTH_SHORT).show();
         }
@@ -294,7 +364,9 @@ public class editActivity extends AppCompatActivity  {
     }
     private void goProfile(){
         Intent intent = new Intent (this, ProfileActivity.class);
+        finish();
         startActivity(intent);
+
     }
     public void onBackPressed() {
         backPressHandler.onBackPressed("뒤로가기 버튼 한번 더 누르면 종료", 3000);

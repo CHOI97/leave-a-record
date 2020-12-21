@@ -2,43 +2,26 @@ package com.example.leave_a_record.InterfaceActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.leave_a_record.BackPressHandler;
 import com.example.leave_a_record.DataBase.Callback;
 import com.example.leave_a_record.R;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
-
 import com.example.leave_a_record.DataBase.Database_M;
 
 public class LoginActivity extends AppCompatActivity {
-    private FirebaseAuth mAuth; //인증객체
-    private BackPressHandler backPressHandler = new BackPressHandler(this);
 
+    Database_M m;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_login);
-
-
-        mAuth = FirebaseAuth.getInstance();
         findViewById(R.id.login_bt).setOnClickListener(onClickListener);
         findViewById(R.id.loginTosignup_bt).setOnClickListener(onClickListener);
-        Handler hand = new Handler();
+        m=new Database_M();
 
-
-    }
-
-    public void onStart() {
-        super.onStart();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-//        updateUI(currentUser);
 
     }
 
@@ -55,6 +38,8 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
     };
+
+
     private void signIn() {
         final String email = ((EditText) findViewById(R.id.login_id)).getText().toString();
         final String password = ((EditText) findViewById(R.id.login_pw)).getText().toString();
@@ -76,15 +61,12 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
     }
+
     private void loginTosignup() {
         Intent intent = new Intent(LoginActivity.this , SignupActivity.class);
         finish();
         startActivity(intent);
 
 
-    }
-
-    public void onBackPressed() {
-        backPressHandler.onBackPressed("뒤로가기 버튼 한번 더 누르면 종료", 3000);
     }
 }

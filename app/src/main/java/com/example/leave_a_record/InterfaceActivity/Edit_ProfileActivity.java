@@ -37,8 +37,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Edit_ProfileActivity extends AppCompatActivity {
     Database_M m=new Database_M();
-    CircleImageView profile_image;
-    EditText profile_name;
+    CircleImageView profile_image,addPhoto;
+    EditText profile_name,about_message;
     Button edit_bt;
     Uri image_uri;
     String  uid= m.getmAuth().getUid();
@@ -49,8 +49,9 @@ public class Edit_ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.page_editprofile);
         profile_image=findViewById(R.id.edit_profile_image);
         profile_name=findViewById(R.id.edit_name);
+        about_message=findViewById(R.id.edit_about);
         edit_bt=findViewById(R.id.edit_bt);
-
+        addPhoto=findViewById(R.id.img_addphoto);
 
         m.SingleImageUri(uid, new Callback<Uri>() {
             @Override
@@ -64,7 +65,13 @@ public class Edit_ProfileActivity extends AppCompatActivity {
                 profile_name.setHint(data);
             }
         });
-        profile_image.setOnClickListener(new View.OnClickListener(){
+        m.userAbout(new Callback<String>() {
+            @Override
+            public void onCallback(String data) {
+                about_message.setHint(data);
+            }
+        });
+        addPhoto.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
@@ -77,9 +84,7 @@ public class Edit_ProfileActivity extends AppCompatActivity {
         edit_bt.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Edit_ProfileActivity.this, ProfileActivity.class);
-                finish();
-                startActivity(intent);
+                changeAll(profile_name.getText().toString(),about_message.getText().toString());
             }
         });
     }
@@ -99,9 +104,14 @@ public class Edit_ProfileActivity extends AppCompatActivity {
             }
         }
     }
-    public void Change_name(String name){
-
+    public void changeAll(String name,String about){
+        m.Name_change(name);
+        m.About_change(about);
+        Intent intent=new Intent(this,MainActivity.class);
+        startActivity(intent);
+        finish();
     }
+
     public void Change_image(Uri Uri){
         if(!Uri.equals(null)) {
             Log.d("이미지를 바꿉니다: ", "Uri는" + Uri.toString());
@@ -123,9 +133,6 @@ public class Edit_ProfileActivity extends AppCompatActivity {
         Uri FilePath = image_uri;
         m.setProfileImage(uid);
         if (FilePath != null) {
-            //업로드 진행 Dialog 보이기
-//////////////// storage 와 cloud의 동시에 저장하자 . /////////////////////////////////
-            //storage
             FirebaseStorage storage = FirebaseStorage.getInstance();
 
             //Unique한 파일명을 만들자.

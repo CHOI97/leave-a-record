@@ -49,16 +49,16 @@ public class myHistory extends Fragment {
     @Override
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.item_myhistory, container, false);
+         View view = inflater.inflate(R.layout.item_myhistory, container, false);
         Log.d("success", "myHistory"); //로그찍기
-
+        gv = view.findViewById(R.id.gridview);
 
         onCallbackPost(new Callback<List<PostData>>() {
             @Override
             public void onCallback(List<PostData> data) {
                 if (data != null) {
                     Log.d("데이터베이스가 myHistory 진입", "추가하겠습니다");
-                    gv = view.findViewById(R.id.gridview);
+
                     for (int i = data.size()-1; i >=0 ; i--) {
                         postStr.add(data.get(i).getPost_images_URI().get(postFirst));
                         Log.d("리스트뷰에 업로드중입니다.  ---", "업로드중인 파일은" + data.get(i).getPost_title());

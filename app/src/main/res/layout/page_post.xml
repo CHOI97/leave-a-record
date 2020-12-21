@@ -18,85 +18,25 @@
 
 
 
-    <ImageView
-        android:id="@+id/img_header"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:contentDescription="@string/app_name"
-        android:scaleType="centerCrop"
-        android:src="@drawable/sample_1"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        tools:layout_editor_absoluteX="0dp"
-
-        />
-
     <LinearLayout
-        android:id="@+id/location_lay"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:paddingStart="30dp"
-        android:paddingEnd="30dp"
+        android:id="@+id/post_viewpagerlayout"
+        android:layout_width="400dp"
+        android:layout_height="410dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
-        app:layout_constraintTop_toBottomOf="@+id/img_header"
-        >
-
-        <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:src="@drawable/ic_location2"
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:layout_marginBottom="@dimen/_5sdp"
-            ></ImageView>
-
-
-        <TextView
-
-            android:id="@+id/Text_location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:paddingRight="10dp"
-            android:text="location"
-            android:textSize="15dp"
-            android:textStyle="bold"
-            android:padding="5dp"
-            android:layout_margin="3dp"
-
-            />
-
-        <ImageView
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            android:src="@drawable/ic_photo"
-            android:layout_marginLeft="70dp"
-            android:layout_marginTop="@dimen/_7sdp"
-            android:layout_marginBottom="@dimen/_5sdp"
-            ></ImageView>
-
-
-        <TextView
-            android:id="@+id/Text_photodate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:paddingRight="10dp"
-            android:text="photo date"
-            android:textSize="15dp"
-            android:textStyle="bold"
-            android:padding="5dp"
-            android:layout_margin="3dp"
-
-            />
-
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/post_viewpager2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@drawable/bg_gray"
-        app:layout_constraintTop_toBottomOf="@id/location_lay"
+        app:layout_constraintTop_toBottomOf="@id/post_viewpagerlayout"
         ></LinearLayout>
 
     <!--   <LinearLayout
@@ -129,7 +69,7 @@
         android:paddingStart="30dp"
         android:paddingEnd="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/location_lay"
+        app:layout_constraintTop_toBottomOf="@id/post_viewpagerlayout"
         app:layout_constraintVertical_bias="1.0"
         tools:layout_editor_absoluteX="0dp">
 
@@ -153,17 +93,18 @@
                     app:cardCornerRadius="@dimen/_15sdp"
                     android:layout_margin="8dp"
                     app:cardElevation="6dp"
+
                     >
                     <TextView
-
                         android:id="@+id/Text_Title"
-                        android:layout_width="match_parent"
+                        android:layout_width="300dp"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
                         android:paddingTop="@dimen/_5sdp"
                         android:paddingBottom="@dimen/_5sdp"
+                        android:paddingLeft="@dimen/_10sdp"
                         android:text="title"
-                        android:textSize="30dp"
+                        android:textSize="20dp"
                         android:textStyle="bold"
                         android:autoSizeTextType="uniform"
                         android:autoSizeMaxTextSize="30dp"
@@ -188,12 +129,11 @@
 
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
+                    android:layout_width="154dp"
                     android:layout_height="match_parent"
-                    app:cardCornerRadius="@dimen/_15sdp"
                     android:layout_margin="8dp"
-                    app:cardElevation="6dp"
-                    >
+                    app:cardCornerRadius="@dimen/_15sdp"
+                    app:cardElevation="6dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="wrap_content"
@@ -201,29 +141,29 @@
 
                         <ImageView
                             android:id="@+id/img_date"
-                            android:layout_width="35dp"
-                            android:layout_height="40dp"
-                            android:src="@drawable/ic_date"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
                             android:paddingLeft="@dimen/_5sdp"
-                            app:layout_constraintTop_toTopOf="parent"
+                            android:src="@drawable/ic_date"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            ></ImageView>
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:tint="@color/colorGray" />
 
                         <TextView
-                            android:id="@+id/Text_postdate"
+                            android:id="@+id/post_date"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:padding="@dimen/_8sdp"
                             android:text="2020.11.26"
-                            android:textSize="15dp"
+                            android:textSize="12dp"
                             android:textStyle="bold"
                             app:layout_constraintStart_toEndOf="@id/img_date"
-                            tools:layout_editor_absoluteY="0dp" />
+                            tools:layout_editor_absoluteY="1dp" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.cardview.widget.CardView>
+                </androidx.cardview.widget.CardView>
 
 
             </LinearLayout>
@@ -231,29 +171,17 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-
+                android:paddingLeft="@dimen/_10sdp"
                 >
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:cardCornerRadius="@dimen/_15sdp"
-                    android:layout_margin="8dp"
-                    app:cardElevation="6dp"
-                    >
-
-                    <TextView
-                        android:id="@+id/Text_content"
-                        android:layout_width="match_parent"
+                <TextView
+                        android:id="@+id/post_content"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:layout_width="300dp"
                         android:layout_height="match_parent"
-                        android:text="동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리 나라만세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세 남산위에 저소나무 철갑을 두른듯 바람서리 불변함은 우리 기상일세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세 가을하늘 공활한데 높고 구름 없이 밝은달은 우리가슴 일편단심일세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세 이기상과 이맘으로 충성을 다하여 괴로우나 즐거우나 나라 사랑하세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세"
-                        android:textSize="20dp"
+                        android:textSize="12dp"
                         android:padding="10dp"
                         android:autoSizeTextType="uniform"
-                        android:autoSizeMaxTextSize="20dp"
-                        />
-                </androidx.cardview.widget.CardView>
-
+                        android:autoSizeMaxTextSize="13dp" />
             </LinearLayout>
 
 

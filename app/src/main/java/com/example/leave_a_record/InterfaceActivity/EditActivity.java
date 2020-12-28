@@ -52,15 +52,12 @@ public class EditActivity extends AppCompatActivity  {
     Button save_content;
     TextView current_time;
     ArrayList<post_data_image> pd_datas_receive;
-
     FirebaseAuth mAuth;
     DatabaseReference mDatabase;
     DatabaseReference mdatabase;
     DatabaseReference oDatabase;
-
     List<image_edit_data> imageditdataList;
     List<String> post_images_URI;
-
     List<String> post_meta_datetime;
     List<String> post_pin;
     List<String> post_meta_gps_Latitue;
@@ -322,7 +319,7 @@ public class EditActivity extends AppCompatActivity  {
         }
     }
 
-
+//자동으로 핀을 지정해주는 알고리즘 수정 필요하다고 생각함.
     public void autopin(List<String> lat ,List<String> lon,List<String> pin){
         int i;
         double sum=0;
@@ -366,9 +363,9 @@ public class EditActivity extends AppCompatActivity  {
         Intent intent = new Intent (this, ProfileActivity.class);
         finish();
         startActivity(intent);
-
     }
-    public void onBackPressed() {
-        backPressHandler.onBackPressed("뒤로가기 버튼 한번 더 누르면 종료", 3000);
-    }
+    //BackPress 새롭게 만들어야함
+//    public void onBackPressed() {
+//        backPressHandler.onBackPressed("뒤로가기 버튼 한번 더 누르면 종료", 3000);
+//    }
 }

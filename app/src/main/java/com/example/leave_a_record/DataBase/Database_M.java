@@ -400,9 +400,6 @@ public class Database_M  {
         });
     }
     public void userAbout(final Callback<String> callback) {
-//        UserData userData = Data_M.getInstance().getUserData();
-//        String name = userData.getUser_name();
-//        callback.onCallback(name);
         FirebaseDatabase.getInstance().getReference().child("users").child(mAuth.getCurrentUser().getUid())
                 .addValueEventListener(new ValueEventListener() {
                     @Override

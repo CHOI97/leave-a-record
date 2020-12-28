@@ -112,6 +112,7 @@ public class ProfileActivity extends AppCompatActivity {
                 Textname.setText(data);
             }
         });
+
         //상태메세지 동기화
         m.userAbout(new Callback<String>() {
             @Override
@@ -120,68 +121,8 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-//        img_add.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.d("현재 진행중인 것은", "-------------갤러리로 넘기는중입니다.");
-//                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
-//                //사진을 여러개 선택할수 있도록 한다
-//                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-//                intent.setType("image/*");
-//                intent.setAction(Intent.ACTION_GET_CONTENT);
-//                startActivityForResult(Intent.createChooser(intent, "Select Picture"), 101);
-//            }
-//        });
-
-//        GridView gridView = (GridView)findViewById(R.id.gridview);
-//        gridView.setAdapter(new HistoryListAdapter(this,));
-
         txt_myHistory.setOnClickListener(new menuClickListener());
         txt_tripCourse.setOnClickListener(new menuClickListener());
-        //--------------- 메뉴 팝업 부분 -----------------//
-//        img_more.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                Log.d("팝업메뉴","=======눌렸음.");
-//                PopupMenu popup= new PopupMenu(getApplicationContext(), v);//v는 클릭된 뷰를 의미
-//                Log.d("팝업메뉴","=======생성중");
-//                getMenuInflater().inflate(R.menu.menu_all, popup.getMenu());
-//                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-//                    @Override
-//                    public boolean onMenuItemClick(MenuItem item) {
-//                        switch (item.getItemId()){
-//                            case R.id.Logout:
-//                                Toast.makeText(getApplication(),"로그아웃",Toast.LENGTH_SHORT).show();
-//                                break;
-//                            case R.id.settings:
-//                                Toast.makeText(getApplication(),"설정",Toast.LENGTH_SHORT).show();
-//                                break;
-//                            default:
-//                                break;
-//                        }
-//                        return false;
-//                    }
-//                });
-//
-//            }
-//        });
-
-
-
-//       img_add.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.d("현재 진행중인 것은", "-------------갤러리로 넘기는중입니다.");
-//                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
-//                //사진을 여러개 선택할수 있도록 한다
-//                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-//                intent.setType("image/*");
-//                intent.setAction(Intent.ACTION_GET_CONTENT);
-//                startActivityForResult(Intent.createChooser(intent, "Select Picture"), 101);
-//            }
-//        });
-
 
         // Fragment 정보 초기화
         fragmentManager = getSupportFragmentManager();
@@ -199,19 +140,6 @@ public class ProfileActivity extends AppCompatActivity {
 
         return true;
     }
-//    @Override public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-//        if(requestCode == 1){
-//            int length = permissions.length;
-//            for (int i = 0; i < length; i++) {
-//                if (grantResults[i] == PackageManager.PERMISSION_GRANTED)
-//                { // 동의
-//                    Log.d("MainActivity","권한 허용 : " + permissions[i]);
-//                }
-//            }
-//        }
-//    }
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -246,11 +174,6 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
 
-//    public void onStart() {
-//        super.onStart();
-//        // Check if user is signed in (non-null) and update UI accordingly.
-//        FirebaseUser currentUser = mAuth.getCurrentUser();
-//    }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -261,30 +184,17 @@ public class ProfileActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 Uri uri = data.getData(); //-----------이게 필요한가?..
                 ClipData clipData = data.getClipData();
-//                pd_data=new post_data_image[clipData.getItemCount()];-------일단보류
 
-
-//               try{            -------------------------------보류중 오류없음.
-//                    pd_datas = new ArrayList<post_data_image>(clipData.getItemCount());
-//                }
-//                catch(Exception e){
-//                    e.printStackTrace();
-//                }
                 pd_datas = new ArrayList<post_data_image>();
                 //이미지 URI 를 이용하여 이미지뷰에 순서대로 세팅한다.
                 if (clipData != null) {
-
+    // 이미지의 메타데이터가 없는경우도 받아야한다.
                     for (int i = 0; i < clipData.getItemCount(); i++) {
                         if (i < clipData.getItemCount()) {
                             try {
                                 urione = clipData.getItemAt(i).getUri();
                                 exif = new ExifInterface(getPath(urione));
                                 pd_datas.add(new post_data_image(urione.toString(), getDateTime(exif),getGPS_Latitude(exif),getGps_Longitude(exif)));
-//                                arr_uri.add(urione);
-//                                arr_date.add(getDateTime(exif));
-//                                pd_data[i].setUri(urione);
-//                                pd_data[i].setDate_time(getDateTime(exif));
-
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -292,11 +202,6 @@ public class ProfileActivity extends AppCompatActivity {
                     }
                     Log.d("현재 진행중인 것은", "인텐트로 넘기기전입니다.");
                     intent = new Intent(this, EditActivity.class);
-//                    intent.putExtra("image-data",pd_datas);
-//                    for(int j=0;j<pd_data.length;j++) {
-//                        to_edit.putExtra("image data - Uri", arr_uri);
-//                        to_edit.putExtra("image data - date",arr_date);
-//                    }
                     intent.putExtra("pd_datas", pd_datas);
                     Log.d("현재 진행중인 것은", "인텐트로 넘기기전입니다.");
 
@@ -456,27 +361,6 @@ public class ProfileActivity extends AppCompatActivity {
             Toast.makeText(this, "권한을 모두 허용", Toast.LENGTH_SHORT).show();
         }
     }
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case android.R.id.home: //뒤로가기 버튼
-//                onBackPressed();
-//                return true;
-//
-//            case R.id.tool_edit: //수정하기 버튼
-//
-//            case R.id.tool_add: //추가하기 버튼
-//
-//            case R.id.tool_logout: //로그아웃 버튼
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
-//
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater menuInflater = getMenuInflater();
-//        menuInflater.inflate(R.menu.menu_profile, menu);
-//        return super.onCreateOptionsMenu(menu);
-//    }
 
     public boolean checkSystemPermission() {
 
@@ -543,12 +427,5 @@ public class ProfileActivity extends AppCompatActivity {
     public void onBackPressed() {
         backPressHandler.onBackPressed("뒤로가기 버튼 한번 더 누르면 종료", 3000);
     }
-//    public String time_conventer(String tag){
-//        String s1 =tag;
-//
-//        tag = s1.replaceAll("[^0-9}]"," ");//문자열 필요없는 부분삭제
-//
-//        return tag;
-//    }
 }
 

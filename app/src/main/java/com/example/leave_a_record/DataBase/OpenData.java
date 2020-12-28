@@ -1,12 +1,8 @@
 package com.example.leave_a_record.DataBase;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class PostData { //게시물에 대한 데이터를 임시저장하는 객체
+public class OpenData {
     private String post_title; // 포스트 제목
     private List<String> post_images_URI; // 포스트 이미지 uri (리스트로 구현)
     private String post_content; // 포스트에 대한 게시글
@@ -15,14 +11,11 @@ public class PostData { //게시물에 대한 데이터를 임시저장하는 �
     private List<String> post_meta_datetime; // 포스트 이미지 시간
     private List<String> post_pin; //포스트 이미지 핀
     private String post_date;
-
-    private String secret;
     private int point;
 
-    public PostData(){}
-
- //메타데이터가 없는경우 생성자를 바꿔야함 추가해야함.
-    public PostData(String post_title,List<String> post_images_URI, String post_content,List<String> post_meta_gps_Latitue,List<String> post_meta_gps_Longitude, List<String> post_meta_datetime,List<String> post_pin,String post_date) {
+    OpenData(){}
+ //메타데이터가없는 이미지인경우 생성자를 다른하나를 더추가해야함.
+    public OpenData(String post_title,List<String> post_images_URI, String post_content,List<String> post_meta_gps_Latitue,List<String> post_meta_gps_Longitude, List<String> post_meta_datetime,List<String> post_pin,String post_date) {
         this.post_title = post_title;
         this.post_content = post_content;
         this.post_images_URI = post_images_URI;
@@ -31,8 +24,7 @@ public class PostData { //게시물에 대한 데이터를 임시저장하는 �
         this.post_meta_datetime = post_meta_datetime;
         this.post_pin=post_pin;
         this.post_date=post_date;
-        this.secret="public"; // Default Settings public , Can be set private
-        this.point =0; // post scraping point
+        this.point = 0;
     }
 
     public int getPoint() {
@@ -41,14 +33,6 @@ public class PostData { //게시물에 대한 데이터를 임시저장하는 �
 
     public void setPoint(int point) {
         this.point = point;
-    }
-
-    public String getSecret() {
-        return secret;
-    }
-
-    public void setSecret(String secret) {
-        this.secret = secret;
     }
 
     public String getPost_title() {
@@ -114,4 +98,5 @@ public class PostData { //게시물에 대한 데이터를 임시저장하는 �
     public void setPost_date(String post_date) {
         this.post_date = post_date;
     }
+}
 }

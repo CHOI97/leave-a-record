@@ -58,7 +58,6 @@ public class USERAdapter extends RecyclerView.Adapter<USERAdapter.UserViewHolder
             super(itemView);
             edit_myimg= itemView.findViewById(R.id.edit_myimg);
 //            edit=itemView.findViewById(R.id.edit_location);
-
         }
     }
 

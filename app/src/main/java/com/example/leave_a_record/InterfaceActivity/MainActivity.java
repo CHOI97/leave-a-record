@@ -24,14 +24,14 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView Textname;
+    private TextView textname;
     private Database_M m;
     private Intent intent;
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_main);
-        Textname= findViewById(R.id.text_username);
+        textname= findViewById(R.id.text_username);
         findViewById(R.id.imgbtn_newphoto).setOnClickListener(onClickListener);
         findViewById(R.id.imgbtn_profile).setOnClickListener(onClickListener);
 
@@ -40,13 +40,14 @@ public class MainActivity extends AppCompatActivity {
         m.userName(new Callback<String>() {
                        @Override
                        public void onCallback(String data) {
-                           Textname.setText(data);
+                           textname.setText(data);
                        }
                    });
     }
 
     View.OnClickListener onClickListener=new View.OnClickListener(){
         public void onClick(View v){
+            // new photo는 사진 추가로 기능 전환시켜야함
             switch (v.getId()){
                 case R.id.imgbtn_newphoto:
                     intent =new Intent(MainActivity.this,ProfileActivity.class);

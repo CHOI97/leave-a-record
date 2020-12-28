@@ -33,109 +33,80 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.auth.User;
 
 public class SignupActivity extends AppCompatActivity {
-    private FirebaseAuth mAuth;
 
-    private static final String TAG="SignupActivity";
-    private static final String TAG2="Member Activity";
-    public EditText id, name, pwd,pwd_c;
-
-    public DatabaseReference mDatabase;
-    public FirebaseDatabase database;
+    public EditText signup_id, signup_name, signup_pwd,signup_pwd_c;
+    public Intent intent;
     private BackPressHandler backPressHandler = new BackPressHandler(this);
     public Database_M m;
 
-    Toolbar myToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_sign_up);
-//        signTologinActivity();
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
         m=new Database_M();
         findViewById(R.id.signup_bt).setOnClickListener(onClickListener);
-        findViewById(R.id.signTologin_bt).setOnClickListener(onClickListener);
-        id = findViewById(R.id.signup_id);
-        name = findViewById(R.id.signup_name);
-        pwd = findViewById(R.id.signup_pw);
-        pwd_c=findViewById(R.id.signup_pwd);
+        findViewById(R.id.SignToLogin_bt).setOnClickListener(onClickListener);
 
-
-        //toolbar
-//        myToolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(myToolbar);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        signup_id = findViewById(R.id.signup_id);
+        signup_name = findViewById(R.id.signup_name);
+        signup_pwd = findViewById(R.id.signup_pw);
+        signup_pwd_c=findViewById(R.id.signup_pwd);
+        intent =new Intent(SignupActivity.this, LoginActivity.class);
 
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
-        //return super.onCreateOptionsMenu(menu);
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu, menu);
-
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case android.R.id.home: //뒤로가기 버튼
+            case android.R.id.home:
                 onBackPressed();
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.signup_bt:
-                    m.signUp(SignupActivity.this,id.getText().toString(),pwd.getText().toString(),name.getText().toString(),pwd_c.getText().toString(),new Callback<Boolean>(){
-                        @Override
-                        public void onCallback(Boolean data) {
-                            if(data){
-                                signTologinActivity();
-                            }
-                        }
-                    });
-
+                    Signup();
                     break;
-                case R.id.signTologin_bt:
-                    signTologinActivity();
+
+                case R.id.SignToLogin_bt:
+                    startActivity(intent);
                     break;
 
             }
         }
     };
-    //회원가입 확인하기
+    public void Signup(){
+        final String id=signup_id.getText().toString();
+        final String pwd=signup_pwd.getText().toString();
+        final String name=signup_name.getText().toString();
+        final String pwd_c=signup_pwd_c.getText().toString();
 
-    private void goToast(String msg){
-        Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
+        m.getInstance().signUp(SignupActivity.this,id,pwd,name,pwd_c,new Callback<Boolean>(){
+            @Override
+            public void onCallback(Boolean data) {
+                if(data){
+                    startActivity(intent);
+                    Toast.makeText(SignupActivity.this, name+"님 회원가입을 축하합니다.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
     }
-    private void signTologinActivity(){
 
-        Intent intent = new Intent (this, LoginActivity.class);
-//        Intent intent = new Intent(this, NextActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-        startActivity(intent);
-
-    }
     public void onBackPressed() {
         backPressHandler.onBackPressed("뒤로가기 버튼 한번 더 누르면 종료", 3000);
     }
-
-//    public void updateUI(FirebaseUser account){
-//
-//        if(account != null){
-//            Toast.makeText(this,"U Signed In successfully",Toast.LENGTH_LONG).show();
-//            startActivity(new Intent(this,LoginActivity.class));
-//
-//        }else {
-//            Toast.makeText(this,"U Didnt signed in",Toast.LENGTH_LONG).show();
-//        }
-//
-//    }
 }

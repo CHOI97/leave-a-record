@@ -99,4 +99,4 @@ public class OpenData {
         this.post_date = post_date;
     }
 }
-}
+
